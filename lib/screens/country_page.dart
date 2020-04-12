@@ -1,11 +1,11 @@
 import 'dart:convert';
-
 import 'package:covidtrack/utils/constants.dart';
 import 'package:covidtrack/utils/country_data_model.dart';
 import 'package:covidtrack/utils/widgets.dart';
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
 
+// ignore: must_be_immutable
 class CountryPage extends StatefulWidget {
   String countryName;
   CountryPage({this.countryName});

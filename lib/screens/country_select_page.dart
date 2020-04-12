@@ -1,6 +1,5 @@
 import 'dart:convert';
 import 'package:covidtrack/screens/country_page.dart';
-import 'package:covidtrack/utils/constants.dart';
 import 'package:covidtrack/utils/country_data_model.dart';
 import 'package:covidtrack/utils/widgets.dart';
 import 'package:flutter/cupertino.dart';
@@ -67,12 +66,13 @@ class _CountrySelectPageState extends State<CountrySelectPage> {
                           search = true;
                           tempCountry = country.shortName;
                         });
-                      } else {
-                        setState(() {
-                          color = Colors.red;
-                          search = false;
-                        });
                       }
+                    }
+                    if (!search) {
+                      setState(() {
+                        color = Colors.red;
+                        tempCountry = '';
+                      });
                     }
                   },
                   autofocus: true,
