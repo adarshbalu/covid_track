@@ -3,8 +3,12 @@ import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 
 class AppHeader extends StatelessWidget {
+  Function onTap;
+  String url = '';
+  AppHeader({this.onTap, this.url});
   @override
   Widget build(BuildContext context) {
+    if (url == null) url = '';
     return Container(
       padding: EdgeInsets.only(bottom: 20, top: 8),
       decoration: BoxDecoration(
@@ -23,12 +27,24 @@ class AppHeader extends StatelessWidget {
             'COVID-19',
             style: kHeaderTextStyle,
           ),
-          CircleAvatar(
-            radius: 25,
-            child: Icon(
-              Icons.search,
-              color: Colors.white,
-              size: 45,
+          GestureDetector(
+            onTap: () {
+              onTap();
+            },
+            child: CircleAvatar(
+              radius: 25,
+              backgroundColor: Colors.white,
+              child: url.isEmpty
+                  ? Icon(
+                      Icons.public,
+                      color: Colors.blue,
+                      size: 45,
+                    )
+                  : Image.network(
+                      url,
+                      width: 40,
+                      height: 40,
+                    ),
             ),
           )
         ],
@@ -139,9 +155,10 @@ class CaseCard extends StatelessWidget {
   }
 }
 
-class OtherScreen extends StatelessWidget {
+class LoaderScreen extends StatelessWidget {
   String text1, text2, image;
-  OtherScreen({this.text1, this.text2, this.image});
+  Function onTap;
+  LoaderScreen({this.text1, this.text2, this.image, this.onTap});
 
   @override
   Widget build(BuildContext context) {
@@ -149,10 +166,11 @@ class OtherScreen extends StatelessWidget {
       mainAxisAlignment: MainAxisAlignment.start,
       children: <Widget>[
         GestureDetector(
+          onTap: () => onTap(),
           child: AppHeader(),
         ),
         SizedBox(
-          height: MediaQuery.of(context).size.height / 2.7,
+          height: MediaQuery.of(context).size.height / 3.5,
         ),
         Image.asset(
           image,
@@ -175,6 +193,14 @@ class OtherScreen extends StatelessWidget {
           child: Text(
             text2,
             style: kCaseNameTextStyle,
+          ),
+        ),
+        SizedBox(
+          height: 20,
+        ),
+        Center(
+          child: CircularProgressIndicator(
+            backgroundColor: Colors.transparent,
           ),
         ),
       ],

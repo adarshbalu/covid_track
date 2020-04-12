@@ -1,32 +1,25 @@
 import 'dart:convert';
-import 'package:covidtrack/screens/country_select_page.dart';
+
 import 'package:covidtrack/utils/constants.dart';
-import 'package:covidtrack/utils/global_data_model.dart';
+import 'package:covidtrack/utils/country_data_model.dart';
 import 'package:covidtrack/utils/widgets.dart';
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/widgets.dart';
 import 'package:http/http.dart' as http;
 
-class HomePage extends StatefulWidget {
+class CountryPage extends StatefulWidget {
+  String countryName;
+  CountryPage({this.countryName});
   @override
-  _HomePageState createState() => _HomePageState();
+  _CountryPageState createState() => _CountryPageState();
 }
 
-class _HomePageState extends State<HomePage> {
-  GlobalData globalData;
-
+class _CountryPageState extends State<CountryPage> {
+  CountryData countryData;
+  String countryName;
+  String countryCode;
   @override
   void initState() {
-    globalData = GlobalData(
-        totalActive: 0,
-        totalConfirmed: 0,
-        totalDeath: 0,
-        totalRecovered: 0,
-        newActive: 0,
-        newDeaths: 0,
-        newConfirmed: 0,
-        newRecovered: 0);
+    countryName = widget.countryName;
     super.initState();
   }
 
@@ -35,7 +28,7 @@ class _HomePageState extends State<HomePage> {
     return Scaffold(
       body: SafeArea(
         child: FutureBuilder(
-            future: getData(),
+            future: getCountry(),
             builder: (context, snapshot) {
               if (snapshot.hasData) {
                 return ListView(
@@ -44,16 +37,17 @@ class _HomePageState extends State<HomePage> {
                       crossAxisAlignment: CrossAxisAlignment.center,
                       children: <Widget>[
                         AppHeader(
+                          url:
+                              'http://www.geognos.com/api/en/countries/flag/${countryCode.toUpperCase()}.png',
                           onTap: () async {
-                            print('tap');
-                            toCountrySelectPage();
+                            Navigator.pop(context);
                           },
                         ),
                         SizedBox(
                           height: 15,
                         ),
                         Text(
-                          'World Outbreak',
+                          '${snapshot.data.countryName} Outbreak',
                           style: TextStyle(
                               fontSize: 24, fontWeight: FontWeight.w300),
                         ),
@@ -74,21 +68,6 @@ class _HomePageState extends State<HomePage> {
                           color: Colors.red,
                           cases: snapshot.data.totalDeath,
                           text: 'Deaths',
-                        ),
-                        DataListTile(
-                          color: Colors.deepPurple,
-                          cases: snapshot.data.newActive,
-                          text: 'New Active',
-                        ),
-                        DataListTile(
-                          color: Colors.green,
-                          cases: snapshot.data.newRecovered,
-                          text: 'New Recovered',
-                        ),
-                        DataListTile(
-                          color: Colors.red,
-                          cases: snapshot.data.newDeaths,
-                          text: 'New Deaths',
                         ),
                         Padding(
                           padding: EdgeInsets.only(top: 8.0, bottom: 10),
@@ -120,32 +99,31 @@ class _HomePageState extends State<HomePage> {
     );
   }
 
-  void toCountrySelectPage() {
-    Navigator.push(context, MaterialPageRoute(builder: (context) {
-      return CountrySelectPage();
-    }));
-  }
-
-  Future<GlobalData> getData() async {
-    http.Response response =
-        await http.get('https://api.covid19api.com/summary');
+  Future<CountryData> getCountry() async {
+    http.Response response = await http.get(
+        'https://api.covid19api.com/live/country/$countryName/status/confirmed');
     if (response.statusCode == 200) {
+      countryData = CountryData(
+        totalRecovered: 0,
+        totalActive: 0,
+        totalConfirmed: 0,
+        totalDeath: 0,
+        countryName: '',
+      );
       var data = response.body;
-      setState(() {
-        globalData.totalRecovered =
-            jsonDecode(data)['Global']['TotalRecovered'];
-        globalData.totalDeath = jsonDecode(data)['Global']['TotalDeaths'];
-        globalData.totalConfirmed =
-            jsonDecode(data)['Global']['TotalConfirmed'];
-        globalData.newConfirmed = jsonDecode(data)['Global']['NewConfirmed'];
-        globalData.newDeaths = jsonDecode(data)['Global']['NewDeaths'];
-        globalData.newRecovered = jsonDecode(data)['Global']['NewRecovered'];
-        globalData.totalActive = globalData.totalConfirmed -
-            (globalData.totalRecovered + globalData.totalDeath);
-        globalData.newActive = globalData.newConfirmed -
-            (globalData.newRecovered + globalData.newDeaths);
-      });
+      var countryDetails = jsonDecode(data);
+      for (var country in countryDetails) {
+        if (country == countryDetails[countryDetails.length - 1])
+          setState(() {
+            countryCode = country['CountryCode'];
+            countryData.countryName = country['Country'];
+            countryData.totalConfirmed = country['Confirmed'];
+            countryData.totalDeath = country['Deaths'];
+            countryData.totalRecovered = country['Recovered'];
+            countryData.totalActive = country['Active'];
+          });
+      }
     }
-    return globalData;
+    return countryData;
   }
 }
