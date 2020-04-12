@@ -1,5 +1,6 @@
 import 'package:covidtrack/utils/constants.dart';
 import 'package:flutter/material.dart';
+import 'package:intl/intl.dart';
 
 class AppHeader extends StatelessWidget {
   @override
@@ -42,8 +43,12 @@ class DataListTile extends StatelessWidget {
   String text;
 
   DataListTile({this.text, this.color, this.cases});
+
   @override
   Widget build(BuildContext context) {
+    var formatter = NumberFormat("##,##,##,###");
+    var caseNumber;
+    caseNumber = formatter.format(cases);
     return Center(
       child: Container(
         margin: EdgeInsets.all(6),
@@ -59,27 +64,21 @@ class DataListTile extends StatelessWidget {
             children: <Widget>[
               Row(
                 children: <Widget>[
-                  SizedBox(
-                    width: 10,
-                  ),
                   Padding(
-                    padding: EdgeInsets.only(left: 25.0, right: 15),
+                    padding: EdgeInsets.only(left: 20.0, right: 15),
                     child: CircleAvatar(
                       radius: 8,
                       backgroundColor: color,
                     ),
                   ),
-                  SizedBox(
-                    width: 5,
-                  ),
                   Text(
-                    cases.toString(),
+                    caseNumber.toString(),
                     style: kCaseNumberTextStyle,
                   )
                 ],
               ),
               Padding(
-                padding: EdgeInsets.only(right: 28.0),
+                padding: EdgeInsets.only(right: 15.0),
                 child: Text(
                   text,
                   style: kCaseNameTextStyle,
@@ -94,8 +93,13 @@ class DataListTile extends StatelessWidget {
 }
 
 class CaseCard extends StatelessWidget {
+  int totalCases;
+  CaseCard({this.totalCases});
   @override
   Widget build(BuildContext context) {
+    var formatter = NumberFormat("##,##,##,###");
+    var caseNumber;
+    caseNumber = formatter.format(totalCases);
     return Container(
       padding: EdgeInsets.all(20),
       margin: EdgeInsets.fromLTRB(20, 5, 20, 10),
@@ -117,9 +121,12 @@ class CaseCard extends StatelessWidget {
             kSickImage,
             height: 80,
           ),
-          Text(
-            '111,500',
-            style: kTotalCaseNumberTextStyle,
+          Padding(
+            padding: EdgeInsets.only(top: 5.0, bottom: 5),
+            child: Text(
+              caseNumber.toString(),
+              style: kTotalCaseNumberTextStyle,
+            ),
           ),
           Text(
             'TOTAL CASES',

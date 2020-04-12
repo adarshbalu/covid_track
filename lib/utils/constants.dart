@@ -11,6 +11,6 @@ const kCaseNumberTextStyle =
 
 const kCaseNameTextStyle = TextStyle(fontSize: 20, fontWeight: FontWeight.bold);
 
-const kTotalCaseNumberTextStyle = TextStyle(color: Colors.white, fontSize: 35);
+const kTotalCaseNumberTextStyle = TextStyle(color: Colors.white, fontSize: 30);
 
 const kLastUpdatedTextStyle = TextStyle(color: Colors.grey, fontSize: 15);
