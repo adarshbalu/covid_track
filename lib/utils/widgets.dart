@@ -41,7 +41,6 @@ class DataListTile extends StatelessWidget {
   Color color;
   int cases;
   String text;
-
   DataListTile({this.text, this.color, this.cases});
 
   @override
@@ -136,6 +135,49 @@ class CaseCard extends StatelessWidget {
           )
         ],
       ),
+    );
+  }
+}
+
+class OtherScreen extends StatelessWidget {
+  String text1, text2, image;
+  OtherScreen({this.text1, this.text2, this.image});
+
+  @override
+  Widget build(BuildContext context) {
+    return Column(
+      mainAxisAlignment: MainAxisAlignment.start,
+      children: <Widget>[
+        GestureDetector(
+          child: AppHeader(),
+        ),
+        SizedBox(
+          height: MediaQuery.of(context).size.height / 2.7,
+        ),
+        Image.asset(
+          image,
+          width: 80,
+          height: 80,
+        ),
+        SizedBox(
+          height: 20,
+        ),
+        Center(
+          child: Text(
+            text1,
+            style: kCaseNumberTextStyle,
+          ),
+        ),
+        SizedBox(
+          height: 5,
+        ),
+        Center(
+          child: Text(
+            text2,
+            style: kCaseNameTextStyle,
+          ),
+        ),
+      ],
     );
   }
 }

@@ -3,6 +3,7 @@ import 'package:covidtrack/utils/constants.dart';
 import 'package:covidtrack/utils/widgets.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/widgets.dart';
 import 'package:http/http.dart' as http;
 
 class HomePage extends StatefulWidget {
@@ -31,8 +32,7 @@ class _HomePageState extends State<HomePage> {
         child: FutureBuilder(
             future: getData(),
             builder: (context, snapshot) {
-              if (!(snapshot.connectionState == ConnectionState.waiting)) {
-                print(globalData.date);
+              if (snapshot.hasData) {
                 return Column(
                   crossAxisAlignment: CrossAxisAlignment.center,
                   children: <Widget>[
@@ -46,56 +46,44 @@ class _HomePageState extends State<HomePage> {
                           TextStyle(fontSize: 24, fontWeight: FontWeight.w300),
                     ),
                     CaseCard(
-                      totalCases: globalData.totalConfirmed,
+                      totalCases: snapshot.data.totalConfirmed,
                     ),
                     DataListTile(
                       color: Colors.deepPurple,
-                      cases: globalData.totalActive,
+                      cases: snapshot.data.totalActive,
                       text: 'Active',
                     ),
                     DataListTile(
                       color: Colors.green,
-                      cases: globalData.totalRecovered,
+                      cases: snapshot.data.totalRecovered,
                       text: 'Recovered',
                     ),
                     DataListTile(
                       color: Colors.red,
-                      cases: globalData.totalDeath,
+                      cases: snapshot.data.totalDeath,
                       text: 'Deaths',
                     ),
                     Padding(
                       padding: EdgeInsets.only(top: 8.0),
                       child: Text(
-                        'Last Updated on + $globalData.date',
+                        'Last Updated Today',
                         style: kLastUpdatedTextStyle,
                       ),
                     ),
                   ],
                 );
+              } else if (snapshot.connectionState == ConnectionState.none ||
+                  snapshot.hasError) {
+                return OtherScreen(
+                  text1: 'Some Issue Connecting',
+                  text2: 'Please check network',
+                  image: kSanitizerImage,
+                );
               } else {
-                return Column(
-                  mainAxisAlignment: MainAxisAlignment.start,
-                  children: <Widget>[
-                    AppHeader(),
-                    SizedBox(
-                      height: MediaQuery.of(context).size.height / 2.7,
-                    ),
-                    Center(
-                      child: Text(
-                        'Wash your hands with Soap',
-                        style: kCaseNumberTextStyle,
-                      ),
-                    ),
-                    SizedBox(
-                      height: 5,
-                    ),
-                    Center(
-                      child: Text(
-                        'While we sync data for you  .. ',
-                        style: kCaseNameTextStyle,
-                      ),
-                    ),
-                  ],
+                return OtherScreen(
+                  text1: 'Wash your hands with Soap',
+                  text2: 'While we sync data for you  .. ',
+                  image: kHandWashImage,
                 );
               }
             }),
@@ -114,9 +102,11 @@ class _HomePageState extends State<HomePage> {
         globalData.totalDeath = jsonDecode(data)['Global']['TotalDeaths'];
         globalData.totalConfirmed =
             jsonDecode(data)['Global']['TotalConfirmed'];
+        globalData.newConfirmed = jsonDecode(data)['Global']['NewConfirmed'];
+        globalData.newDeaths = jsonDecode(data)['Global']['NewDeaths'];
+        globalData.newRecovered = jsonDecode(data)['Global']['NewRecovered'];
         globalData.totalActive = globalData.totalConfirmed -
             (globalData.totalRecovered + globalData.totalDeath);
-        globalData.date = DateTime.now();
       });
     }
     return globalData;
@@ -124,13 +114,18 @@ class _HomePageState extends State<HomePage> {
 }
 
 class GlobalData {
-  int totalConfirmed, totalRecovered, totalDeath, totalActive;
-  DateTime date;
+  int totalConfirmed,
+      totalRecovered,
+      totalDeath,
+      totalActive,
+      newConfirmed,
+      newDeaths,
+      newRecovered;
 
-  GlobalData(
-      {this.totalConfirmed,
-      this.totalDeath,
-      this.totalRecovered,
-      this.totalActive,
-      this.date});
+  GlobalData({
+    this.totalConfirmed,
+    this.totalDeath,
+    this.totalRecovered,
+    this.totalActive,
+  });
 }

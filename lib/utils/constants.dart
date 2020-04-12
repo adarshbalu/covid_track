@@ -6,6 +6,9 @@ const kSickImage = 'assets/sick.png';
 
 const kGermImage = 'assets/germ.png';
 
+const kSanitizerImage = 'assets/handsanitizer.png';
+const kHandWashImage = 'assets/handwash.png';
+
 const kCaseNumberTextStyle =
     TextStyle(fontWeight: FontWeight.w700, fontSize: 25);
 

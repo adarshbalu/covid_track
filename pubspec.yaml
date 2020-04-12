@@ -46,6 +46,8 @@ flutter:
   assets:
   - sick.png
   - germ.png
+  - handwash.png
+  - handsanitizer.png
   #  - images/a_dot_ham.jpeg
 
   # An image asset can refer to one or more resolution-specific "variants", see
