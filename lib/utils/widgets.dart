@@ -1,9 +1,12 @@
 import 'package:covidtrack/utils/constants.dart';
+import 'package:covidtrack/utils/country_data_model.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 
+var formatter = NumberFormat("##,##,##,###");
+
 class AppHeader extends StatelessWidget {
-  Function onTap;
+  final Function onTap;
   String url = '';
   AppHeader({this.onTap, this.url});
   @override
@@ -54,14 +57,13 @@ class AppHeader extends StatelessWidget {
 }
 
 class DataListTile extends StatelessWidget {
-  Color color;
-  int cases;
-  String text;
+  final Color color;
+  final int cases;
+  final String text;
   DataListTile({this.text, this.color, this.cases});
 
   @override
   Widget build(BuildContext context) {
-    var formatter = NumberFormat("##,##,##,###");
     var caseNumber;
     caseNumber = formatter.format(cases);
     return Center(
@@ -88,7 +90,7 @@ class DataListTile extends StatelessWidget {
                   ),
                   Text(
                     caseNumber.toString(),
-                    style: kCaseNumberTextStyle,
+                    style: kSecondaryTextStyle,
                   )
                 ],
               ),
@@ -108,7 +110,7 @@ class DataListTile extends StatelessWidget {
 }
 
 class CaseCard extends StatelessWidget {
-  int totalCases;
+  final int totalCases;
   CaseCard({this.totalCases});
   @override
   Widget build(BuildContext context) {
@@ -140,7 +142,7 @@ class CaseCard extends StatelessWidget {
             padding: EdgeInsets.only(top: 5.0, bottom: 5),
             child: Text(
               caseNumber.toString(),
-              style: kTotalCaseNumberTextStyle,
+              style: kSecondaryTextStyleWhite,
             ),
           ),
           Text(
@@ -156,8 +158,8 @@ class CaseCard extends StatelessWidget {
 }
 
 class LoaderScreen extends StatelessWidget {
-  String text1, text2, image;
-  Function onTap;
+  final String text1, text2, image;
+  final Function onTap;
   LoaderScreen({this.text1, this.text2, this.image, this.onTap});
 
   @override
@@ -183,7 +185,7 @@ class LoaderScreen extends StatelessWidget {
         Center(
           child: Text(
             text1,
-            style: kCaseNumberTextStyle,
+            style: kSecondaryTextStyle,
           ),
         ),
         SizedBox(
@@ -204,6 +206,72 @@ class LoaderScreen extends StatelessWidget {
           ),
         ),
       ],
+    );
+  }
+}
+
+class DataCard extends StatelessWidget {
+  DataCard(
+      {this.countryUrl,
+      this.countryName,
+      this.color,
+      this.newData,
+      this.totalData});
+
+  final String countryUrl, countryName;
+  final int totalData, newData;
+  final Color color;
+  var totalCaseNumber;
+  @override
+  Widget build(BuildContext context) {
+    totalCaseNumber = formatter.format(totalData);
+
+    return Container(
+      margin: EdgeInsets.fromLTRB(6, 0, 6, 10),
+      height: 100,
+      width: MediaQuery.of(context).size.width / 1.1,
+      color: Colors.transparent,
+      child: Material(
+          color: Colors.white,
+          elevation: 2,
+          borderRadius: BorderRadius.circular(20),
+          child: Column(
+            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+            children: <Widget>[
+              Row(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: <Widget>[
+                  Image.network(
+                    countryUrl,
+                    width: 30,
+                  ),
+                  Padding(
+                    padding: EdgeInsets.only(left: 8),
+                    child: Text(
+                      countryName,
+                      softWrap: true,
+                      style: TextStyle(fontSize: 20),
+                    ),
+                  )
+                ],
+              ),
+              Row(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: <Widget>[
+                  Text(
+                    totalCaseNumber.toString(),
+                    style: kCaseNameTextStyle,
+                  ),
+                  Text(' ( + '),
+                  Text(
+                    newData.toString(),
+                    style: TextStyle(color: color),
+                  ),
+                  Text(' )')
+                ],
+              ),
+            ],
+          )),
     );
   }
 }

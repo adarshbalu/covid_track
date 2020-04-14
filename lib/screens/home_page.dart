@@ -1,6 +1,7 @@
 import 'dart:convert';
 import 'package:covidtrack/screens/country_select_page.dart';
 import 'package:covidtrack/utils/constants.dart';
+import 'package:covidtrack/utils/country_data_model.dart';
 import 'package:covidtrack/utils/global_data_model.dart';
 import 'package:covidtrack/utils/widgets.dart';
 import 'package:flutter/cupertino.dart';
@@ -17,7 +18,9 @@ class _HomePageState extends State<HomePage> {
   GlobalData globalData;
   DateTime dateTime = DateTime.now();
   String date = '';
-
+  CountryData mostCases, mostDeaths, mostRecovered;
+  var mostAffectedCountry;
+  Map<String, int> mostAffected;
   @override
   void initState() {
     date = dateTime.day.toString() +
@@ -60,8 +63,7 @@ class _HomePageState extends State<HomePage> {
                         ),
                         Text(
                           'World Outbreak',
-                          style: TextStyle(
-                              fontSize: 24, fontWeight: FontWeight.w300),
+                          style: kPrimaryTextStyle,
                         ),
                         CaseCard(
                           totalCases: snapshot.data.totalConfirmed,
@@ -96,8 +98,53 @@ class _HomePageState extends State<HomePage> {
 //                          cases: snapshot.data.newDeaths,
 //                          text: 'New Deaths',
 //                        ),
+                        SizedBox(
+                          height: 8,
+                        ),
                         Padding(
-                          padding: EdgeInsets.only(top: 0.0, bottom: 0),
+                          padding: EdgeInsets.fromLTRB(0, 15, 0, 3),
+                          child: Text(
+                            'Most Cases',
+                            style: kPrimaryTextStyle,
+                          ),
+                        ),
+                        DataCard(
+                          color: Colors.amber,
+                          countryUrl: mostCases.countryUrl,
+                          countryName: mostCases.countryName,
+                          totalData: mostCases.totalConfirmed,
+                          newData: mostCases.newConfirmed,
+                        ),
+                        Padding(
+                          padding: EdgeInsets.fromLTRB(0, 15, 0, 3),
+                          child: Text(
+                            'Most Recovered',
+                            style: kPrimaryTextStyle,
+                          ),
+                        ),
+                        DataCard(
+                          color: Colors.greenAccent,
+                          countryUrl: mostRecovered.countryUrl,
+                          countryName: mostRecovered.countryName,
+                          totalData: mostRecovered.totalRecovered,
+                          newData: mostRecovered.newRecovered,
+                        ),
+                        Padding(
+                          padding: EdgeInsets.fromLTRB(0, 15, 0, 3),
+                          child: Text(
+                            'Most Deaths',
+                            style: kPrimaryTextStyle,
+                          ),
+                        ),
+                        DataCard(
+                          color: Colors.redAccent,
+                          countryUrl: mostDeaths.countryUrl,
+                          countryName: mostDeaths.countryName,
+                          totalData: mostDeaths.totalDeath,
+                          newData: mostDeaths.newDeath,
+                        ),
+                        Padding(
+                          padding: EdgeInsets.only(top: 8, bottom: 0),
                           child: Text(
                             'Last Updated $date',
                             style: kLastUpdatedTextStyle,
@@ -158,7 +205,44 @@ class _HomePageState extends State<HomePage> {
         globalData.newActive = globalData.newConfirmed -
             (globalData.newRecovered + globalData.newDeaths);
       });
+
+      var allCountryArray = jsonDecode(data)['Countries'];
+      var tempMostCases, tempMostDeaths, tempMostRecovered;
+      tempMostCases = allCountryArray[0];
+      tempMostDeaths = allCountryArray[0];
+      tempMostRecovered = allCountryArray[0];
+      for (int i = 1; i < allCountryArray.length; i++) {
+        if (tempMostCases['TotalConfirmed'] <
+            allCountryArray[i]['TotalConfirmed'])
+          tempMostCases = allCountryArray[i];
+        if (tempMostDeaths['TotalDeaths'] < allCountryArray[i]['TotalDeaths'])
+          tempMostDeaths = allCountryArray[i];
+        if (tempMostRecovered['TotalRecovered'] <
+            allCountryArray[i]['TotalRecovered'])
+          tempMostRecovered = allCountryArray[i];
+      }
+      setState(() {
+        mostCases = CountryData(
+            countryUrl:
+                'http://www.geognos.com/api/en/countries/flag/${tempMostCases['CountryCode'].toUpperCase()}.png',
+            countryName: tempMostCases['Country'],
+            newConfirmed: tempMostCases['NewConfirmed'],
+            totalConfirmed: tempMostCases['TotalConfirmed']);
+        mostDeaths = CountryData(
+            countryName: tempMostDeaths['Country'],
+            newDeath: tempMostDeaths['NewDeaths'],
+            countryUrl:
+                'http://www.geognos.com/api/en/countries/flag/${tempMostDeaths['CountryCode'].toUpperCase()}.png',
+            totalDeath: tempMostDeaths['TotalDeaths']);
+        mostRecovered = CountryData(
+            newRecovered: tempMostRecovered['NewRecovered'],
+            countryUrl:
+                'http://www.geognos.com/api/en/countries/flag/${tempMostRecovered['CountryCode'].toUpperCase()}.png',
+            countryName: tempMostRecovered['Country'],
+            totalRecovered: tempMostRecovered['TotalRecovered']);
+      });
     }
+
     return globalData;
   }
 }
