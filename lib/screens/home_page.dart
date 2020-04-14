@@ -15,9 +15,16 @@ class HomePage extends StatefulWidget {
 
 class _HomePageState extends State<HomePage> {
   GlobalData globalData;
+  DateTime dateTime = DateTime.now();
+  String date = '';
 
   @override
   void initState() {
+    date = dateTime.day.toString() +
+        ' ' +
+        monthNames[dateTime.month - 1] +
+        ' ' +
+        dateTime.year.toString();
     globalData = GlobalData(
         totalActive: 0,
         totalConfirmed: 0,
@@ -45,12 +52,11 @@ class _HomePageState extends State<HomePage> {
                       children: <Widget>[
                         AppHeader(
                           onTap: () async {
-                            print('tap');
                             toCountrySelectPage();
                           },
                         ),
                         SizedBox(
-                          height: 15,
+                          height: 12,
                         ),
                         Text(
                           'World Outbreak',
@@ -75,25 +81,32 @@ class _HomePageState extends State<HomePage> {
                           cases: snapshot.data.totalDeath,
                           text: 'Deaths',
                         ),
-                        DataListTile(
-                          color: Colors.deepPurple,
-                          cases: snapshot.data.newActive,
-                          text: 'New Active',
-                        ),
-                        DataListTile(
-                          color: Colors.green,
-                          cases: snapshot.data.newRecovered,
-                          text: 'New Recovered',
-                        ),
-                        DataListTile(
-                          color: Colors.red,
-                          cases: snapshot.data.newDeaths,
-                          text: 'New Deaths',
+//                        DataListTile(
+//                          color: Colors.deepPurple,
+//                          cases: snapshot.data.newActive,
+//                          text: 'New Active',
+//                        ),
+//                        DataListTile(
+//                          color: Colors.green,
+//                          cases: snapshot.data.newRecovered,
+//                          text: 'New Recovered',
+//                        ),
+//                        DataListTile(
+//                          color: Colors.red,
+//                          cases: snapshot.data.newDeaths,
+//                          text: 'New Deaths',
+//                        ),
+                        Padding(
+                          padding: EdgeInsets.only(top: 0.0, bottom: 0),
+                          child: Text(
+                            'Last Updated $date',
+                            style: kLastUpdatedTextStyle,
+                          ),
                         ),
                         Padding(
-                          padding: EdgeInsets.only(top: 8.0, bottom: 10),
+                          padding: EdgeInsets.only(top: 0.0, bottom: 10),
                           child: Text(
-                            'Last Updated Today',
+                            'Data might be subject to Inconsistency.',
                             style: kLastUpdatedTextStyle,
                           ),
                         ),

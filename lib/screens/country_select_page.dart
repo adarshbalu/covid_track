@@ -16,6 +16,8 @@ class _CountrySelectPageState extends State<CountrySelectPage> {
   TextEditingController _controller = TextEditingController();
   Color color = Colors.red;
   bool search = false;
+  String url = '';
+
   @override
   void dispose() {
     _controller.dispose();
@@ -58,9 +60,11 @@ class _CountrySelectPageState extends State<CountrySelectPage> {
               Expanded(
                 flex: 3,
                 child: TextField(
+                  onChanged: (value) {},
                   onSubmitted: (value) {
                     for (var country in countryDataList) {
-                      if (country.countryName == value) {
+                      if (country.countryName.toLowerCase() ==
+                          value.toLowerCase()) {
                         setState(() {
                           color = Colors.green;
                           search = true;
@@ -75,7 +79,6 @@ class _CountrySelectPageState extends State<CountrySelectPage> {
                       });
                     }
                   },
-                  autofocus: true,
                   controller: _controller,
                   style: TextStyle(
                     color: Colors.black,
@@ -149,6 +152,11 @@ class _CountrySelectPageState extends State<CountrySelectPage> {
                                   toCountryPage(snapshot.data[index].shortName);
                                 },
                                 title: Text(snapshot.data[index].countryName),
+                                leading: Image.network(
+                                  snapshot.data[index].countryUrl,
+                                  height: 40,
+                                  width: 40,
+                                ),
                               ));
                         });
                   } else {
@@ -177,12 +185,13 @@ class _CountrySelectPageState extends State<CountrySelectPage> {
         var countryList = jsonDecode(data)['Countries'];
         for (var country in countryList) {
           countryData = CountryData(
-            totalRecovered: 0,
-            totalActive: 0,
-            totalConfirmed: 0,
-            totalDeath: 0,
-            countryName: '',
-          );
+              totalRecovered: 0,
+              totalActive: 0,
+              totalConfirmed: 0,
+              totalDeath: 0,
+              countryName: '',
+              countryUrl: '',
+              countryCode: '');
           setState(() {
 //            countryData.totalConfirmed = country['TotalConfirmed'];
 //            countryData.totalDeath = country['TotalDeaths'];
@@ -196,6 +205,9 @@ class _CountrySelectPageState extends State<CountrySelectPage> {
 //            countryData.newActive = countryData.newConfirmed -
 //                (countryData.newRecovered + countryData.newDeaths);
             countryData.shortName = country['Slug'];
+            countryData.countryCode = country['CountryCode'];
+            countryData.countryUrl =
+                'http://www.geognos.com/api/en/countries/flag/${countryData.countryCode.toUpperCase()}.png';
           });
           tempCountryDataList.add(countryData);
         }

@@ -1,4 +1,20 @@
+import 'package:covidtrack/screens/home_page.dart';
 import 'package:flutter/material.dart';
+
+final monthNames = [
+  "January",
+  "February",
+  "March",
+  "April",
+  "May",
+  "June",
+  "July",
+  "August",
+  "September",
+  "October",
+  "November",
+  "December"
+];
 
 const kHeaderTextStyle = TextStyle(fontSize: 40, fontWeight: FontWeight.w900);
 
@@ -17,3 +33,9 @@ const kCaseNameTextStyle = TextStyle(fontSize: 20, fontWeight: FontWeight.bold);
 const kTotalCaseNumberTextStyle = TextStyle(color: Colors.white, fontSize: 30);
 
 const kLastUpdatedTextStyle = TextStyle(color: Colors.grey, fontSize: 15);
+
+void toCountrySelectPage(BuildContext context) {
+  Navigator.push(context, MaterialPageRoute(builder: (context) {
+    return HomePage();
+  }));
+}

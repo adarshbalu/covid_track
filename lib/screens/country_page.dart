@@ -17,8 +17,16 @@ class _CountryPageState extends State<CountryPage> {
   CountryData countryData;
   String countryName;
   String countryCode;
+  DateTime dateTime = DateTime.now();
+  String date = '';
+
   @override
   void initState() {
+    date = dateTime.day.toString() +
+        ' ' +
+        monthNames[dateTime.month - 1] +
+        ' ' +
+        dateTime.year.toString();
     countryName = widget.countryName;
     super.initState();
   }
@@ -37,8 +45,7 @@ class _CountryPageState extends State<CountryPage> {
                       crossAxisAlignment: CrossAxisAlignment.center,
                       children: <Widget>[
                         AppHeader(
-                          url:
-                              'http://www.geognos.com/api/en/countries/flag/${countryCode.toUpperCase()}.png',
+                          url: snapshot.data.countryUrl,
                           onTap: () async {
                             Navigator.pop(context);
                           },
@@ -72,7 +79,7 @@ class _CountryPageState extends State<CountryPage> {
                         Padding(
                           padding: EdgeInsets.only(top: 8.0, bottom: 10),
                           child: Text(
-                            'Last Updated Today',
+                            'Last Updated $date',
                             style: kLastUpdatedTextStyle,
                           ),
                         ),
@@ -85,13 +92,13 @@ class _CountryPageState extends State<CountryPage> {
                 return LoaderScreen(
                   text1: 'Some Issue Connecting',
                   text2: 'Please check network',
-                  image: kSanitizerImage,
+                  image: kHandWashImage,
                 );
               } else {
                 return LoaderScreen(
                   text1: 'Wash your hands with Soap',
                   text2: 'While we sync data for you  .. ',
-                  image: kHandWashImage,
+                  image: kSanitizerImage,
                 );
               }
             }),
@@ -100,27 +107,32 @@ class _CountryPageState extends State<CountryPage> {
   }
 
   Future<CountryData> getCountry() async {
-    http.Response response = await http.get(
-        'https://api.covid19api.com/live/country/$countryName/status/confirmed');
+    http.Response response =
+        await http.get('https://api.covid19api.com/summary');
     if (response.statusCode == 200) {
       countryData = CountryData(
-        totalRecovered: 0,
-        totalActive: 0,
-        totalConfirmed: 0,
-        totalDeath: 0,
-        countryName: '',
-      );
+          totalRecovered: 0,
+          totalActive: 0,
+          totalConfirmed: 0,
+          totalDeath: 0,
+          countryName: '',
+          countryCode: '',
+          countryUrl: '');
       var data = response.body;
-      var countryDetails = jsonDecode(data);
+      var countryDetails = jsonDecode(data)['Countries'];
       for (var country in countryDetails) {
-        if (country == countryDetails[countryDetails.length - 1])
+        if (country['Slug'] == countryName)
           setState(() {
             countryCode = country['CountryCode'];
+            if (countryCode == null) countryCode = ' ';
             countryData.countryName = country['Country'];
-            countryData.totalConfirmed = country['Confirmed'];
-            countryData.totalDeath = country['Deaths'];
-            countryData.totalRecovered = country['Recovered'];
-            countryData.totalActive = country['Active'];
+            countryData.totalConfirmed = country['TotalConfirmed'];
+            countryData.totalDeath = country['TotalDeaths'];
+            countryData.totalRecovered = country['TotalRecovered'];
+            countryData.totalActive = countryData.totalConfirmed -
+                (countryData.totalRecovered - countryData.totalDeath);
+            countryData.countryUrl =
+                'http://www.geognos.com/api/en/countries/flag/${countryCode.toUpperCase()}.png';
           });
       }
     }
