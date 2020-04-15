@@ -1,14 +1,16 @@
 import 'package:covidtrack/utils/constants.dart';
 import 'package:covidtrack/utils/country_data_model.dart';
+import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 
 var formatter = NumberFormat("##,##,##,###");
 
 class AppHeader extends StatelessWidget {
-  final Function onTap;
-  String url = '';
-  AppHeader({this.onTap, this.url});
+  String url = '', headerText = 'COVID-19';
+  Function onTap;
+  AppHeader({this.url, this.onTap});
+  AppHeader.withName({this.headerText, this.url, this.onTap});
   @override
   Widget build(BuildContext context) {
     if (url == null) url = '';
@@ -20,36 +22,50 @@ class AppHeader extends StatelessWidget {
               bottomLeft: Radius.circular(45),
               bottomRight: Radius.circular(45))),
       child: Row(
-        mainAxisAlignment: MainAxisAlignment.spaceAround,
+        mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: <Widget>[
-          Image.asset(
-            kGermImage,
-            width: 50,
-          ),
-          Text(
-            'COVID-19',
-            style: kHeaderTextStyle,
-          ),
-          GestureDetector(
-            onTap: () {
-              onTap();
-            },
-            child: CircleAvatar(
-              radius: 25,
-              backgroundColor: Colors.white,
-              child: url.isEmpty
-                  ? Icon(
-                      Icons.public,
-                      color: Colors.blue,
-                      size: 45,
-                    )
-                  : Image.network(
-                      url,
-                      width: 40,
-                      height: 40,
-                    ),
+          Padding(
+            padding: headerText == 'COVID-19'
+                ? EdgeInsets.only(left: 4)
+                : EdgeInsets.only(left: 8.0, right: 8),
+            child: Image.asset(
+              kGermImage,
+              width: 50,
             ),
-          )
+          ),
+          headerText != 'COVID-19'
+              ? Expanded(
+                  child: Text(
+                    headerText,
+                    style: TextStyle(fontSize: 23),
+                  ),
+                )
+              : Text(
+                  headerText,
+                  style: kHeaderTextStyle,
+                ),
+          headerText == 'COVID-19'
+              ? GestureDetector(
+                  onTap: () {
+                    onTap();
+                  },
+                  child: CircleAvatar(
+                    radius: 25,
+                    backgroundColor: Colors.white,
+                    child: url.isEmpty
+                        ? Icon(
+                            Icons.public,
+                            color: Colors.blue,
+                            size: 45,
+                          )
+                        : Image.network(
+                            url,
+                            width: 40,
+                            height: 40,
+                          ),
+                  ),
+                )
+              : SizedBox(),
         ],
       ),
     );
@@ -111,7 +127,9 @@ class DataListTile extends StatelessWidget {
 
 class CaseCard extends StatelessWidget {
   final int totalCases;
-  CaseCard({this.totalCases});
+  bool isFlag;
+  String flagURL;
+  CaseCard({this.totalCases, this.isFlag, this.flagURL});
   @override
   Widget build(BuildContext context) {
     var formatter = NumberFormat("##,##,##,###");
@@ -134,10 +152,15 @@ class CaseCard extends StatelessWidget {
       child: Column(
         mainAxisAlignment: MainAxisAlignment.center,
         children: <Widget>[
-          Image.asset(
-            kSickImage,
-            height: 80,
-          ),
+          !isFlag
+              ? Image.asset(
+                  kSickImage,
+                  height: 80,
+                )
+              : Image.network(
+                  flagURL,
+                  width: 100,
+                ),
           Padding(
             padding: EdgeInsets.only(top: 5.0, bottom: 5),
             child: Text(
@@ -216,12 +239,14 @@ class DataCard extends StatelessWidget {
       this.countryName,
       this.color,
       this.newData,
-      this.totalData});
+      this.totalData,
+      this.onTap});
 
   final String countryUrl, countryName;
   final int totalData, newData;
   final Color color;
   var totalCaseNumber;
+  Function onTap;
   @override
   Widget build(BuildContext context) {
     totalCaseNumber = formatter.format(totalData);

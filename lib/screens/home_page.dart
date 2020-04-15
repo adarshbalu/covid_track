@@ -1,5 +1,6 @@
 import 'dart:convert';
 import 'package:covidtrack/screens/country_select_page.dart';
+import 'package:covidtrack/screens/data_display_page.dart';
 import 'package:covidtrack/utils/constants.dart';
 import 'package:covidtrack/utils/country_data_model.dart';
 import 'package:covidtrack/utils/global_data_model.dart';
@@ -19,8 +20,7 @@ class _HomePageState extends State<HomePage> {
   DateTime dateTime = DateTime.now();
   String date = '';
   CountryData mostCases, mostDeaths, mostRecovered;
-  var mostAffectedCountry;
-  Map<String, int> mostAffected;
+  bool load = false;
   @override
   void initState() {
     date = dateTime.day.toString() +
@@ -67,6 +67,7 @@ class _HomePageState extends State<HomePage> {
                         ),
                         CaseCard(
                           totalCases: snapshot.data.totalConfirmed,
+                          isFlag: false,
                         ),
                         DataListTile(
                           color: Colors.deepPurple,
@@ -108,12 +109,17 @@ class _HomePageState extends State<HomePage> {
                             style: kPrimaryTextStyle,
                           ),
                         ),
-                        DataCard(
-                          color: Colors.amber,
-                          countryUrl: mostCases.countryUrl,
-                          countryName: mostCases.countryName,
-                          totalData: mostCases.totalConfirmed,
-                          newData: mostCases.newConfirmed,
+                        InkWell(
+                          onTap: () {
+                            toScreen(context, 'cases');
+                          },
+                          child: DataCard(
+                            color: Colors.amber,
+                            countryUrl: mostCases.countryUrl,
+                            countryName: mostCases.countryName,
+                            totalData: mostCases.totalConfirmed,
+                            newData: mostCases.newConfirmed,
+                          ),
                         ),
                         Padding(
                           padding: EdgeInsets.fromLTRB(0, 15, 0, 3),
@@ -122,12 +128,17 @@ class _HomePageState extends State<HomePage> {
                             style: kPrimaryTextStyle,
                           ),
                         ),
-                        DataCard(
-                          color: Colors.greenAccent,
-                          countryUrl: mostRecovered.countryUrl,
-                          countryName: mostRecovered.countryName,
-                          totalData: mostRecovered.totalRecovered,
-                          newData: mostRecovered.newRecovered,
+                        InkWell(
+                          onTap: () {
+                            toScreen(context, 'recovered');
+                          },
+                          child: DataCard(
+                            color: Colors.greenAccent,
+                            countryUrl: mostRecovered.countryUrl,
+                            countryName: mostRecovered.countryName,
+                            totalData: mostRecovered.totalRecovered,
+                            newData: mostRecovered.newRecovered,
+                          ),
                         ),
                         Padding(
                           padding: EdgeInsets.fromLTRB(0, 15, 0, 3),
@@ -136,12 +147,17 @@ class _HomePageState extends State<HomePage> {
                             style: kPrimaryTextStyle,
                           ),
                         ),
-                        DataCard(
-                          color: Colors.redAccent,
-                          countryUrl: mostDeaths.countryUrl,
-                          countryName: mostDeaths.countryName,
-                          totalData: mostDeaths.totalDeath,
-                          newData: mostDeaths.newDeath,
+                        InkWell(
+                          onTap: () {
+                            toScreen(context, 'deaths');
+                          },
+                          child: DataCard(
+                            color: Colors.redAccent,
+                            countryUrl: mostDeaths.countryUrl,
+                            countryName: mostDeaths.countryName,
+                            totalData: mostDeaths.totalDeath,
+                            newData: mostDeaths.newDeath,
+                          ),
                         ),
                         Padding(
                           padding: EdgeInsets.only(top: 8, bottom: 0),
@@ -187,62 +203,70 @@ class _HomePageState extends State<HomePage> {
   }
 
   Future<GlobalData> getData() async {
-    http.Response response =
-        await http.get('https://api.covid19api.com/summary');
-    if (response.statusCode == 200) {
-      var data = response.body;
-      setState(() {
-        globalData.totalRecovered =
-            jsonDecode(data)['Global']['TotalRecovered'];
-        globalData.totalDeath = jsonDecode(data)['Global']['TotalDeaths'];
-        globalData.totalConfirmed =
-            jsonDecode(data)['Global']['TotalConfirmed'];
-        globalData.newConfirmed = jsonDecode(data)['Global']['NewConfirmed'];
-        globalData.newDeaths = jsonDecode(data)['Global']['NewDeaths'];
-        globalData.newRecovered = jsonDecode(data)['Global']['NewRecovered'];
-        globalData.totalActive = globalData.totalConfirmed -
-            (globalData.totalRecovered + globalData.totalDeath);
-        globalData.newActive = globalData.newConfirmed -
-            (globalData.newRecovered + globalData.newDeaths);
-      });
+    if (!load) {
+      http.Response response =
+          await http.get('https://api.covid19api.com/summary');
+      if (response.statusCode == 200) {
+        var data = response.body;
+        setState(() {
+          globalData.totalRecovered =
+              jsonDecode(data)['Global']['TotalRecovered'];
+          globalData.totalDeath = jsonDecode(data)['Global']['TotalDeaths'];
+          globalData.totalConfirmed =
+              jsonDecode(data)['Global']['TotalConfirmed'];
+          globalData.newConfirmed = jsonDecode(data)['Global']['NewConfirmed'];
+          globalData.newDeaths = jsonDecode(data)['Global']['NewDeaths'];
+          globalData.newRecovered = jsonDecode(data)['Global']['NewRecovered'];
+          globalData.totalActive = globalData.totalConfirmed -
+              (globalData.totalRecovered + globalData.totalDeath);
+          globalData.newActive = globalData.newConfirmed -
+              (globalData.newRecovered + globalData.newDeaths);
+        });
 
-      var allCountryArray = jsonDecode(data)['Countries'];
-      var tempMostCases, tempMostDeaths, tempMostRecovered;
-      tempMostCases = allCountryArray[0];
-      tempMostDeaths = allCountryArray[0];
-      tempMostRecovered = allCountryArray[0];
-      for (int i = 1; i < allCountryArray.length; i++) {
-        if (tempMostCases['TotalConfirmed'] <
-            allCountryArray[i]['TotalConfirmed'])
-          tempMostCases = allCountryArray[i];
-        if (tempMostDeaths['TotalDeaths'] < allCountryArray[i]['TotalDeaths'])
-          tempMostDeaths = allCountryArray[i];
-        if (tempMostRecovered['TotalRecovered'] <
-            allCountryArray[i]['TotalRecovered'])
-          tempMostRecovered = allCountryArray[i];
+        var allCountryArray = jsonDecode(data)['Countries'];
+        var tempMostCases, tempMostDeaths, tempMostRecovered;
+        tempMostCases = allCountryArray[0];
+        tempMostDeaths = allCountryArray[0];
+        tempMostRecovered = allCountryArray[0];
+        for (int i = 1; i < allCountryArray.length; i++) {
+          if (tempMostCases['TotalConfirmed'] <
+              allCountryArray[i]['TotalConfirmed'])
+            tempMostCases = allCountryArray[i];
+          if (tempMostDeaths['TotalDeaths'] < allCountryArray[i]['TotalDeaths'])
+            tempMostDeaths = allCountryArray[i];
+          if (tempMostRecovered['TotalRecovered'] <
+              allCountryArray[i]['TotalRecovered'])
+            tempMostRecovered = allCountryArray[i];
+        }
+        setState(() {
+          mostCases = CountryData(
+              countryUrl:
+                  'http://www.geognos.com/api/en/countries/flag/${tempMostCases['CountryCode'].toUpperCase()}.png',
+              countryName: tempMostCases['Country'],
+              newConfirmed: tempMostCases['NewConfirmed'],
+              totalConfirmed: tempMostCases['TotalConfirmed']);
+          mostDeaths = CountryData(
+              countryName: tempMostDeaths['Country'],
+              newDeath: tempMostDeaths['NewDeaths'],
+              countryUrl:
+                  'http://www.geognos.com/api/en/countries/flag/${tempMostDeaths['CountryCode'].toUpperCase()}.png',
+              totalDeath: tempMostDeaths['TotalDeaths']);
+          mostRecovered = CountryData(
+              newRecovered: tempMostRecovered['NewRecovered'],
+              countryUrl:
+                  'http://www.geognos.com/api/en/countries/flag/${tempMostRecovered['CountryCode'].toUpperCase()}.png',
+              countryName: tempMostRecovered['Country'],
+              totalRecovered: tempMostRecovered['TotalRecovered']);
+        });
       }
-      setState(() {
-        mostCases = CountryData(
-            countryUrl:
-                'http://www.geognos.com/api/en/countries/flag/${tempMostCases['CountryCode'].toUpperCase()}.png',
-            countryName: tempMostCases['Country'],
-            newConfirmed: tempMostCases['NewConfirmed'],
-            totalConfirmed: tempMostCases['TotalConfirmed']);
-        mostDeaths = CountryData(
-            countryName: tempMostDeaths['Country'],
-            newDeath: tempMostDeaths['NewDeaths'],
-            countryUrl:
-                'http://www.geognos.com/api/en/countries/flag/${tempMostDeaths['CountryCode'].toUpperCase()}.png',
-            totalDeath: tempMostDeaths['TotalDeaths']);
-        mostRecovered = CountryData(
-            newRecovered: tempMostRecovered['NewRecovered'],
-            countryUrl:
-                'http://www.geognos.com/api/en/countries/flag/${tempMostRecovered['CountryCode'].toUpperCase()}.png',
-            countryName: tempMostRecovered['Country'],
-            totalRecovered: tempMostRecovered['TotalRecovered']);
-      });
+      load = true;
     }
-
     return globalData;
+  }
+
+  void toScreen(BuildContext context, String type) {
+    Navigator.push(context, MaterialPageRoute(builder: (context) {
+      return DataPage(type: type);
+    }));
   }
 }

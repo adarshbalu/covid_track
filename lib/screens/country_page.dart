@@ -44,22 +44,20 @@ class _CountryPageState extends State<CountryPage> {
                     Column(
                       crossAxisAlignment: CrossAxisAlignment.center,
                       children: <Widget>[
-                        AppHeader(
+                        AppHeader.withName(
                           url: snapshot.data.countryUrl,
                           onTap: () async {
                             Navigator.pop(context);
                           },
+                          headerText: snapshot.data.countryName,
                         ),
                         SizedBox(
                           height: 15,
                         ),
-                        Text(
-                          '${snapshot.data.countryName} Outbreak',
-                          style: TextStyle(
-                              fontSize: 24, fontWeight: FontWeight.w300),
-                        ),
                         CaseCard(
                           totalCases: snapshot.data.totalConfirmed,
+                          isFlag: true,
+                          flagURL: snapshot.data.countryUrl,
                         ),
                         DataListTile(
                           color: Colors.deepPurple,

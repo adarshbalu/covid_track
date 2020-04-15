@@ -34,8 +34,8 @@ class _CountrySelectPageState extends State<CountrySelectPage> {
   Widget build(BuildContext context) {
     return Scaffold(
         body: SafeArea(
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.center,
+      child: ListView(
+        //crossAxisAlignment: CrossAxisAlignment.center,
         children: <Widget>[
           AppHeader(
             onTap: () {
@@ -47,6 +47,7 @@ class _CountrySelectPageState extends State<CountrySelectPage> {
           ),
           Text(
             'Country Outbreak',
+            textAlign: TextAlign.center,
             style: TextStyle(fontSize: 24, fontWeight: FontWeight.w300),
           ),
           SizedBox(
@@ -131,43 +132,59 @@ class _CountrySelectPageState extends State<CountrySelectPage> {
           ),
           Text(
             'Country List',
+            textAlign: TextAlign.center,
             style: TextStyle(fontSize: 24, fontWeight: FontWeight.w300),
           ),
           SizedBox(
-            height: 20,
+            height: 2,
           ),
-          Flexible(
-            child: FutureBuilder(
-                future: getCountryData(),
-                builder: (context, snapshot) {
-                  if (snapshot.hasData) {
-                    return ListView.builder(
-                        itemCount: snapshot.data.length,
-                        itemBuilder: (context, index) {
-                          return Card(
-                              margin: EdgeInsets.fromLTRB(30, 10, 30, 10),
-                              elevation: 2,
-                              child: ListTile(
-                                onTap: () {
-                                  toCountryPage(snapshot.data[index].shortName);
-                                },
-                                title: Text(snapshot.data[index].countryName),
-                                leading: Image.network(
-                                  snapshot.data[index].countryUrl,
-                                  height: 40,
-                                  width: 40,
-                                ),
-                              ));
-                        });
-                  } else {
-                    return Center(
-                      child: Container(
-                        child: CircularProgressIndicator(),
-                      ),
-                    );
-                  }
-                }),
-          )
+          Container(
+            margin: EdgeInsets.only(left: 10, right: 10),
+            decoration: BoxDecoration(
+              //color: Colors.black12,
+
+              borderRadius: BorderRadius.all(Radius.circular(20)),
+            ),
+            child: ConstrainedBox(
+              constraints: BoxConstraints(maxHeight: 250),
+              child: FutureBuilder(
+                  future: getCountryData(),
+                  builder: (context, snapshot) {
+                    if (snapshot.hasData) {
+                      return ListView.builder(
+                          physics: ScrollPhysics(),
+                          shrinkWrap: true,
+                          itemCount: snapshot.data.length,
+                          itemBuilder: (context, index) {
+                            return Card(
+                                margin: EdgeInsets.fromLTRB(30, 10, 30, 10),
+                                elevation: 2,
+                                child: ListTile(
+                                  onTap: () {
+                                    toCountryPage(
+                                        snapshot.data[index].shortName);
+                                  },
+                                  title: Text(snapshot.data[index].countryName),
+                                  leading: Image.network(
+                                    snapshot.data[index].countryUrl,
+                                    height: 40,
+                                    width: 40,
+                                  ),
+                                ));
+                          });
+                    } else {
+                      return Center(
+                        child: Container(
+                          child: CircularProgressIndicator(),
+                        ),
+                      );
+                    }
+                  }),
+            ),
+          ),
+          SizedBox(
+            height: 40,
+          ),
         ],
       ),
     ));

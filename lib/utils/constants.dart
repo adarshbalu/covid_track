@@ -16,6 +16,8 @@ final monthNames = [
   "December"
 ];
 
+final types = {'cases': 'cases', 'recovered': 'recovered', 'deaths': 'deaths'};
+
 const kHeaderTextStyle = TextStyle(fontSize: 40, fontWeight: FontWeight.w900);
 
 const kSickImage = 'assets/sick.png';

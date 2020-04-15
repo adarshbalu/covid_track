@@ -15,4 +15,18 @@ class CountryData {
       this.newConfirmed,
       this.newActive,
       this.newDeath});
+
+  int getTypes(String type) {
+    switch (type) {
+      case 'cases':
+        return this.totalConfirmed;
+        break;
+      case 'recovered':
+        return this.totalRecovered;
+        break;
+      case 'deaths':
+        return this.totalDeath;
+        break;
+    }
+  }
 }
