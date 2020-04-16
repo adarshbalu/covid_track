@@ -21,6 +21,7 @@ class _HomePageState extends State<HomePage> {
   String date = '';
   CountryData mostCases, mostDeaths, mostRecovered;
   bool load = false;
+  var allCountryArray;
   @override
   void initState() {
     date = dateTime.day.toString() +
@@ -111,7 +112,7 @@ class _HomePageState extends State<HomePage> {
                         ),
                         InkWell(
                           onTap: () {
-                            toScreen(context, 'cases');
+                            toScreen(context, 'cases', allCountryArray);
                           },
                           child: DataCard(
                             color: Colors.amber,
@@ -130,7 +131,7 @@ class _HomePageState extends State<HomePage> {
                         ),
                         InkWell(
                           onTap: () {
-                            toScreen(context, 'recovered');
+                            toScreen(context, 'recovered', allCountryArray);
                           },
                           child: DataCard(
                             color: Colors.greenAccent,
@@ -149,7 +150,7 @@ class _HomePageState extends State<HomePage> {
                         ),
                         InkWell(
                           onTap: () {
-                            toScreen(context, 'deaths');
+                            toScreen(context, 'deaths', allCountryArray);
                           },
                           child: DataCard(
                             color: Colors.redAccent,
@@ -221,9 +222,9 @@ class _HomePageState extends State<HomePage> {
               (globalData.totalRecovered + globalData.totalDeath);
           globalData.newActive = globalData.newConfirmed -
               (globalData.newRecovered + globalData.newDeaths);
+          allCountryArray = jsonDecode(data)['Countries'];
         });
 
-        var allCountryArray = jsonDecode(data)['Countries'];
         var tempMostCases, tempMostDeaths, tempMostRecovered;
         tempMostCases = allCountryArray[0];
         tempMostDeaths = allCountryArray[0];
@@ -264,9 +265,12 @@ class _HomePageState extends State<HomePage> {
     return globalData;
   }
 
-  void toScreen(BuildContext context, String type) {
-    Navigator.push(context, MaterialPageRoute(builder: (context) {
-      return DataPage(type: type);
+  void toScreen(BuildContext context, String type, var data) async {
+    await Navigator.push(context, MaterialPageRoute(builder: (context) {
+      return DataPage(
+        type: type,
+        data: data,
+      );
     }));
   }
 }

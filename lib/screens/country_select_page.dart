@@ -17,7 +17,7 @@ class _CountrySelectPageState extends State<CountrySelectPage> {
   Color color = Colors.red;
   bool search = false;
   String url = '';
-
+  CountryData countryData;
   @override
   void dispose() {
     _controller.dispose();
@@ -61,13 +61,17 @@ class _CountrySelectPageState extends State<CountrySelectPage> {
               Expanded(
                 flex: 3,
                 child: TextField(
-                  onChanged: (value) {},
+                  onChanged: (value) {
+                    setState(() {
+                      search = true;
+                      color = Colors.green;
+                    });
+                  },
                   onSubmitted: (value) {
                     for (var country in countryDataList) {
                       if (country.countryName.toLowerCase() ==
                           value.toLowerCase()) {
                         setState(() {
-                          color = Colors.green;
                           search = true;
                           tempCountry = country.shortName;
                         });
@@ -109,19 +113,12 @@ class _CountrySelectPageState extends State<CountrySelectPage> {
                 ),
               ),
               Expanded(
-                child: GestureDetector(
-                  onTap: search
-                      ? () {
-                          toCountryPage(tempCountry);
-                        }
-                      : () {},
-                  child: CircleAvatar(
-                    radius: 30,
-                    backgroundColor: color,
-                    child: Icon(
-                      Icons.search,
-                      color: Colors.white,
-                    ),
+                child: CircleAvatar(
+                  radius: 30,
+                  backgroundColor: color,
+                  child: Icon(
+                    Icons.search,
+                    color: Colors.white,
                   ),
                 ),
               ),
@@ -162,7 +159,8 @@ class _CountrySelectPageState extends State<CountrySelectPage> {
                                 child: ListTile(
                                   onTap: () {
                                     toCountryPage(
-                                        snapshot.data[index].shortName);
+                                        snapshot.data[index].shortName,
+                                        snapshot.data[index]);
                                   },
                                   title: Text(snapshot.data[index].countryName),
                                   leading: Image.network(
@@ -198,7 +196,7 @@ class _CountrySelectPageState extends State<CountrySelectPage> {
           await http.get('https://api.covid19api.com/summary');
       if (response.statusCode == 200) {
         var data = response.body;
-        CountryData countryData;
+
         var countryList = jsonDecode(data)['Countries'];
         for (var country in countryList) {
           countryData = CountryData(
@@ -208,19 +206,20 @@ class _CountrySelectPageState extends State<CountrySelectPage> {
               totalDeath: 0,
               countryName: '',
               countryUrl: '',
-              countryCode: '');
+              countryCode: '',
+              newDeath: 0,
+              newConfirmed: 0,
+              newRecovered: 0,
+              newActive: 0,
+              shortName: '');
           setState(() {
-//            countryData.totalConfirmed = country['TotalConfirmed'];
-//            countryData.totalDeath = country['TotalDeaths'];
-//            countryData.totalRecovered = country['TotalRecovered'];
-//            countryData.newRecovered = country['NewRecovered'];
-//            countryData.newDeaths = country['NewDeaths'];
-//            countryData.newConfirmed = country['NewConfirmed'];
             countryData.countryName = country['Country'];
-//            countryData.totalActive = countryData.totalConfirmed -
-//                (countryData.totalRecovered + countryData.totalDeath);
-//            countryData.newActive = countryData.newConfirmed -
-//                (countryData.newRecovered + countryData.newDeaths);
+            countryData.totalConfirmed = country['TotalConfirmed'];
+            countryData.totalDeath = country['TotalDeaths'];
+            countryData.totalRecovered = country['TotalRecovered'];
+            countryData.totalActive = countryData.totalConfirmed -
+                (countryData.totalRecovered - countryData.totalDeath);
+            countryData.countryName = country['Country'];
             countryData.shortName = country['Slug'];
             countryData.countryCode = country['CountryCode'];
             countryData.countryUrl =
@@ -232,13 +231,29 @@ class _CountrySelectPageState extends State<CountrySelectPage> {
         countryDataList = tempCountryDataList;
       }
       return tempCountryDataList;
+    } else if (search) {
+      return searchCountry(_controller.text);
     } else
       return countryDataList;
   }
 
-  void toCountryPage(String countryName) {
+  List<CountryData> searchCountry(String name) {
+    List<CountryData> tempCountryList = countryDataList, temp = [];
+    for (var country in tempCountryList) {
+      if (name.toLowerCase() ==
+          country.countryName.toLowerCase().substring(0, name.length)) {
+        temp.add(country);
+      }
+    }
+    return temp;
+  }
+
+  void toCountryPage(String countryName, var data) {
     Navigator.push(context, MaterialPageRoute(builder: (context) {
-      return CountryPage(countryName: countryName);
+      return CountryPage(
+        countryName: countryName,
+        data: data,
+      );
     }));
   }
 }

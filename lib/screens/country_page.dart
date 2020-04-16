@@ -8,7 +8,8 @@ import 'package:http/http.dart' as http;
 // ignore: must_be_immutable
 class CountryPage extends StatefulWidget {
   String countryName;
-  CountryPage({this.countryName});
+  var data;
+  CountryPage({this.countryName, this.data});
   @override
   _CountryPageState createState() => _CountryPageState();
 }
@@ -22,6 +23,7 @@ class _CountryPageState extends State<CountryPage> {
 
   @override
   void initState() {
+    countryData = widget.data;
     date = dateTime.day.toString() +
         ' ' +
         monthNames[dateTime.month - 1] +
@@ -105,35 +107,36 @@ class _CountryPageState extends State<CountryPage> {
   }
 
   Future<CountryData> getCountry() async {
-    http.Response response =
-        await http.get('https://api.covid19api.com/summary');
-    if (response.statusCode == 200) {
-      countryData = CountryData(
-          totalRecovered: 0,
-          totalActive: 0,
-          totalConfirmed: 0,
-          totalDeath: 0,
-          countryName: '',
-          countryCode: '',
-          countryUrl: '');
-      var data = response.body;
-      var countryDetails = jsonDecode(data)['Countries'];
-      for (var country in countryDetails) {
-        if (country['Slug'] == countryName)
-          setState(() {
-            countryCode = country['CountryCode'];
-            if (countryCode == null) countryCode = ' ';
-            countryData.countryName = country['Country'];
-            countryData.totalConfirmed = country['TotalConfirmed'];
-            countryData.totalDeath = country['TotalDeaths'];
-            countryData.totalRecovered = country['TotalRecovered'];
-            countryData.totalActive = countryData.totalConfirmed -
-                (countryData.totalRecovered - countryData.totalDeath);
-            countryData.countryUrl =
-                'http://www.geognos.com/api/en/countries/flag/${countryCode.toUpperCase()}.png';
-          });
-      }
-    }
+    countryData = widget.data;
+//    http.Response response =
+//        await http.get('https://api.covid19api.com/summary');
+//    if (response.statusCode == 200) {
+//      countryData = CountryData(
+//          totalRecovered: 0,
+//          totalActive: 0,
+//          totalConfirmed: 0,
+//          totalDeath: 0,
+//          countryName: '',
+//          countryCode: '',
+//          countryUrl: '');
+    // var data = response.body;
+    //var countryDetails = jsonDecode(data)['Countries'];
+    //for (var country in countryDetails) {
+    //if (country['Slug'] == countryName)
+//          setState(() {
+//            countryCode = country['CountryCode'];
+//            if (countryCode == null) countryCode = ' ';
+//            countryData.countryName = country['Country'];
+//            countryData.totalConfirmed = country['TotalConfirmed'];
+//            countryData.totalDeath = country['TotalDeaths'];
+//            countryData.totalRecovered = country['TotalRecovered'];
+//            countryData.totalActive = countryData.totalConfirmed -
+//                (countryData.totalRecovered - countryData.totalDeath);
+//            countryData.countryUrl =
+//                'http://www.geognos.com/api/en/countries/flag/${countryCode.toUpperCase()}.png';
+//          });
+//      }
+//    }
     return countryData;
   }
 }

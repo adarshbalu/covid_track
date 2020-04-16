@@ -1,5 +1,4 @@
 import 'dart:convert';
-
 import 'package:covidtrack/screens/country_page.dart';
 import 'package:covidtrack/utils/constants.dart';
 import 'package:covidtrack/utils/country_data_model.dart';
@@ -10,7 +9,8 @@ import 'package:http/http.dart' as http;
 
 class DataPage extends StatefulWidget {
   String type;
-  DataPage({this.type});
+  var data;
+  DataPage({this.type, this.data});
   @override
   _DataPageState createState() => _DataPageState();
 }
@@ -18,14 +18,16 @@ class DataPage extends StatefulWidget {
 class _DataPageState extends State<DataPage> {
   String type = '';
   Color color;
-  List<CountryData> countryArray = List(246);
-  List<CountryData> tempArray = List(246);
+  List<CountryData> countryArray = List();
+  List<CountryData> tempArray = List();
   bool loaded = false;
   TextEditingController controller;
   int totalReports = 5;
+  var allCountryArray;
   @override
   void initState() {
     type = widget.type;
+    allCountryArray = widget.data;
     switch (type) {
       case 'cases':
         color = Colors.deepPurple;
@@ -74,7 +76,8 @@ class _DataPageState extends State<DataPage> {
                         margin: EdgeInsets.fromLTRB(10, 2, 20, 5),
                         child: TextField(
                           onChanged: (value) {
-                            if (int.parse(value) < 246) {
+                            if (int.parse(value) < snapshot.data.length &&
+                                int.parse(value) > 0) {
                               setState(() {
                                 totalReports = int.parse(value);
                               });
@@ -203,39 +206,34 @@ class _DataPageState extends State<DataPage> {
 
   Future<List<CountryData>> getData() async {
     if (!loaded) {
-      http.Response response;
-      var allCountryArray, data;
+      tempArray.clear();
+      for (int i = 0; i < allCountryArray.length; i++) {
+        tempArray.add(CountryData(
+            newRecovered: allCountryArray[i]['NewRecovered'],
+            newConfirmed: allCountryArray[i]['NewConfirmed'],
+            newDeath: allCountryArray[i]['NewDeaths'],
+            totalRecovered: allCountryArray[i]['TotalRecovered'],
+            totalDeath: allCountryArray[i]['TotalDeaths'],
+            totalConfirmed: allCountryArray[i]['TotalConfirmed'],
+            countryName: allCountryArray[i]['Country'],
+            countryCode: allCountryArray[i]['CountryCode'],
+            shortName: allCountryArray[i]['Slug'],
+            countryUrl:
+                'http://www.geognos.com/api/en/countries/flag/${allCountryArray[i]['CountryCode'].toUpperCase()}.png'));
+      }
 
-      response = await http.get('https://api.covid19api.com/summary');
-      if (response.statusCode == 200) {
-        data = response.body;
-        allCountryArray = jsonDecode(data)['Countries'];
-        countryArray = [];
+      countryArray = [];
+      countryArray = sortArray(tempArray, type);
+      setState(() {
+        loaded = true;
+      });
+    }
 
-        for (int i = 0; i < allCountryArray.length; i++) {
-          tempArray[i] = CountryData(
-              newRecovered: allCountryArray[i]['NewRecovered'],
-              newConfirmed: allCountryArray[i]['NewConfirmed'],
-              newDeath: allCountryArray[i]['NewDeaths'],
-              totalRecovered: allCountryArray[i]['TotalRecovered'],
-              totalDeath: allCountryArray[i]['TotalDeaths'],
-              totalConfirmed: allCountryArray[i]['TotalConfirmed'],
-              countryName: allCountryArray[i]['Country'],
-              countryCode: allCountryArray[i]['CountryCode'],
-              shortName: allCountryArray[i]['Slug'],
-              countryUrl:
-                  'http://www.geognos.com/api/en/countries/flag/${allCountryArray[i]['CountryCode'].toUpperCase()}.png');
-        }
-        countryArray = sortArray(tempArray, type);
-
-        setState(() {
-          loaded = true;
-        });
-        return countryArray;
-      } else
-        return [];
-    } else
-      return countryArray;
+    return countryArray;
+//      else
+//        return [];
+//    } else
+//  return countryArray;
   }
 
   sortArray(List<CountryData> countryArray, String type) {
