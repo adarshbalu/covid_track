@@ -16,6 +16,25 @@ final monthNames = [
   "December"
 ];
 
+final List<Color> yellow = [
+  Colors.yellow[200],
+  Colors.yellow[800],
+];
+final List<Color> purple = [Colors.deepPurpleAccent, Colors.deepPurple];
+final List<Color> blue = [Colors.blue[200], Colors.blue[900]];
+final List<Color> red = [Colors.redAccent, Colors.red];
+final List<Color> green = [Colors.greenAccent, Colors.green];
+final List<Color> white = [Colors.white10, Colors.white70];
+
+final Map<String, List<Color>> colorArray = {
+  'yellow': yellow,
+  'purple': purple,
+  'blue': blue,
+  'red': red,
+  'green': green,
+  'white': white,
+};
+
 final types = {'cases': 'cases', 'recovered': 'recovered', 'deaths': 'deaths'};
 
 const kHeaderTextStyle = TextStyle(fontSize: 40, fontWeight: FontWeight.w900);

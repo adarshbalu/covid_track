@@ -10,7 +10,6 @@ class AppHeader extends StatelessWidget {
   String url = '', headerText = 'COVID-19';
   Function onTap;
   AppHeader({this.url, this.onTap});
-  AppHeader.withName({this.headerText, this.url, this.onTap});
   @override
   Widget build(BuildContext context) {
     if (url == null) url = '';
@@ -25,47 +24,36 @@ class AppHeader extends StatelessWidget {
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: <Widget>[
           Padding(
-            padding: headerText == 'COVID-19'
-                ? EdgeInsets.only(left: 4)
-                : EdgeInsets.only(left: 8.0, right: 8),
+            padding: EdgeInsets.only(left: 4),
             child: Image.asset(
               kGermImage,
               width: 50,
             ),
           ),
-          headerText != 'COVID-19'
-              ? Expanded(
-                  child: Text(
-                    headerText,
-                    style: TextStyle(fontSize: 23),
-                  ),
-                )
-              : Text(
-                  headerText,
-                  style: kHeaderTextStyle,
-                ),
-          headerText == 'COVID-19'
-              ? GestureDetector(
-                  onTap: () {
-                    onTap();
-                  },
-                  child: CircleAvatar(
-                    radius: 25,
-                    backgroundColor: Colors.white,
-                    child: url.isEmpty
-                        ? Icon(
-                            Icons.public,
-                            color: Colors.blue,
-                            size: 45,
-                          )
-                        : Image.network(
-                            url,
-                            width: 40,
-                            height: 40,
-                          ),
-                  ),
-                )
-              : SizedBox(),
+          Text(
+            headerText,
+            style: kHeaderTextStyle,
+          ),
+          GestureDetector(
+            onTap: () {
+              onTap();
+            },
+            child: CircleAvatar(
+              radius: 25,
+              backgroundColor: Colors.white,
+              child: url.isEmpty
+                  ? Icon(
+                      Icons.public,
+                      color: Colors.blue,
+                      size: 45,
+                    )
+                  : Image.network(
+                      url,
+                      width: 40,
+                      height: 40,
+                    ),
+            ),
+          ),
         ],
       ),
     );
@@ -129,7 +117,8 @@ class CaseCard extends StatelessWidget {
   final int totalCases;
   bool isFlag;
   String flagURL;
-  CaseCard({this.totalCases, this.isFlag, this.flagURL});
+  var color;
+  CaseCard({this.totalCases, this.isFlag, this.flagURL, this.color});
   @override
   Widget build(BuildContext context) {
     var formatter = NumberFormat("##,##,##,###");
@@ -142,10 +131,7 @@ class CaseCard extends StatelessWidget {
       height: MediaQuery.of(context).size.height / 3.2,
       decoration: BoxDecoration(
           gradient: LinearGradient(
-            colors: [
-              Colors.deepPurpleAccent,
-              Colors.deepPurple,
-            ],
+            colors: color,
           ),
           boxShadow: [BoxShadow(color: Colors.blueGrey, blurRadius: 3)],
           borderRadius: BorderRadius.circular(40)),
@@ -297,6 +283,88 @@ class DataCard extends StatelessWidget {
               ),
             ],
           )),
+    );
+  }
+}
+
+class BottomMenu extends StatelessWidget {
+  @override
+  Widget build(BuildContext context) {
+    return Container(
+      height: MediaQuery.of(context).size.height / 10,
+      decoration: BoxDecoration(
+          color: Colors.deepPurple,
+          borderRadius: BorderRadius.only(
+              topLeft: Radius.circular(20), topRight: Radius.circular(20))),
+      child: Row(
+        mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+        children: <Widget>[
+          Container(
+            child: Column(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: <Widget>[
+                Icon(
+                  Icons.home,
+                  size: 35,
+                  color: Colors.white,
+                ),
+                Text(
+                  'Home',
+                  style: TextStyle(color: Colors.white),
+                ),
+              ],
+            ),
+          ),
+          Container(
+            child: Column(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: <Widget>[
+                Icon(
+                  Icons.public,
+                  size: 35,
+                  color: Colors.white,
+                ),
+                Text(
+                  'Countries',
+                  style: TextStyle(color: Colors.white),
+                ),
+              ],
+            ),
+          ),
+          Container(
+            child: Column(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: <Widget>[
+                Icon(
+                  Icons.note,
+                  size: 40,
+                  color: Colors.white,
+                ),
+                Text(
+                  'Stats',
+                  style: TextStyle(color: Colors.white),
+                ),
+              ],
+            ),
+          ),
+          Container(
+            child: Column(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: <Widget>[
+                Icon(
+                  Icons.close,
+                  size: 40,
+                  color: Colors.white,
+                ),
+                Text(
+                  'Exit',
+                  style: TextStyle(color: Colors.white),
+                ),
+              ],
+            ),
+          ),
+        ],
+      ),
     );
   }
 }

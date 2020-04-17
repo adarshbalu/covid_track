@@ -7,6 +7,7 @@ import 'package:covidtrack/utils/global_data_model.dart';
 import 'package:covidtrack/utils/widgets.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/rendering.dart';
 import 'package:flutter/widgets.dart';
 import 'package:http/http.dart' as http;
 
@@ -44,6 +45,7 @@ class _HomePageState extends State<HomePage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      bottomNavigationBar: BottomMenu(),
       body: SafeArea(
         child: FutureBuilder(
             future: getData(),
@@ -69,6 +71,7 @@ class _HomePageState extends State<HomePage> {
                         CaseCard(
                           totalCases: snapshot.data.totalConfirmed,
                           isFlag: false,
+                          color: colorArray['purple'],
                         ),
                         DataListTile(
                           color: Colors.deepPurple,
@@ -85,21 +88,6 @@ class _HomePageState extends State<HomePage> {
                           cases: snapshot.data.totalDeath,
                           text: 'Deaths',
                         ),
-//                        DataListTile(
-//                          color: Colors.deepPurple,
-//                          cases: snapshot.data.newActive,
-//                          text: 'New Active',
-//                        ),
-//                        DataListTile(
-//                          color: Colors.green,
-//                          cases: snapshot.data.newRecovered,
-//                          text: 'New Recovered',
-//                        ),
-//                        DataListTile(
-//                          color: Colors.red,
-//                          cases: snapshot.data.newDeaths,
-//                          text: 'New Deaths',
-//                        ),
                         SizedBox(
                           height: 8,
                         ),

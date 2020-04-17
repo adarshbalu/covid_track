@@ -137,7 +137,8 @@ class _DataPageState extends State<DataPage> {
                             margin: EdgeInsets.fromLTRB(20, 10, 20, 5),
                             child: InkWell(
                               onTap: () {
-                                toCountryPage(snapshot.data[index].shortName);
+                                toCountryPage(snapshot.data[index].shortName,
+                                    snapshot.data[index]);
                               },
                               child: DataCard(
                                 color: color,
@@ -153,7 +154,8 @@ class _DataPageState extends State<DataPage> {
                             margin: EdgeInsets.fromLTRB(20, 10, 20, 5),
                             child: InkWell(
                               onTap: () {
-                                toCountryPage(snapshot.data[index].shortName);
+                                toCountryPage(snapshot.data[index].shortName,
+                                    snapshot.data[index]);
                               },
                               child: DataCard(
                                 color: color,
@@ -169,7 +171,8 @@ class _DataPageState extends State<DataPage> {
                             margin: EdgeInsets.fromLTRB(20, 10, 20, 5),
                             child: InkWell(
                               onTap: () {
-                                toCountryPage(snapshot.data[index].shortName);
+                                toCountryPage(snapshot.data[index].shortName,
+                                    snapshot.data[index]);
                               },
                               child: DataCard(
                                 color: color,
@@ -218,6 +221,12 @@ class _DataPageState extends State<DataPage> {
             countryName: allCountryArray[i]['Country'],
             countryCode: allCountryArray[i]['CountryCode'],
             shortName: allCountryArray[i]['Slug'],
+            totalActive: allCountryArray[i]['TotalConfirmed'] -
+                allCountryArray[i]['TotalRecovered'] +
+                allCountryArray[i]['TotalDeaths'],
+            newActive: allCountryArray[i]['NewConfirmed'] -
+                allCountryArray[i]['NewRecovered'] +
+                allCountryArray[i]['NewDeaths'],
             countryUrl:
                 'http://www.geognos.com/api/en/countries/flag/${allCountryArray[i]['CountryCode'].toUpperCase()}.png'));
       }
@@ -250,9 +259,12 @@ class _DataPageState extends State<DataPage> {
     return countryArray;
   }
 
-  void toCountryPage(String countryName) {
+  void toCountryPage(String countryName, var data) {
     Navigator.push(context, MaterialPageRoute(builder: (context) {
-      return CountryPage(countryName: countryName);
+      return CountryPage(
+        countryName: countryName,
+        data: data,
+      );
     }));
   }
 }
