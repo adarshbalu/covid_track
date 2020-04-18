@@ -1,8 +1,7 @@
 import 'dart:convert';
 import 'package:covidtrack/screens/country_select_page.dart';
-import 'package:covidtrack/screens/data_display_page.dart';
+import 'package:covidtrack/screens/stat_detail_page.dart';
 import 'package:covidtrack/utils/constants.dart';
-import 'package:covidtrack/utils/country_data_model.dart';
 import 'package:covidtrack/utils/global_data_model.dart';
 import 'package:covidtrack/utils/widgets.dart';
 import 'package:flutter/cupertino.dart';
@@ -20,7 +19,6 @@ class _HomePageState extends State<HomePage> {
   GlobalData globalData;
   DateTime dateTime = DateTime.now();
   String date = '';
-  CountryData mostCases, mostDeaths, mostRecovered;
   bool load = false;
   var allCountryArray;
   @override
@@ -45,7 +43,7 @@ class _HomePageState extends State<HomePage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      bottomNavigationBar: BottomMenu(),
+      bottomNavigationBar: BottomMenu(allCountryArray),
       body: SafeArea(
         child: FutureBuilder(
             future: getData(),
@@ -57,16 +55,10 @@ class _HomePageState extends State<HomePage> {
                       crossAxisAlignment: CrossAxisAlignment.center,
                       children: <Widget>[
                         AppHeader(
-                          onTap: () async {
-                            toCountrySelectPage();
-                          },
+                          headerText: 'COVID-19',
                         ),
                         SizedBox(
                           height: 12,
-                        ),
-                        Text(
-                          'World Outbreak',
-                          style: kPrimaryTextStyle,
                         ),
                         CaseCard(
                           totalCases: snapshot.data.totalConfirmed,
@@ -90,77 +82,6 @@ class _HomePageState extends State<HomePage> {
                         ),
                         SizedBox(
                           height: 8,
-                        ),
-                        Padding(
-                          padding: EdgeInsets.fromLTRB(0, 15, 0, 3),
-                          child: Text(
-                            'Most Cases',
-                            style: kPrimaryTextStyle,
-                          ),
-                        ),
-                        InkWell(
-                          onTap: () {
-                            toScreen(context, 'cases', allCountryArray);
-                          },
-                          child: DataCard(
-                            color: Colors.amber,
-                            countryUrl: mostCases.countryUrl,
-                            countryName: mostCases.countryName,
-                            totalData: mostCases.totalConfirmed,
-                            newData: mostCases.newConfirmed,
-                          ),
-                        ),
-                        Padding(
-                          padding: EdgeInsets.fromLTRB(0, 15, 0, 3),
-                          child: Text(
-                            'Most Recovered',
-                            style: kPrimaryTextStyle,
-                          ),
-                        ),
-                        InkWell(
-                          onTap: () {
-                            toScreen(context, 'recovered', allCountryArray);
-                          },
-                          child: DataCard(
-                            color: Colors.greenAccent,
-                            countryUrl: mostRecovered.countryUrl,
-                            countryName: mostRecovered.countryName,
-                            totalData: mostRecovered.totalRecovered,
-                            newData: mostRecovered.newRecovered,
-                          ),
-                        ),
-                        Padding(
-                          padding: EdgeInsets.fromLTRB(0, 15, 0, 3),
-                          child: Text(
-                            'Most Deaths',
-                            style: kPrimaryTextStyle,
-                          ),
-                        ),
-                        InkWell(
-                          onTap: () {
-                            toScreen(context, 'deaths', allCountryArray);
-                          },
-                          child: DataCard(
-                            color: Colors.redAccent,
-                            countryUrl: mostDeaths.countryUrl,
-                            countryName: mostDeaths.countryName,
-                            totalData: mostDeaths.totalDeath,
-                            newData: mostDeaths.newDeath,
-                          ),
-                        ),
-                        Padding(
-                          padding: EdgeInsets.only(top: 8, bottom: 0),
-                          child: Text(
-                            'Last Updated $date',
-                            style: kLastUpdatedTextStyle,
-                          ),
-                        ),
-                        Padding(
-                          padding: EdgeInsets.only(top: 0.0, bottom: 10),
-                          child: Text(
-                            'Data might be subject to Inconsistency.',
-                            style: kLastUpdatedTextStyle,
-                          ),
                         ),
                       ],
                     ),
@@ -212,41 +133,6 @@ class _HomePageState extends State<HomePage> {
               (globalData.newRecovered + globalData.newDeaths);
           allCountryArray = jsonDecode(data)['Countries'];
         });
-
-        var tempMostCases, tempMostDeaths, tempMostRecovered;
-        tempMostCases = allCountryArray[0];
-        tempMostDeaths = allCountryArray[0];
-        tempMostRecovered = allCountryArray[0];
-        for (int i = 1; i < allCountryArray.length; i++) {
-          if (tempMostCases['TotalConfirmed'] <
-              allCountryArray[i]['TotalConfirmed'])
-            tempMostCases = allCountryArray[i];
-          if (tempMostDeaths['TotalDeaths'] < allCountryArray[i]['TotalDeaths'])
-            tempMostDeaths = allCountryArray[i];
-          if (tempMostRecovered['TotalRecovered'] <
-              allCountryArray[i]['TotalRecovered'])
-            tempMostRecovered = allCountryArray[i];
-        }
-        setState(() {
-          mostCases = CountryData(
-              countryUrl:
-                  'http://www.geognos.com/api/en/countries/flag/${tempMostCases['CountryCode'].toUpperCase()}.png',
-              countryName: tempMostCases['Country'],
-              newConfirmed: tempMostCases['NewConfirmed'],
-              totalConfirmed: tempMostCases['TotalConfirmed']);
-          mostDeaths = CountryData(
-              countryName: tempMostDeaths['Country'],
-              newDeath: tempMostDeaths['NewDeaths'],
-              countryUrl:
-                  'http://www.geognos.com/api/en/countries/flag/${tempMostDeaths['CountryCode'].toUpperCase()}.png',
-              totalDeath: tempMostDeaths['TotalDeaths']);
-          mostRecovered = CountryData(
-              newRecovered: tempMostRecovered['NewRecovered'],
-              countryUrl:
-                  'http://www.geognos.com/api/en/countries/flag/${tempMostRecovered['CountryCode'].toUpperCase()}.png',
-              countryName: tempMostRecovered['Country'],
-              totalRecovered: tempMostRecovered['TotalRecovered']);
-        });
       }
       load = true;
     }
@@ -255,7 +141,7 @@ class _HomePageState extends State<HomePage> {
 
   void toScreen(BuildContext context, String type, var data) async {
     await Navigator.push(context, MaterialPageRoute(builder: (context) {
-      return DataPage(
+      return StatDetail(
         type: type,
         data: data,
       );

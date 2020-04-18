@@ -7,15 +7,15 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
 
-class DataPage extends StatefulWidget {
+class StatDetail extends StatefulWidget {
   String type;
   var data;
-  DataPage({this.type, this.data});
+  StatDetail({this.type, this.data});
   @override
-  _DataPageState createState() => _DataPageState();
+  _StatDetailState createState() => _StatDetailState();
 }
 
-class _DataPageState extends State<DataPage> {
+class _StatDetailState extends State<StatDetail> {
   String type = '';
   Color color;
   List<CountryData> countryArray = List();
@@ -59,9 +59,7 @@ class _DataPageState extends State<DataPage> {
             if (snapshot.hasData) {
               return Column(children: <Widget>[
                 AppHeader(
-                  onTap: () {
-                    Navigator.pop(context);
-                  },
+                  headerText: type.toUpperCase(),
                 ),
                 SizedBox(
                   height: 20,

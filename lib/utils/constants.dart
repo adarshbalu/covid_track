@@ -37,7 +37,8 @@ final Map<String, List<Color>> colorArray = {
 
 final types = {'cases': 'cases', 'recovered': 'recovered', 'deaths': 'deaths'};
 
-const kHeaderTextStyle = TextStyle(fontSize: 40, fontWeight: FontWeight.w900);
+const kHeaderTextStyle = TextStyle(
+    fontSize: 38, fontWeight: FontWeight.w600, fontFamily: 'Merienda');
 
 const kSickImage = 'assets/sick.png';
 
@@ -45,6 +46,7 @@ const kGermImage = 'assets/germ.png';
 
 const kSanitizerImage = 'assets/handsanitizer.png';
 const kHandWashImage = 'assets/handwash.png';
+const kIndiaImage = 'assets/india.png';
 
 const kSecondaryTextStyle =
     TextStyle(fontWeight: FontWeight.w700, fontSize: 25);

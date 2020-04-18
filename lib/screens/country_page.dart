@@ -36,6 +36,7 @@ class _CountryPageState extends State<CountryPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      bottomNavigationBar: BottomMenu(null),
       body: SafeArea(
         child: FutureBuilder(
             future: getCountry(),
@@ -46,24 +47,7 @@ class _CountryPageState extends State<CountryPage> {
                     Column(
                       crossAxisAlignment: CrossAxisAlignment.center,
                       children: <Widget>[
-                        Container(
-                          margin: EdgeInsets.only(bottom: 5),
-                          padding: EdgeInsets.only(top: 15, bottom: 15),
-                          constraints:
-                              BoxConstraints.tightFor(width: double.infinity),
-                          decoration: BoxDecoration(
-                              borderRadius: BorderRadius.only(
-                                  bottomRight: Radius.circular(40),
-                                  bottomLeft: Radius.circular(40)),
-                              color: Colors.white,
-                              backgroundBlendMode: BlendMode.colorDodge),
-                          child: Text(
-                            snapshot.data.countryName,
-                            style: kSecondaryTextStyle,
-                            textAlign: TextAlign.center,
-                            softWrap: true,
-                          ),
-                        ),
+                        CountryNameHeader(snapshot.data.countryName),
                         SizedBox(
                           height: 15,
                         ),
@@ -71,7 +55,7 @@ class _CountryPageState extends State<CountryPage> {
                           totalCases: snapshot.data.totalConfirmed,
                           isFlag: true,
                           flagURL: snapshot.data.countryUrl,
-                          color: colorArray['white'],
+                          color: colorArray['purple'],
                         ),
                         DataListTile(
                           color: Colors.deepPurple,

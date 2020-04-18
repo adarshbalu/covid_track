@@ -1,60 +1,67 @@
+import 'package:covidtrack/screens/country_page.dart';
+import 'package:covidtrack/screens/country_select_page.dart';
+import 'package:covidtrack/screens/home_page.dart';
+import 'package:covidtrack/screens/stats_page.dart';
 import 'package:covidtrack/utils/constants.dart';
-import 'package:covidtrack/utils/country_data_model.dart';
-import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:intl/intl.dart';
 
 var formatter = NumberFormat("##,##,##,###");
 
 class AppHeader extends StatelessWidget {
-  String url = '', headerText = 'COVID-19';
-  Function onTap;
-  AppHeader({this.url, this.onTap});
+  String headerText = '';
+  var data, name;
+  AppHeader({this.headerText, this.name, this.data});
   @override
   Widget build(BuildContext context) {
-    if (url == null) url = '';
-    return Container(
-      padding: EdgeInsets.only(bottom: 20, top: 8),
-      decoration: BoxDecoration(
-          color: Colors.white,
-          borderRadius: BorderRadius.only(
-              bottomLeft: Radius.circular(45),
-              bottomRight: Radius.circular(45))),
-      child: Row(
-        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-        children: <Widget>[
-          Padding(
-            padding: EdgeInsets.only(left: 4),
-            child: Image.asset(
-              kGermImage,
-              width: 50,
+    return Material(
+      color: Colors.transparent,
+      elevation: 2,
+      child: Container(
+        padding: EdgeInsets.only(bottom: 15, top: 8),
+        decoration: BoxDecoration(
+            color: Colors.white,
+            borderRadius: BorderRadius.only(
+                bottomLeft: Radius.circular(5),
+                bottomRight: Radius.circular(5))),
+        child: Row(
+          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+          children: <Widget>[
+            Padding(
+              padding: EdgeInsets.only(left: 0),
+              child: Image.asset(
+                kGermImage,
+                width: 50,
+              ),
             ),
-          ),
-          Text(
-            headerText,
-            style: kHeaderTextStyle,
-          ),
-          GestureDetector(
-            onTap: () {
-              onTap();
-            },
-            child: CircleAvatar(
-              radius: 25,
-              backgroundColor: Colors.white,
-              child: url.isEmpty
-                  ? Icon(
-                      Icons.public,
-                      color: Colors.blue,
-                      size: 45,
-                    )
-                  : Image.network(
-                      url,
-                      width: 40,
-                      height: 40,
-                    ),
+            Text(
+              headerText,
+              style: kHeaderTextStyle,
             ),
-          ),
-        ],
+            headerText == 'Countries'
+                ? GestureDetector(
+                    onTap: () {
+                      Navigator.push(context,
+                          MaterialPageRoute(builder: (context) {
+                        return CountryPage(
+                          countryName: name,
+                          data: data,
+                        );
+                      }));
+                    },
+                    child: CircleAvatar(
+                        radius: 25,
+                        backgroundColor: Colors.white,
+                        child: Image.asset(
+                          kIndiaImage,
+                          width: 50,
+                          height: 50,
+                        )),
+                  )
+                : SizedBox(),
+          ],
+        ),
       ),
     );
   }
@@ -176,10 +183,6 @@ class LoaderScreen extends StatelessWidget {
     return Column(
       mainAxisAlignment: MainAxisAlignment.start,
       children: <Widget>[
-        GestureDetector(
-          onTap: () => onTap(),
-          child: AppHeader(),
-        ),
         SizedBox(
           height: MediaQuery.of(context).size.height / 3.5,
         ),
@@ -288,82 +291,141 @@ class DataCard extends StatelessWidget {
 }
 
 class BottomMenu extends StatelessWidget {
+  var allCountryArray;
+  BottomMenu([this.allCountryArray]);
+  @override
+  Widget build(BuildContext context) {
+    return BottomAppBar(
+      color: Colors.transparent,
+      child: Container(
+        height: MediaQuery.of(context).size.height / 10,
+        decoration: BoxDecoration(
+            //color: Colors.deepPurple,
+            gradient: LinearGradient(
+              colors: [Colors.black45, Colors.black54],
+            ),
+            borderRadius: BorderRadius.only(
+                topLeft: Radius.circular(20), topRight: Radius.circular(20))),
+        child: Row(
+          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+          children: <Widget>[
+            InkWell(
+              onTap: () {
+                Navigator.push(context, MaterialPageRoute(builder: (context) {
+                  return HomePage();
+                }));
+              },
+              child: Container(
+                child: Column(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: <Widget>[
+                    Icon(
+                      Icons.home,
+                      size: 35,
+                      color: Colors.white,
+                    ),
+                    Text(
+                      'Home',
+                      style: TextStyle(color: Colors.white),
+                    ),
+                  ],
+                ),
+              ),
+            ),
+            InkWell(
+              onTap: () {
+                Navigator.push(context, MaterialPageRoute(builder: (context) {
+                  return CountrySelectPage();
+                }));
+              },
+              child: Container(
+                child: Column(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: <Widget>[
+                    Icon(
+                      Icons.public,
+                      size: 35,
+                      color: Colors.white,
+                    ),
+                    Text(
+                      'Countries',
+                      style: TextStyle(color: Colors.white),
+                    ),
+                  ],
+                ),
+              ),
+            ),
+            InkWell(
+              onTap: () {
+                Navigator.push(context, MaterialPageRoute(builder: (context) {
+                  return StatsPage();
+                }));
+              },
+              child: Container(
+                child: Column(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: <Widget>[
+                    Icon(
+                      Icons.note,
+                      size: 40,
+                      color: Colors.white,
+                    ),
+                    Text(
+                      'Stats',
+                      style: TextStyle(color: Colors.white),
+                    ),
+                  ],
+                ),
+              ),
+            ),
+            InkWell(
+              onTap: () {
+                SystemNavigator.pop(animated: true);
+              },
+              child: Container(
+                child: Column(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: <Widget>[
+                    Icon(
+                      Icons.close,
+                      size: 40,
+                      color: Colors.white,
+                    ),
+                    Text(
+                      'Exit',
+                      style: TextStyle(color: Colors.white),
+                    ),
+                  ],
+                ),
+              ),
+            ),
+          ],
+        ),
+      ),
+    );
+  }
+}
+
+class CountryNameHeader extends StatelessWidget {
+  final String name;
+  CountryNameHeader(this.name);
   @override
   Widget build(BuildContext context) {
     return Container(
-      height: MediaQuery.of(context).size.height / 10,
+      margin: EdgeInsets.only(bottom: 5),
+      padding: EdgeInsets.only(top: 15, bottom: 15),
+      constraints: BoxConstraints.tightFor(width: double.infinity),
       decoration: BoxDecoration(
-          color: Colors.deepPurple,
           borderRadius: BorderRadius.only(
-              topLeft: Radius.circular(20), topRight: Radius.circular(20))),
-      child: Row(
-        mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-        children: <Widget>[
-          Container(
-            child: Column(
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: <Widget>[
-                Icon(
-                  Icons.home,
-                  size: 35,
-                  color: Colors.white,
-                ),
-                Text(
-                  'Home',
-                  style: TextStyle(color: Colors.white),
-                ),
-              ],
-            ),
-          ),
-          Container(
-            child: Column(
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: <Widget>[
-                Icon(
-                  Icons.public,
-                  size: 35,
-                  color: Colors.white,
-                ),
-                Text(
-                  'Countries',
-                  style: TextStyle(color: Colors.white),
-                ),
-              ],
-            ),
-          ),
-          Container(
-            child: Column(
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: <Widget>[
-                Icon(
-                  Icons.note,
-                  size: 40,
-                  color: Colors.white,
-                ),
-                Text(
-                  'Stats',
-                  style: TextStyle(color: Colors.white),
-                ),
-              ],
-            ),
-          ),
-          Container(
-            child: Column(
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: <Widget>[
-                Icon(
-                  Icons.close,
-                  size: 40,
-                  color: Colors.white,
-                ),
-                Text(
-                  'Exit',
-                  style: TextStyle(color: Colors.white),
-                ),
-              ],
-            ),
-          ),
-        ],
+              bottomRight: Radius.circular(40),
+              bottomLeft: Radius.circular(40)),
+          color: Colors.white,
+          backgroundBlendMode: BlendMode.colorDodge),
+      child: Text(
+        name,
+        style: kSecondaryTextStyle,
+        textAlign: TextAlign.center,
+        softWrap: true,
       ),
     );
   }
