@@ -1,15 +1,11 @@
-import 'dart:convert';
-
 import 'package:covidtrack/screens/stat_detail_page.dart';
 import 'package:covidtrack/utils/constants.dart';
 import 'package:covidtrack/utils/models/country.dart';
+import 'package:covidtrack/utils/models/country_list.dart';
 import 'package:flutter/material.dart';
 import 'package:covidtrack/utils/widgets.dart';
-import 'package:http/http.dart' as http;
 
 class StatsPage extends StatefulWidget {
-  var data;
-  StatsPage([this.data]);
   @override
   _StatsPageState createState() => _StatsPageState();
 }
@@ -17,18 +13,17 @@ class StatsPage extends StatefulWidget {
 class _StatsPageState extends State<StatsPage> {
   DateTime dateTime = DateTime.now();
   Map<String, CountryData> dataMap;
+  CountryList countryList;
   String date = '';
-  var allCountryArray;
+  List<CountryData> countryDataList;
+
   CountryData mostCases, mostDeaths, mostRecovered;
   bool load = false;
 
   @override
   void initState() {
-    if (widget.data != null) {
-      allCountryArray = widget.data;
-    } else {
-      allCountryArray = null;
-    }
+    dataMap = Map();
+    countryList = CountryList(countryList: [], indiaData: CountryData());
     date = dateTime.day.toString() +
         ' ' +
         monthNames[dateTime.month - 1] +
@@ -66,7 +61,7 @@ class _StatsPageState extends State<StatsPage> {
                         ),
                         InkWell(
                           onTap: () {
-                            toScreen(context, 'cases', allCountryArray);
+                            toScreen(context, 'cases', countryDataList);
                           },
                           child: DataCard(
                             color: Colors.amber,
@@ -85,7 +80,7 @@ class _StatsPageState extends State<StatsPage> {
                         ),
                         InkWell(
                           onTap: () {
-                            toScreen(context, 'recovered', allCountryArray);
+                            toScreen(context, 'recovered', countryDataList);
                           },
                           child: DataCard(
                             color: Colors.greenAccent,
@@ -105,7 +100,7 @@ class _StatsPageState extends State<StatsPage> {
                         ),
                         InkWell(
                           onTap: () {
-                            toScreen(context, 'deaths', allCountryArray);
+                            toScreen(context, 'deaths', countryDataList);
                           },
                           child: DataCard(
                             color: Colors.redAccent,
@@ -133,8 +128,7 @@ class _StatsPageState extends State<StatsPage> {
                     ),
                   ],
                 );
-              } else if (snapshot.connectionState == ConnectionState.none ||
-                  snapshot.hasError) {
+              } else if (snapshot.hasError) {
                 return LoaderScreen(
                   text1: 'Some Issue Connecting',
                   text2: 'Please check network',
@@ -153,59 +147,24 @@ class _StatsPageState extends State<StatsPage> {
   }
 
   Future<Map<String, CountryData>> getData() async {
-    http.Response response;
-    var data;
     if (!load) {
-      if (widget.data == null) {
-        response = await http.get('https://api.covid19api.com/summary');
-        if (response.statusCode == 200) {
-          data = response.body;
-          setState(() {
-            allCountryArray = jsonDecode(data)['Countries'];
-          });
-        }
-      }
-      var tempMostCases, tempMostDeaths, tempMostRecovered;
-      tempMostCases = allCountryArray[0];
-      tempMostDeaths = allCountryArray[0];
-      tempMostRecovered = allCountryArray[0];
-      for (int i = 1; i < allCountryArray.length; i++) {
-        if (tempMostCases['TotalConfirmed'] <
-            allCountryArray[i]['TotalConfirmed'])
-          tempMostCases = allCountryArray[i];
-        if (tempMostDeaths['TotalDeaths'] < allCountryArray[i]['TotalDeaths'])
-          tempMostDeaths = allCountryArray[i];
-        if (tempMostRecovered['TotalRecovered'] <
-            allCountryArray[i]['TotalRecovered'])
-          tempMostRecovered = allCountryArray[i];
-      }
+      await countryList.getAllCountryData();
       setState(() {
-        mostCases = CountryData(
-            countryUrl:
-                'http://www.geognos.com/api/en/countries/flag/${tempMostCases['CountryCode'].toUpperCase()}.png',
-            countryName: tempMostCases['Country'],
-            newConfirmed: tempMostCases['NewConfirmed'],
-            totalConfirmed: tempMostCases['TotalConfirmed']);
-        mostDeaths = CountryData(
-            countryName: tempMostDeaths['Country'],
-            newDeaths: tempMostDeaths['NewDeaths'],
-            countryUrl:
-                'http://www.geognos.com/api/en/countries/flag/${tempMostDeaths['CountryCode'].toUpperCase()}.png',
-            totalDeaths: tempMostDeaths['TotalDeaths']);
-        mostRecovered = CountryData(
-            newRecovered: tempMostRecovered['NewRecovered'],
-            countryUrl:
-                'http://www.geognos.com/api/en/countries/flag/${tempMostRecovered['CountryCode'].toUpperCase()}.png',
-            countryName: tempMostRecovered['Country'],
-            totalRecovered: tempMostRecovered['TotalRecovered']);
+        countryDataList = countryList.countryList;
+      });
+
+      mostCases = await countryList.getMost('cases');
+      mostDeaths = await countryList.getMost('deaths');
+      mostRecovered = await countryList.getMost('recovered');
+
+      setState(() {
+        load = true;
         dataMap = {
           'cases': mostCases,
           'recovered': mostRecovered,
           'deaths': mostDeaths
         };
       });
-
-      load = true;
     }
 
     return dataMap;

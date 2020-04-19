@@ -5,6 +5,7 @@ class CountryList {
   List<CountryData> countryList;
   CountryData indiaData;
   static final String _apiUrl = 'https://api.covid19api.com/summary';
+
   CountryList({this.countryList, this.indiaData});
 
   getAllCountryData() async {
@@ -45,5 +46,33 @@ class CountryList {
       this.countryList.add(countryData);
     }
     return this.countryList;
+  }
+
+  getMost(String type) async {
+    CountryData _countryData;
+    _countryData = this.countryList[0];
+    switch (type) {
+      case 'cases':
+        for (int i = 1; i < this.countryList.length; i++) {
+          if (_countryData.totalConfirmed < this.countryList[i].totalConfirmed)
+            _countryData = this.countryList[i];
+        }
+        break;
+
+      case 'recovered':
+        for (int i = 1; i < this.countryList.length; i++) {
+          if (_countryData.totalRecovered < this.countryList[i].totalRecovered)
+            _countryData = this.countryList[i];
+        }
+        break;
+
+      case 'deaths':
+        for (int i = 1; i < this.countryList.length; i++) {
+          if (_countryData.totalDeaths < this.countryList[i].totalDeaths)
+            _countryData = this.countryList[i];
+        }
+        break;
+    }
+    return _countryData;
   }
 }

@@ -187,7 +187,7 @@ class _CountrySelectPageState extends State<CountrySelectPage> {
 
   Future<List<CountryData>> getCountryData() async {
     if (!load) {
-      countryDataList = await allCountryList.getAllCountryData();
+      await allCountryList.getAllCountryData();
       countryDataList = allCountryList.countryList;
       setState(() {
         load = true;
