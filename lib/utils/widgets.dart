@@ -366,7 +366,7 @@ class BottomMenu extends StatelessWidget {
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: <Widget>[
                     Icon(
-                      Icons.note,
+                      Icons.assessment,
                       size: 40,
                       color: Colors.white,
                     ),
@@ -417,13 +417,13 @@ class CountryNameHeader extends StatelessWidget {
       constraints: BoxConstraints.tightFor(width: double.infinity),
       decoration: BoxDecoration(
           borderRadius: BorderRadius.only(
-              bottomRight: Radius.circular(40),
-              bottomLeft: Radius.circular(40)),
+              bottomRight: Radius.circular(5), bottomLeft: Radius.circular(5)),
           color: Colors.white,
           backgroundBlendMode: BlendMode.colorDodge),
       child: Text(
-        name,
-        style: kSecondaryTextStyle,
+        name.toUpperCase(),
+        style: TextStyle(
+            fontWeight: FontWeight.w700, fontSize: 25, fontFamily: 'Merienda'),
         textAlign: TextAlign.center,
         softWrap: true,
       ),

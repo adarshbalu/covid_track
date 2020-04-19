@@ -3,12 +3,10 @@ import 'package:covidtrack/utils/models/country.dart';
 import 'package:covidtrack/utils/widgets.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:http/http.dart' as http;
 
-// ignore: must_be_immutable
 class CountryPage extends StatefulWidget {
-  String countryName;
-  var data;
+  final String countryName;
+  final data;
   CountryPage({this.countryName, this.data});
   @override
   _CountryPageState createState() => _CountryPageState();
@@ -17,17 +15,10 @@ class CountryPage extends StatefulWidget {
 class _CountryPageState extends State<CountryPage> {
   CountryData countryData;
   String countryName;
-  DateTime dateTime = DateTime.now();
-  String date = '';
 
   @override
   void initState() {
     countryData = widget.data;
-    date = dateTime.day.toString() +
-        ' ' +
-        monthNames[dateTime.month - 1] +
-        ' ' +
-        dateTime.year.toString();
     countryName = widget.countryName;
     super.initState();
   }
@@ -71,15 +62,9 @@ class _CountryPageState extends State<CountryPage> {
                           cases: snapshot.data.totalDeaths,
                           text: 'Deaths',
                         ),
-                        Padding(
-                          padding: EdgeInsets.only(top: 8.0, bottom: 10),
-                          child: Text(
-                            'Last Updated $date',
-                            style: kLastUpdatedTextStyle,
-                          ),
-                        ),
                       ],
                     ),
+                    countryName == 'india' ? SizedBox() : SizedBox()
                   ],
                 );
               } else if (snapshot.connectionState == ConnectionState.none ||

@@ -33,6 +33,11 @@ class CountryList {
       countryData.totalConfirmed = country['TotalConfirmed'];
       countryData.totalDeaths = country['TotalDeaths'];
       countryData.totalRecovered = country['TotalRecovered'];
+      countryData.newConfirmed = country['NewConfirmed'];
+      countryData.newDeaths = country['NewDeaths'];
+      countryData.newRecovered = country['NewRecovered'];
+      countryData.newActive = countryData.newConfirmed -
+          (countryData.newRecovered - countryData.newDeaths);
       countryData.totalActive = countryData.totalConfirmed -
           (countryData.totalRecovered - countryData.totalDeaths);
       countryData.countryName = country['Country'];
