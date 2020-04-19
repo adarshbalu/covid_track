@@ -1,6 +1,6 @@
 import 'dart:convert';
 import 'package:covidtrack/screens/country_page.dart';
-import 'package:covidtrack/utils/country_data_model.dart';
+import 'package:covidtrack/utils/models/country.dart';
 import 'package:covidtrack/utils/widgets.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
@@ -198,11 +198,11 @@ class _CountrySelectPageState extends State<CountrySelectPage> {
               totalRecovered: 0,
               totalActive: 0,
               totalConfirmed: 0,
-              totalDeath: 0,
+              totalDeaths: 0,
               countryName: '',
               countryUrl: '',
               countryCode: '',
-              newDeath: 0,
+              newDeaths: 0,
               newConfirmed: 0,
               newRecovered: 0,
               newActive: 0,
@@ -210,10 +210,10 @@ class _CountrySelectPageState extends State<CountrySelectPage> {
           setState(() {
             countryData.countryName = country['Country'];
             countryData.totalConfirmed = country['TotalConfirmed'];
-            countryData.totalDeath = country['TotalDeaths'];
+            countryData.totalDeaths = country['TotalDeaths'];
             countryData.totalRecovered = country['TotalRecovered'];
             countryData.totalActive = countryData.totalConfirmed -
-                (countryData.totalRecovered - countryData.totalDeath);
+                (countryData.totalRecovered - countryData.totalDeaths);
             countryData.countryName = country['Country'];
             countryData.shortName = country['Slug'];
             countryData.countryCode = country['CountryCode'];

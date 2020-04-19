@@ -1,7 +1,7 @@
 import 'dart:convert';
 import 'package:covidtrack/screens/country_page.dart';
 import 'package:covidtrack/utils/constants.dart';
-import 'package:covidtrack/utils/country_data_model.dart';
+import 'package:covidtrack/utils/models/country.dart';
 import 'package:covidtrack/utils/widgets.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
@@ -176,8 +176,8 @@ class _StatDetailState extends State<StatDetail> {
                                 color: color,
                                 countryUrl: snapshot.data[index].countryUrl,
                                 countryName: snapshot.data[index].countryName,
-                                totalData: snapshot.data[index].totalDeath,
-                                newData: snapshot.data[index].newDeath,
+                                totalData: snapshot.data[index].totalDeaths,
+                                newData: snapshot.data[index].newDeaths,
                               ),
                             ),
                           );
@@ -212,9 +212,9 @@ class _StatDetailState extends State<StatDetail> {
         tempArray.add(CountryData(
             newRecovered: allCountryArray[i]['NewRecovered'],
             newConfirmed: allCountryArray[i]['NewConfirmed'],
-            newDeath: allCountryArray[i]['NewDeaths'],
+            newDeaths: allCountryArray[i]['NewDeaths'],
             totalRecovered: allCountryArray[i]['TotalRecovered'],
-            totalDeath: allCountryArray[i]['TotalDeaths'],
+            totalDeaths: allCountryArray[i]['TotalDeaths'],
             totalConfirmed: allCountryArray[i]['TotalConfirmed'],
             countryName: allCountryArray[i]['Country'],
             countryCode: allCountryArray[i]['CountryCode'],

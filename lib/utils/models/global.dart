@@ -1,9 +1,9 @@
-import 'package:covidtrack/utils/network.dart';
+import 'package:covidtrack/utils/services/network.dart';
 
 class GlobalData {
   int totalConfirmed,
       totalRecovered,
-      totalDeath,
+      totalDeaths,
       totalActive,
       newConfirmed,
       newDeaths,
@@ -12,7 +12,7 @@ class GlobalData {
 
   GlobalData(
       {this.totalConfirmed,
-      this.totalDeath,
+      this.totalDeaths,
       this.totalRecovered,
       this.totalActive,
       this.newDeaths,
@@ -27,13 +27,13 @@ class GlobalData {
     var globalData = await networkHelper.getData();
     var data = globalData['Global'];
     this.totalConfirmed = data['TotalConfirmed'];
-    this.totalDeath = data['TotalDeaths'];
+    this.totalDeaths = data['TotalDeaths'];
     this.totalRecovered = data['TotalRecovered'];
     this.newConfirmed = data['NewConfirmed'];
     this.newRecovered = data['NewRecovered'];
     this.newDeaths = data['NewDeaths'];
     this.totalActive =
-        this.totalConfirmed - (this.totalRecovered + this.totalDeath);
+        this.totalConfirmed - (this.totalRecovered + this.totalDeaths);
     this.newActive = this.newConfirmed - (this.newRecovered + this.newDeaths);
 
     return this;

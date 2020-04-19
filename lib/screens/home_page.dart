@@ -1,7 +1,7 @@
 import 'package:covidtrack/screens/country_select_page.dart';
 import 'package:covidtrack/screens/stat_detail_page.dart';
 import 'package:covidtrack/utils/constants.dart';
-import 'package:covidtrack/utils/global_data_model.dart';
+import 'package:covidtrack/utils/models/global.dart';
 import 'package:covidtrack/utils/widgets.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
@@ -67,7 +67,7 @@ class _HomePageState extends State<HomePage> {
                         ),
                         DataListTile(
                           color: Colors.red,
-                          cases: snapshot.data.totalDeath,
+                          cases: snapshot.data.totalDeaths,
                           text: 'Deaths',
                         ),
                         SizedBox(

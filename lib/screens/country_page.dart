@@ -1,5 +1,5 @@
 import 'package:covidtrack/utils/constants.dart';
-import 'package:covidtrack/utils/country_data_model.dart';
+import 'package:covidtrack/utils/models/country.dart';
 import 'package:covidtrack/utils/widgets.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
@@ -69,7 +69,7 @@ class _CountryPageState extends State<CountryPage> {
                         ),
                         DataListTile(
                           color: Colors.red,
-                          cases: snapshot.data.totalDeath,
+                          cases: snapshot.data.totalDeaths,
                           text: 'Deaths',
                         ),
                         Padding(
@@ -104,35 +104,6 @@ class _CountryPageState extends State<CountryPage> {
 
   Future<CountryData> getCountry() async {
     countryData = widget.data;
-//    http.Response response =
-//        await http.get('https://api.covid19api.com/summary');
-//    if (response.statusCode == 200) {
-//      countryData = CountryData(
-//          totalRecovered: 0,
-//          totalActive: 0,
-//          totalConfirmed: 0,
-//          totalDeath: 0,
-//          countryName: '',
-//          countryCode: '',
-//          countryUrl: '');
-    // var data = response.body;
-    //var countryDetails = jsonDecode(data)['Countries'];
-    //for (var country in countryDetails) {
-    //if (country['Slug'] == countryName)
-//          setState(() {
-//            countryCode = country['CountryCode'];
-//            if (countryCode == null) countryCode = ' ';
-//            countryData.countryName = country['Country'];
-//            countryData.totalConfirmed = country['TotalConfirmed'];
-//            countryData.totalDeath = country['TotalDeaths'];
-//            countryData.totalRecovered = country['TotalRecovered'];
-//            countryData.totalActive = countryData.totalConfirmed -
-//                (countryData.totalRecovered - countryData.totalDeath);
-//            countryData.countryUrl =
-//                'http://www.geognos.com/api/en/countries/flag/${countryCode.toUpperCase()}.png';
-//          });
-//      }
-//    }
     return countryData;
   }
 }

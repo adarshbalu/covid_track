@@ -2,7 +2,7 @@ import 'dart:convert';
 
 import 'package:covidtrack/screens/stat_detail_page.dart';
 import 'package:covidtrack/utils/constants.dart';
-import 'package:covidtrack/utils/country_data_model.dart';
+import 'package:covidtrack/utils/models/country.dart';
 import 'package:flutter/material.dart';
 import 'package:covidtrack/utils/widgets.dart';
 import 'package:http/http.dart' as http;
@@ -111,8 +111,8 @@ class _StatsPageState extends State<StatsPage> {
                             color: Colors.redAccent,
                             countryUrl: snapshot.data['deaths'].countryUrl,
                             countryName: snapshot.data['deaths'].countryName,
-                            totalData: snapshot.data['deaths'].totalDeath,
-                            newData: snapshot.data['deaths'].newDeath,
+                            totalData: snapshot.data['deaths'].totalDeaths,
+                            newData: snapshot.data['deaths'].newDeaths,
                           ),
                         ),
                         Padding(
@@ -188,10 +188,10 @@ class _StatsPageState extends State<StatsPage> {
             totalConfirmed: tempMostCases['TotalConfirmed']);
         mostDeaths = CountryData(
             countryName: tempMostDeaths['Country'],
-            newDeath: tempMostDeaths['NewDeaths'],
+            newDeaths: tempMostDeaths['NewDeaths'],
             countryUrl:
                 'http://www.geognos.com/api/en/countries/flag/${tempMostDeaths['CountryCode'].toUpperCase()}.png',
-            totalDeath: tempMostDeaths['TotalDeaths']);
+            totalDeaths: tempMostDeaths['TotalDeaths']);
         mostRecovered = CountryData(
             newRecovered: tempMostRecovered['NewRecovered'],
             countryUrl:
