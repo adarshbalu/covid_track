@@ -1,10 +1,9 @@
-import 'dart:convert';
 import 'package:covidtrack/screens/country_page.dart';
 import 'package:covidtrack/utils/models/country.dart';
+import 'package:covidtrack/utils/models/country_list.dart';
 import 'package:covidtrack/utils/widgets.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:http/http.dart' as http;
 
 class CountrySelectPage extends StatefulWidget {
   @override
@@ -12,13 +11,15 @@ class CountrySelectPage extends StatefulWidget {
 }
 
 class _CountrySelectPageState extends State<CountrySelectPage> {
-  List<CountryData> countryDataList = [];
+  CountryList allCountryList;
   TextEditingController _controller = TextEditingController();
   Color color = Colors.red;
   bool search = false;
   String url = '', name;
   CountryData countryData, indiaData;
   var countryList;
+  List<CountryData> countryDataList;
+  bool load = false;
   @override
   void dispose() {
     _controller.dispose();
@@ -27,6 +28,7 @@ class _CountrySelectPageState extends State<CountrySelectPage> {
 
   @override
   void initState() {
+    allCountryList = CountryList(countryList: [], indiaData: CountryData());
     super.initState();
   }
 
@@ -183,53 +185,16 @@ class _CountrySelectPageState extends State<CountrySelectPage> {
         ));
   }
 
-  bool load = false;
   Future<List<CountryData>> getCountryData() async {
     if (!load) {
-      List<CountryData> tempCountryDataList = [];
-      http.Response response =
-          await http.get('https://api.covid19api.com/summary');
-      if (response.statusCode == 200) {
-        var data = response.body;
-
-        countryList = jsonDecode(data)['Countries'];
-        for (var country in countryList) {
-          countryData = CountryData(
-              totalRecovered: 0,
-              totalActive: 0,
-              totalConfirmed: 0,
-              totalDeaths: 0,
-              countryName: '',
-              countryUrl: '',
-              countryCode: '',
-              newDeaths: 0,
-              newConfirmed: 0,
-              newRecovered: 0,
-              newActive: 0,
-              shortName: '');
-          setState(() {
-            countryData.countryName = country['Country'];
-            countryData.totalConfirmed = country['TotalConfirmed'];
-            countryData.totalDeaths = country['TotalDeaths'];
-            countryData.totalRecovered = country['TotalRecovered'];
-            countryData.totalActive = countryData.totalConfirmed -
-                (countryData.totalRecovered - countryData.totalDeaths);
-            countryData.countryName = country['Country'];
-            countryData.shortName = country['Slug'];
-            countryData.countryCode = country['CountryCode'];
-            countryData.countryUrl =
-                'http://www.geognos.com/api/en/countries/flag/${countryData.countryCode.toUpperCase()}.png';
-          });
-          if (countryData.shortName == 'india') {
-            name = countryData.shortName;
-            indiaData = countryData;
-          }
-          tempCountryDataList.add(countryData);
-        }
+      countryDataList = await allCountryList.getAllCountryData();
+      countryDataList = allCountryList.countryList;
+      setState(() {
         load = true;
-        countryDataList = tempCountryDataList;
-      }
-      return tempCountryDataList;
+        indiaData = allCountryList.indiaData;
+        name = allCountryList.indiaData.shortName;
+      });
+      return countryDataList;
     } else if (search) {
       return searchCountry(_controller.text);
     } else

@@ -23,8 +23,8 @@ class GlobalData {
   static final String _apiUrl = 'https://api.covid19api.com/summary';
 
   getGlobalData() async {
-    NetworkHelper networkHelper = NetworkHelper(_apiUrl);
-    var globalData = await networkHelper.getData();
+    NetworkHelper _networkHelper = NetworkHelper(_apiUrl);
+    var globalData = await _networkHelper.getData();
     var data = globalData['Global'];
     this.totalConfirmed = data['TotalConfirmed'];
     this.totalDeaths = data['TotalDeaths'];

@@ -17,7 +17,6 @@ class CountryPage extends StatefulWidget {
 class _CountryPageState extends State<CountryPage> {
   CountryData countryData;
   String countryName;
-  String countryCode;
   DateTime dateTime = DateTime.now();
   String date = '';
 
@@ -103,7 +102,7 @@ class _CountryPageState extends State<CountryPage> {
   }
 
   Future<CountryData> getCountry() async {
-    countryData = widget.data;
+    countryData.getCountryData(widget.data);
     return countryData;
   }
 }
