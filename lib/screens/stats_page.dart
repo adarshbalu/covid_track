@@ -15,7 +15,7 @@ class _StatsPageState extends State<StatsPage> {
   Map<String, CountryData> dataMap;
   CountryList countryList;
   String date = '';
-  List<CountryData> countryDataList;
+  List<CountryData> countryDataList = List();
 
   CountryData mostCases, mostDeaths, mostRecovered;
   bool load = false;
@@ -148,9 +148,9 @@ class _StatsPageState extends State<StatsPage> {
 
   Future<Map<String, CountryData>> getData() async {
     if (!load) {
-      await countryList.getAllCountryData();
+      var data = await countryList.getAllCountryData();
       setState(() {
-        countryDataList = countryList.countryList;
+        countryDataList = data;
       });
 
       mostCases = await countryList.getMost('cases');

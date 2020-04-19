@@ -1,15 +1,14 @@
-import 'dart:convert';
 import 'package:covidtrack/screens/country_page.dart';
 import 'package:covidtrack/utils/constants.dart';
 import 'package:covidtrack/utils/models/country.dart';
+import 'package:covidtrack/utils/models/country_list.dart';
 import 'package:covidtrack/utils/widgets.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:http/http.dart' as http;
 
 class StatDetail extends StatefulWidget {
-  String type;
-  var data;
+  final String type;
+  final data;
   StatDetail({this.type, this.data});
   @override
   _StatDetailState createState() => _StatDetailState();
@@ -19,15 +18,17 @@ class _StatDetailState extends State<StatDetail> {
   String type = '';
   Color color;
   List<CountryData> countryArray = List();
-  List<CountryData> tempArray = List();
+  CountryList countryList = CountryList();
   bool loaded = false;
   TextEditingController controller;
   int totalReports = 5;
-  var allCountryArray;
   @override
   void initState() {
     type = widget.type;
-    allCountryArray = widget.data;
+    print(widget.data.length);
+    countryList =
+        CountryList(countryList: widget.data, indiaData: CountryData());
+
     switch (type) {
       case 'cases':
         color = Colors.deepPurple;
@@ -207,53 +208,12 @@ class _StatDetailState extends State<StatDetail> {
 
   Future<List<CountryData>> getData() async {
     if (!loaded) {
-      tempArray.clear();
-      for (int i = 0; i < allCountryArray.length; i++) {
-        tempArray.add(CountryData(
-            newRecovered: allCountryArray[i]['NewRecovered'],
-            newConfirmed: allCountryArray[i]['NewConfirmed'],
-            newDeaths: allCountryArray[i]['NewDeaths'],
-            totalRecovered: allCountryArray[i]['TotalRecovered'],
-            totalDeaths: allCountryArray[i]['TotalDeaths'],
-            totalConfirmed: allCountryArray[i]['TotalConfirmed'],
-            countryName: allCountryArray[i]['Country'],
-            countryCode: allCountryArray[i]['CountryCode'],
-            shortName: allCountryArray[i]['Slug'],
-            totalActive: allCountryArray[i]['TotalConfirmed'] -
-                allCountryArray[i]['TotalRecovered'] +
-                allCountryArray[i]['TotalDeaths'],
-            newActive: allCountryArray[i]['NewConfirmed'] -
-                allCountryArray[i]['NewRecovered'] +
-                allCountryArray[i]['NewDeaths'],
-            countryUrl:
-                'http://www.geognos.com/api/en/countries/flag/${allCountryArray[i]['CountryCode'].toUpperCase()}.png'));
-      }
-
-      countryArray = [];
-      countryArray = sortArray(tempArray, type);
+      countryArray = countryList.sortCountryList(type);
       setState(() {
         loaded = true;
       });
     }
 
-    return countryArray;
-//      else
-//        return [];
-//    } else
-//  return countryArray;
-  }
-
-  sortArray(List<CountryData> countryArray, String type) {
-    for (int i = 0; i < countryArray.length; i++) {
-      for (int j = 0; j < (countryArray.length - i - 1); j++) {
-        if (countryArray[j].getTypes(type) <
-            countryArray[j + 1].getTypes(type)) {
-          var tempCountry = countryArray[j];
-          countryArray[j] = countryArray[j + 1];
-          countryArray[j + 1] = tempCountry;
-        }
-      }
-    }
     return countryArray;
   }
 

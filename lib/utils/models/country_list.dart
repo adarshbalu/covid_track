@@ -75,4 +75,19 @@ class CountryList {
     }
     return _countryData;
   }
+
+  sortCountryList(String type) {
+    var countryArray = this.countryList;
+    for (int i = 0; i < countryArray.length; i++) {
+      for (int j = 0; j < (countryArray.length - i - 1); j++) {
+        if (countryArray[j].getTypes(type) <
+            countryArray[j + 1].getTypes(type)) {
+          var tempCountry = countryArray[j];
+          countryArray[j] = countryArray[j + 1];
+          countryArray[j + 1] = tempCountry;
+        }
+      }
+    }
+    return countryArray;
+  }
 }
