@@ -1,4 +1,3 @@
-import 'dart:convert';
 import 'package:covidtrack/screens/country_select_page.dart';
 import 'package:covidtrack/screens/stat_detail_page.dart';
 import 'package:covidtrack/utils/constants.dart';
@@ -8,7 +7,6 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
 import 'package:flutter/widgets.dart';
-import 'package:http/http.dart' as http;
 
 class HomePage extends StatefulWidget {
   @override
@@ -28,15 +26,7 @@ class _HomePageState extends State<HomePage> {
         monthNames[dateTime.month - 1] +
         ' ' +
         dateTime.year.toString();
-    globalData = GlobalData(
-        totalActive: 0,
-        totalConfirmed: 0,
-        totalDeath: 0,
-        totalRecovered: 0,
-        newActive: 0,
-        newDeaths: 0,
-        newConfirmed: 0,
-        newRecovered: 0);
+    globalData = GlobalData();
     super.initState();
   }
 
@@ -114,27 +104,10 @@ class _HomePageState extends State<HomePage> {
 
   Future<GlobalData> getData() async {
     if (!load) {
-      http.Response response =
-          await http.get('https://api.covid19api.com/summary');
-      if (response.statusCode == 200) {
-        var data = response.body;
-        setState(() {
-          globalData.totalRecovered =
-              jsonDecode(data)['Global']['TotalRecovered'];
-          globalData.totalDeath = jsonDecode(data)['Global']['TotalDeaths'];
-          globalData.totalConfirmed =
-              jsonDecode(data)['Global']['TotalConfirmed'];
-          globalData.newConfirmed = jsonDecode(data)['Global']['NewConfirmed'];
-          globalData.newDeaths = jsonDecode(data)['Global']['NewDeaths'];
-          globalData.newRecovered = jsonDecode(data)['Global']['NewRecovered'];
-          globalData.totalActive = globalData.totalConfirmed -
-              (globalData.totalRecovered + globalData.totalDeath);
-          globalData.newActive = globalData.newConfirmed -
-              (globalData.newRecovered + globalData.newDeaths);
-          allCountryArray = jsonDecode(data)['Countries'];
-        });
-      }
-      load = true;
+      await globalData.getGlobalData();
+      setState(() {
+        load = true;
+      });
     }
     return globalData;
   }
