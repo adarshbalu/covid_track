@@ -49,6 +49,42 @@ flutter:
   - handwash.png
   - handsanitizer.png
   - india.png
+  - avoid-eye.png
+  - avoid-gathering-1.png
+  - avoid-gathering-2.png
+  - avoid-mouth.png
+  - avoid-nose.png
+  - avoid-travel.png
+  - clean.png
+  - cough.png
+  - covid-19.png
+  - difficulty-breathing.png
+  - disinfect.png
+  - fever.png
+  - gloves.png
+  - graph.png
+  - hand.png
+  - hand-wash-1.png
+  - hand-wash-2.png
+  - keep-distance.png
+  - mask-1.png
+  - mask-2.png
+  - mask-3.png
+  - mask-4.png
+  - medical-mask.png
+  - medicine.png
+  - pandemic-1.png
+  - pandemic-2.png
+  - pills.png
+  - quarantine.png
+  - runny-nose.png
+  - sore-throat.png
+  - stay-home.png
+  - tissue.png
+  - vaccine-1.png
+  - vaccine-2.png
+  - virus-1.png
+  - virus-2.png
   #  - images/a_dot_ham.jpeg
 
   # An image asset can refer to one or more resolution-specific "variants", see

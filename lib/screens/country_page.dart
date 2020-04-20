@@ -1,3 +1,4 @@
+import 'package:covidtrack/screens/loading_screen.dart';
 import 'package:covidtrack/utils/constants.dart';
 import 'package:covidtrack/utils/models/country.dart';
 import 'package:covidtrack/utils/widgets.dart';

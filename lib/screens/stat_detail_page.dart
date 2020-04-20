@@ -1,4 +1,5 @@
 import 'package:covidtrack/screens/country_page.dart';
+import 'package:covidtrack/screens/loading_screen.dart';
 import 'package:covidtrack/utils/constants.dart';
 import 'package:covidtrack/utils/models/country.dart';
 import 'package:covidtrack/utils/models/country_list.dart';
@@ -26,7 +27,6 @@ class _StatDetailState extends State<StatDetail> {
   @override
   void initState() {
     type = widget.type;
-    print(widget.data.length);
     countryList =
         CountryList(countryList: widget.data, indiaData: CountryData());
 
