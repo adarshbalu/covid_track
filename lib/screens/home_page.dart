@@ -37,60 +37,61 @@ class _HomePageState extends State<HomePage> {
   Widget build(BuildContext context) {
     return Scaffold(
       bottomNavigationBar: BottomMenu(allCountryArray),
-      body: SafeArea(
-        child: FutureBuilder(
-            future: getData(),
-            builder: (context, snapshot) {
-              if (snapshot.hasData) {
-                return ListView(
-                  children: <Widget>[
-                    Column(
-                      crossAxisAlignment: CrossAxisAlignment.center,
-                      children: <Widget>[
-                        AppHeader(
-                          headerText: 'COVID-19',
-                        ),
-                        SizedBox(
-                          height: 12,
-                        ),
-                        CaseCard(
-                          totalCases: snapshot.data.totalConfirmed,
-                          isFlag: false,
-                          color: colorArray['purple'],
-                        ),
-                        DataListTile(
-                          color: Colors.deepPurple,
-                          cases: snapshot.data.totalActive,
-                          text: 'Active',
-                        ),
-                        DataListTile(
-                          color: Colors.green,
-                          cases: snapshot.data.totalRecovered,
-                          text: 'Recovered',
-                        ),
-                        DataListTile(
-                          color: Colors.red,
-                          cases: snapshot.data.totalDeaths,
-                          text: 'Deaths',
-                        ),
-                        SizedBox(
-                          height: 8,
-                        ),
-                      ],
-                    ),
-                  ],
-                );
-              } else if (snapshot.connectionState == ConnectionState.none ||
-                  snapshot.hasError) {
-                return LoaderScreen(
-                  text1: 'Some Issue Connecting',
-                  text2: 'Please check network',
-                  image: kSanitizerImage,
-                );
-              } else {
-                return StartScreen();
-              }
-            }),
+      body: WillPopScope(
+        onWillPop: () async {
+          return false;
+        },
+        child: SafeArea(
+          child: FutureBuilder(
+              future: getData(),
+              builder: (context, snapshot) {
+                if (snapshot.hasData) {
+                  return ListView(
+                    children: <Widget>[
+                      Column(
+                        crossAxisAlignment: CrossAxisAlignment.center,
+                        children: <Widget>[
+                          AppHeader(
+                            headerText: 'COVID-19',
+                          ),
+                          SizedBox(
+                            height: 12,
+                          ),
+                          CaseCard(
+                            totalCases: snapshot.data.totalConfirmed,
+                            isFlag: false,
+                            color: colorArray['purple'],
+                          ),
+                          DataListTile(
+                            color: Colors.deepPurple,
+                            cases: snapshot.data.totalActive,
+                            text: 'Active',
+                          ),
+                          DataListTile(
+                            color: Colors.green,
+                            cases: snapshot.data.totalRecovered,
+                            text: 'Recovered',
+                          ),
+                          DataListTile(
+                            color: Colors.red,
+                            cases: snapshot.data.totalDeaths,
+                            text: 'Deaths',
+                          ),
+                          SizedBox(
+                            height: 8,
+                          ),
+                        ],
+                      ),
+                    ],
+                  );
+                } else if (snapshot.connectionState == ConnectionState.none ||
+                    snapshot.hasError) {
+                  return ErrorScreen();
+                } else {
+                  return StartScreen();
+                }
+              }),
+        ),
       ),
     );
   }

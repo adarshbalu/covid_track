@@ -1,51 +1,61 @@
 import 'package:covidtrack/utils/constants.dart';
+import 'package:covidtrack/utils/widgets.dart';
 import 'package:flutter/material.dart';
 
 class LoaderScreen extends StatelessWidget {
-  final String text1, text2, image;
-  final Function onTap;
-  LoaderScreen({this.text1, this.text2, this.image, this.onTap});
+  final String text, image;
+
+  LoaderScreen({
+    this.text,
+    this.image,
+  });
 
   @override
   Widget build(BuildContext context) {
-    return Column(
-      mainAxisAlignment: MainAxisAlignment.start,
-      children: <Widget>[
-        SizedBox(
-          height: MediaQuery.of(context).size.height / 3.5,
-        ),
-        Image.asset(
-          image,
-          width: 80,
-          height: 80,
-        ),
-        SizedBox(
-          height: 20,
-        ),
-        Center(
-          child: Text(
-            text1,
-            style: kSecondaryTextStyle,
+    return Scaffold(
+      backgroundColor: Colors.white,
+      body: Column(
+        mainAxisAlignment: MainAxisAlignment.start,
+        children: <Widget>[
+          AppHeader(
+            headerText: 'Advices',
           ),
-        ),
-        SizedBox(
-          height: 5,
-        ),
-        Center(
-          child: Text(
-            text2,
-            style: kCaseNameTextStyle,
+          Expanded(
+            child: Padding(
+              padding: EdgeInsets.only(top: 10.0),
+              child: Container(
+                margin: EdgeInsets.all(10),
+                width: MediaQuery.of(context).size.width / 1.5,
+                height: MediaQuery.of(context).size.height / 4,
+                child: Image.asset(
+                  image,
+                ),
+              ),
+            ),
           ),
-        ),
-        SizedBox(
-          height: 20,
-        ),
-        Center(
-          child: CircularProgressIndicator(
-            backgroundColor: Colors.transparent,
+          Center(
+            child: Padding(
+              padding:
+                  EdgeInsets.only(top: 30, left: 10.0, right: 10, bottom: 8),
+              child: Text(
+                text,
+                style: TextStyle(
+                    fontSize: 23,
+                    fontFamily: 'Merienda',
+                    fontWeight: FontWeight.w500),
+              ),
+            ),
           ),
-        ),
-      ],
+          Center(
+            child: CircularProgressIndicator(
+              backgroundColor: Colors.transparent,
+            ),
+          ),
+          SizedBox(
+            height: 20,
+          )
+        ],
+      ),
     );
   }
 }

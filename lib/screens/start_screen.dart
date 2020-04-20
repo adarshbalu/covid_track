@@ -1,5 +1,5 @@
 import 'package:covidtrack/screens/home_page.dart';
-import 'package:covidtrack/screens/loading_screen.dart';
+import 'package:covidtrack/utils/widgets.dart';
 import 'package:covidtrack/utils/constants.dart';
 import 'package:covidtrack/utils/models/global.dart';
 import 'package:flutter/cupertino.dart';
@@ -27,47 +27,47 @@ class _StartScreenState extends State<StartScreen> {
           future: getData(),
           builder: (context, snapshot) {
             if (!snapshot.hasData) {
-              return Center(
-                child: Column(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: <Widget>[
-                    Image.asset(
-                      kCOVIDImage,
-                      width: MediaQuery.of(context).size.width / 1.5,
-                      height: MediaQuery.of(context).size.height / 2,
-                    ),
-                    Padding(
-                      padding: EdgeInsets.only(
-                        top: 8,
+              if (snapshot.connectionState == ConnectionState.none ||
+                  snapshot.hasError) {
+                return ErrorScreen();
+              } else
+                return Center(
+                  child: Column(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: <Widget>[
+                      Image.asset(
+                        kCOVIDImage,
+                        width: MediaQuery.of(context).size.width / 1.5,
+                        height: MediaQuery.of(context).size.height / 2,
                       ),
-                      child: Text(
-                        '#StayHome',
-                        style: TextStyle(fontSize: 25),
+                      Padding(
+                        padding: EdgeInsets.only(
+                          top: 8,
+                        ),
+                        child: Text(
+                          '#StayHome',
+                          style: TextStyle(fontSize: 25),
+                        ),
                       ),
-                    ),
-                    Padding(
-                      padding: EdgeInsets.only(bottom: 8),
-                      child: Text(
-                        '#StaySafe',
-                        style: TextStyle(fontSize: 26),
+                      Padding(
+                        padding: EdgeInsets.only(bottom: 8),
+                        child: Text(
+                          '#StaySafe',
+                          style: TextStyle(fontSize: 26),
+                        ),
                       ),
-                    ),
-                    SizedBox(
-                      height: 10,
-                    ),
-                    CircularProgressIndicator(
-                        valueColor:
-                            AlwaysStoppedAnimation<Color>(Colors.green)),
-                  ],
-                ),
-              );
+                      SizedBox(
+                        height: 10,
+                      ),
+                      CircularProgressIndicator(
+                          valueColor:
+                              AlwaysStoppedAnimation<Color>(Colors.green)),
+                    ],
+                  ),
+                );
             } else if (snapshot.connectionState == ConnectionState.none ||
                 snapshot.hasError) {
-              return LoaderScreen(
-                text1: 'Network Connection not available',
-                text2: 'Please check network',
-                image: kPandemic_2_Image,
-              );
+              return ErrorScreen();
             } else {
               return HomePage(globalData);
             }
@@ -76,12 +76,11 @@ class _StartScreenState extends State<StartScreen> {
   }
 
   getData() async {
-    if (!load) {
-      await globalData.getGlobalData();
-      setState(() {
-        if (globalData.totalConfirmed != null) load = true;
-      });
-    }
+    await globalData.getGlobalData();
+    setState(() {
+      if (globalData.totalConfirmed != null) load = true;
+    });
+
     return globalData;
   }
 }

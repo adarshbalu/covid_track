@@ -1,3 +1,5 @@
+import 'dart:math';
+
 import 'package:covidtrack/screens/country_page.dart';
 import 'package:covidtrack/screens/country_select_page.dart';
 import 'package:covidtrack/screens/home_page.dart';
@@ -375,6 +377,56 @@ class CountryNameHeader extends StatelessWidget {
         textAlign: TextAlign.center,
         softWrap: true,
       ),
+    );
+  }
+}
+
+class ErrorScreen extends StatelessWidget {
+  static List<String> imageList = [kPandemic_1_Image, kPandemic_2_Image];
+  static final random = new Random();
+  final image = imageList[random.nextInt(2)];
+  ErrorScreen();
+
+  @override
+  Widget build(BuildContext context) {
+    return Column(
+      mainAxisAlignment: MainAxisAlignment.center,
+      children: <Widget>[
+        SizedBox(
+          height: MediaQuery.of(context).size.height / 3.5,
+        ),
+        Image.asset(
+          image,
+          width: 80,
+          height: 80,
+        ),
+        SizedBox(
+          height: 20,
+        ),
+        Center(
+          child: Text(
+            ' Connection not available',
+            style: kSecondaryTextStyle,
+          ),
+        ),
+        SizedBox(
+          height: 5,
+        ),
+        Center(
+          child: Text(
+            'Please check network',
+            style: kCaseNameTextStyle,
+          ),
+        ),
+        SizedBox(
+          height: 20,
+        ),
+        Center(
+          child: CircularProgressIndicator(
+            backgroundColor: Colors.transparent,
+          ),
+        ),
+      ],
     );
   }
 }

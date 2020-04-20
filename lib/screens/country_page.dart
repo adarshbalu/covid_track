@@ -1,5 +1,7 @@
 import 'package:covidtrack/screens/loading_screen.dart';
 import 'package:covidtrack/utils/constants.dart';
+import 'package:covidtrack/utils/models/content.dart';
+import 'package:covidtrack/utils/models/content_list.dart';
 import 'package:covidtrack/utils/models/country.dart';
 import 'package:covidtrack/utils/widgets.dart';
 import 'package:flutter/cupertino.dart';
@@ -16,9 +18,16 @@ class CountryPage extends StatefulWidget {
 class _CountryPageState extends State<CountryPage> {
   CountryData countryData;
   String countryName;
+  ContentsList contentsList;
+  Content content;
 
   @override
   void initState() {
+    content = Content();
+    contentsList = ContentsList();
+    contentsList.contents = contentsList.getAllContents();
+    content =
+        contentsList.contents[random.nextInt(contentsList.contents.length)];
     countryData = widget.data;
     countryName = widget.countryName;
     super.initState();
@@ -70,16 +79,11 @@ class _CountryPageState extends State<CountryPage> {
                 );
               } else if (snapshot.connectionState == ConnectionState.none ||
                   snapshot.hasError) {
-                return LoaderScreen(
-                  text1: 'Some Issue Connecting',
-                  text2: 'Please check network',
-                  image: kHandWashImage,
-                );
+                return ErrorScreen();
               } else {
                 return LoaderScreen(
-                  text1: 'Wash your hands with Soap',
-                  text2: 'While we sync data for you  .. ',
-                  image: kSanitizerImage,
+                  text: content.text,
+                  image: content.text,
                 );
               }
             }),

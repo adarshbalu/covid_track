@@ -1,6 +1,8 @@
 import 'package:covidtrack/screens/loading_screen.dart';
 import 'package:covidtrack/screens/stat_detail_page.dart';
 import 'package:covidtrack/utils/constants.dart';
+import 'package:covidtrack/utils/models/content.dart';
+import 'package:covidtrack/utils/models/content_list.dart';
 import 'package:covidtrack/utils/models/country.dart';
 import 'package:covidtrack/utils/models/country_list.dart';
 import 'package:covidtrack/utils/navigation_transition.dart';
@@ -18,12 +20,17 @@ class _StatsPageState extends State<StatsPage> {
   CountryList countryList;
   String date = '';
   List<CountryData> countryDataList = List();
-
   CountryData mostCases, mostDeaths, mostRecovered;
   bool load = false;
-
+  ContentsList contentsList;
+  Content content;
   @override
   void initState() {
+    content = Content();
+    contentsList = ContentsList();
+    contentsList.contents = contentsList.getAllContents();
+    content =
+        contentsList.contents[random.nextInt(contentsList.contents.length)];
     dataMap = Map();
     countryList = CountryList(countryList: [], indiaData: CountryData());
     date = dateTime.day.toString() +
@@ -130,17 +137,13 @@ class _StatsPageState extends State<StatsPage> {
                     ),
                   ],
                 );
-              } else if (snapshot.hasError) {
-                return LoaderScreen(
-                  text1: 'Some Issue Connecting',
-                  text2: 'Please check network',
-                  image: kSanitizerImage,
-                );
+              } else if (snapshot.hasError ||
+                  snapshot.connectionState == ConnectionState.none) {
+                return ErrorScreen();
               } else {
                 return LoaderScreen(
-                  text1: 'Wash your hands with Soap',
-                  text2: 'While we sync data for you  .. ',
-                  image: kHandWashImage,
+                  text: content.text,
+                  image: content.image,
                 );
               }
             }),

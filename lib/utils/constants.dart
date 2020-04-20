@@ -1,3 +1,5 @@
+import 'dart:math';
+
 import 'package:flutter/material.dart';
 
 final monthNames = [
@@ -98,4 +100,4 @@ const kVaccine_2_Image = 'assets/vaccine-2.png';
 const kVirus_1_Image = 'assets/vaccine-1.png';
 const kVirus_2_Image = 'assets/vaccine-2.png';
 
-const kImagesList = [];
+var random = Random();

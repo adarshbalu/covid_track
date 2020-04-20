@@ -1,6 +1,8 @@
 import 'package:covidtrack/screens/country_page.dart';
 import 'package:covidtrack/screens/loading_screen.dart';
 import 'package:covidtrack/utils/constants.dart';
+import 'package:covidtrack/utils/models/content.dart';
+import 'package:covidtrack/utils/models/content_list.dart';
 import 'package:covidtrack/utils/models/country.dart';
 import 'package:covidtrack/utils/models/country_list.dart';
 import 'package:covidtrack/utils/navigation_transition.dart';
@@ -24,8 +26,17 @@ class _StatDetailState extends State<StatDetail> {
   bool loaded = false;
   TextEditingController controller;
   int totalReports = 5;
+  ContentsList contentsList;
+  Content content;
+
   @override
   void initState() {
+    content = Content();
+    contentsList = ContentsList();
+    contentsList.contents = contentsList.getAllContents();
+    content =
+        contentsList.contents[random.nextInt(contentsList.contents.length)];
+
     type = widget.type;
     countryList =
         CountryList(countryList: widget.data, indiaData: CountryData());
@@ -189,16 +200,11 @@ class _StatDetailState extends State<StatDetail> {
               ]);
             } else if (snapshot.connectionState == ConnectionState.none ||
                 snapshot.hasError) {
-              return LoaderScreen(
-                text1: 'Some Issue Connecting',
-                text2: 'Please check network',
-                image: kSanitizerImage,
-              );
+              return ErrorScreen();
             } else {
               return LoaderScreen(
-                text1: 'Wash your hands with Soap',
-                text2: 'While we sync data for you  .. ',
-                image: kHandWashImage,
+                text: content.text,
+                image: content.image,
               );
             }
           },
