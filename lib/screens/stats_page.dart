@@ -2,6 +2,7 @@ import 'package:covidtrack/screens/stat_detail_page.dart';
 import 'package:covidtrack/utils/constants.dart';
 import 'package:covidtrack/utils/models/country.dart';
 import 'package:covidtrack/utils/models/country_list.dart';
+import 'package:covidtrack/utils/navigation_transition.dart';
 import 'package:flutter/material.dart';
 import 'package:covidtrack/utils/widgets.dart';
 
@@ -171,11 +172,12 @@ class _StatsPageState extends State<StatsPage> {
   }
 
   void toScreen(BuildContext context, String type, var data) async {
-    await Navigator.push(context, MaterialPageRoute(builder: (context) {
-      return StatDetail(
-        type: type,
-        data: data,
-      );
-    }));
+    await Navigator.push(
+        context,
+        SlideRoute(
+            widget: StatDetail(
+          type: type,
+          data: data,
+        )));
   }
 }

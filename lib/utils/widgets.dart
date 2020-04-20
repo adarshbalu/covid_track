@@ -3,6 +3,7 @@ import 'package:covidtrack/screens/country_select_page.dart';
 import 'package:covidtrack/screens/home_page.dart';
 import 'package:covidtrack/screens/stats_page.dart';
 import 'package:covidtrack/utils/constants.dart';
+import 'package:covidtrack/utils/navigation_transition.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:intl/intl.dart';
@@ -311,9 +312,7 @@ class BottomMenu extends StatelessWidget {
           children: <Widget>[
             InkWell(
               onTap: () {
-                Navigator.push(context, MaterialPageRoute(builder: (context) {
-                  return HomePage();
-                }));
+                Navigator.push(context, SlideRoute(widget: HomePage()));
               },
               child: Container(
                 child: Column(
@@ -334,9 +333,8 @@ class BottomMenu extends StatelessWidget {
             ),
             InkWell(
               onTap: () {
-                Navigator.push(context, MaterialPageRoute(builder: (context) {
-                  return CountrySelectPage();
-                }));
+                Navigator.push(
+                    context, SlideRoute(widget: CountrySelectPage()));
               },
               child: Container(
                 child: Column(
@@ -357,9 +355,7 @@ class BottomMenu extends StatelessWidget {
             ),
             InkWell(
               onTap: () {
-                Navigator.push(context, MaterialPageRoute(builder: (context) {
-                  return StatsPage();
-                }));
+                Navigator.push(context, SlideRoute(widget: StatsPage()));
               },
               child: Container(
                 child: Column(

@@ -2,6 +2,7 @@ import 'package:covidtrack/screens/country_page.dart';
 import 'package:covidtrack/utils/constants.dart';
 import 'package:covidtrack/utils/models/country.dart';
 import 'package:covidtrack/utils/models/country_list.dart';
+import 'package:covidtrack/utils/navigation_transition.dart';
 import 'package:covidtrack/utils/widgets.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
@@ -218,11 +219,12 @@ class _StatDetailState extends State<StatDetail> {
   }
 
   void toCountryPage(String countryName, var data) {
-    Navigator.push(context, MaterialPageRoute(builder: (context) {
-      return CountryPage(
-        countryName: countryName,
-        data: data,
-      );
-    }));
+    Navigator.push(
+        context,
+        SlideRoute(
+            widget: CountryPage(
+          countryName: countryName,
+          data: data,
+        )));
   }
 }

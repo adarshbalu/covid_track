@@ -1,4 +1,3 @@
-import 'package:covidtrack/screens/country_select_page.dart';
 import 'package:covidtrack/screens/stat_detail_page.dart';
 import 'package:covidtrack/utils/constants.dart';
 import 'package:covidtrack/utils/models/global.dart';
@@ -94,12 +93,6 @@ class _HomePageState extends State<HomePage> {
             }),
       ),
     );
-  }
-
-  void toCountrySelectPage() {
-    Navigator.push(context, MaterialPageRoute(builder: (context) {
-      return CountrySelectPage();
-    }));
   }
 
   Future<GlobalData> getData() async {
