@@ -1,5 +1,6 @@
 import 'package:covidtrack/utils/constants.dart';
 import 'package:flutter/material.dart';
+
 class LoaderScreen extends StatelessWidget {
   final String text1, text2, image;
   final Function onTap;

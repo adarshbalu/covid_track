@@ -1,4 +1,5 @@
 import 'package:covidtrack/screens/loading_screen.dart';
+import 'package:covidtrack/screens/start_screen.dart';
 import 'package:covidtrack/screens/stat_detail_page.dart';
 import 'package:covidtrack/utils/constants.dart';
 import 'package:covidtrack/utils/models/global.dart';
@@ -9,6 +10,8 @@ import 'package:flutter/rendering.dart';
 import 'package:flutter/widgets.dart';
 
 class HomePage extends StatefulWidget {
+  var data;
+  HomePage(this.data);
   @override
   _HomePageState createState() => _HomePageState();
 }
@@ -85,11 +88,7 @@ class _HomePageState extends State<HomePage> {
                   image: kSanitizerImage,
                 );
               } else {
-                return LoaderScreen(
-                  text1: 'Wash your hands with Soap',
-                  text2: 'While we sync data for you  .. ',
-                  image: kHandWashImage,
-                );
+                return StartScreen();
               }
             }),
       ),
@@ -98,7 +97,11 @@ class _HomePageState extends State<HomePage> {
 
   Future<GlobalData> getData() async {
     if (!load) {
-      await globalData.getGlobalData();
+      if (widget.data == null) {
+        await globalData.getGlobalData();
+      } else {
+        globalData = widget.data;
+      }
       setState(() {
         load = true;
       });

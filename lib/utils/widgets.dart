@@ -174,8 +174,6 @@ class CaseCard extends StatelessWidget {
   }
 }
 
-
-
 class DataCard extends StatelessWidget {
   DataCard(
       {this.countryUrl,
@@ -265,7 +263,8 @@ class BottomMenu extends StatelessWidget {
           children: <Widget>[
             InkWell(
               onTap: () {
-                Navigator.push(context, SlideRoute(widget: HomePage()));
+                Navigator.pushReplacement(
+                    context, SlideRoute(widget: HomePage(null)));
               },
               child: Container(
                 child: Column(
