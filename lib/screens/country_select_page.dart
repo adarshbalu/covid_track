@@ -190,6 +190,7 @@ class _CountrySelectPageState extends State<CountrySelectPage> {
     if (!load) {
       await allCountryList.getAllCountryData();
       countryDataList = allCountryList.countryList;
+
       setState(() {
         load = true;
         indiaData = allCountryList.indiaData;

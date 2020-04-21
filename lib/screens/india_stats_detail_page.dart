@@ -1,26 +1,26 @@
 import 'package:covidtrack/screens/country_page.dart';
 import 'package:covidtrack/utils/constants.dart';
 import 'package:covidtrack/utils/models/content_list.dart';
-import 'package:covidtrack/utils/models/country.dart';
-import 'package:covidtrack/utils/models/country_list.dart';
+import 'package:covidtrack/utils/models/state_data.dart';
+import 'package:covidtrack/utils/models/state_list.dart';
 import 'package:covidtrack/utils/navigation_transition.dart';
 import 'package:covidtrack/utils/widgets.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
-class StatDetail extends StatefulWidget {
+class IndiaStatDetail extends StatefulWidget {
   final String type;
   final data;
-  StatDetail({this.type, this.data});
+  IndiaStatDetail({this.type, this.data});
   @override
-  _StatDetailState createState() => _StatDetailState();
+  _IndiaStatDetailState createState() => _IndiaStatDetailState();
 }
 
-class _StatDetailState extends State<StatDetail> {
+class _IndiaStatDetailState extends State<IndiaStatDetail> {
   String type = '';
   Color color;
-  List<CountryData> countryArray = List();
-  CountryList countryList = CountryList();
+  List<StateData> statesArray = List();
+  StateList stateList = StateList();
   bool loaded = false;
   TextEditingController controller;
   int totalReports = 5;
@@ -34,8 +34,7 @@ class _StatDetailState extends State<StatDetail> {
         contentsList.contents[random.nextInt(contentsList.contents.length)];
 
     type = widget.type;
-    countryList =
-        CountryList(countryList: widget.data, indiaData: CountryData());
+    stateList = StateList(stateList: widget.data, totalData: StateData());
 
     switch (type) {
       case 'cases':
@@ -61,6 +60,7 @@ class _StatDetailState extends State<StatDetail> {
   Widget build(BuildContext context) {
     double width = MediaQuery.of(context).size.width;
     return Scaffold(
+      bottomNavigationBar: BottomMenu(null),
       body: SafeArea(
         child: FutureBuilder(
           future: getData(),
@@ -142,52 +142,37 @@ class _StatDetailState extends State<StatDetail> {
                         if (type == 'recovered') {
                           return Container(
                             margin: EdgeInsets.fromLTRB(20, 10, 20, 5),
-                            child: InkWell(
-                              onTap: () {
-                                toCountryPage(snapshot.data[index].shortName,
-                                    snapshot.data[index]);
-                              },
-                              child: DataCard(
-                                color: color,
-                                countryUrl: snapshot.data[index].countryUrl,
-                                countryName: snapshot.data[index].countryName,
-                                totalData: snapshot.data[index].totalRecovered,
-                                newData: snapshot.data[index].newRecovered,
-                              ),
+                            child: DataCard(
+                              color: color,
+                              countryUrl:
+                                  'http://www.geognos.com/api/en/countries/flag/IN.png',
+                              countryName: snapshot.data[index].name,
+                              totalData: snapshot.data[index].totalRecovered,
+                              newData: snapshot.data[index].newRecovered,
                             ),
                           );
                         } else if (type == 'cases') {
                           return Container(
                             margin: EdgeInsets.fromLTRB(20, 10, 20, 5),
-                            child: InkWell(
-                              onTap: () {
-                                toCountryPage(snapshot.data[index].shortName,
-                                    snapshot.data[index]);
-                              },
-                              child: DataCard(
-                                color: color,
-                                countryUrl: snapshot.data[index].countryUrl,
-                                countryName: snapshot.data[index].countryName,
-                                totalData: snapshot.data[index].totalConfirmed,
-                                newData: snapshot.data[index].newConfirmed,
-                              ),
+                            child: DataCard(
+                              color: color,
+                              countryUrl:
+                                  'http://www.geognos.com/api/en/countries/flag/IN.png',
+                              countryName: snapshot.data[index].name,
+                              totalData: snapshot.data[index].totalConfirmed,
+                              newData: snapshot.data[index].newConfirmed,
                             ),
                           );
                         } else {
                           return Container(
                             margin: EdgeInsets.fromLTRB(20, 10, 20, 5),
-                            child: InkWell(
-                              onTap: () {
-                                toCountryPage(snapshot.data[index].shortName,
-                                    snapshot.data[index]);
-                              },
-                              child: DataCard(
-                                color: color,
-                                countryUrl: snapshot.data[index].countryUrl,
-                                countryName: snapshot.data[index].countryName,
-                                totalData: snapshot.data[index].totalDeaths,
-                                newData: snapshot.data[index].newDeaths,
-                              ),
+                            child: DataCard(
+                              color: color,
+                              countryUrl:
+                                  'http://www.geognos.com/api/en/countries/flag/IN.png',
+                              countryName: snapshot.data[index].name,
+                              totalData: snapshot.data[index].totalDeaths,
+                              newData: snapshot.data[index].newDeaths,
                             ),
                           );
                         }
@@ -203,15 +188,15 @@ class _StatDetailState extends State<StatDetail> {
     );
   }
 
-  Future<List<CountryData>> getData() async {
+  Future<List<StateData>> getData() async {
     if (!loaded) {
-      countryArray = countryList.sortCountryList(type);
+      statesArray = stateList.sortStateList(type);
       setState(() {
         loaded = true;
       });
     }
 
-    return countryArray;
+    return statesArray;
   }
 
   void toCountryPage(String countryName, var data) {

@@ -1,4 +1,3 @@
-import 'package:covidtrack/screens/loading_screen.dart';
 import 'package:covidtrack/screens/start_screen.dart';
 import 'package:covidtrack/screens/stat_detail_page.dart';
 import 'package:covidtrack/utils/constants.dart';
@@ -10,7 +9,7 @@ import 'package:flutter/rendering.dart';
 import 'package:flutter/widgets.dart';
 
 class HomePage extends StatefulWidget {
-  var data;
+  final data;
   HomePage(this.data);
   @override
   _HomePageState createState() => _HomePageState();
@@ -103,6 +102,7 @@ class _HomePageState extends State<HomePage> {
       } else {
         globalData = widget.data;
       }
+
       setState(() {
         load = true;
       });

@@ -13,8 +13,8 @@ import 'package:intl/intl.dart';
 var formatter = NumberFormat("##,##,##,###");
 
 class AppHeader extends StatelessWidget {
-  String headerText = '';
-  var data, name;
+  final headerText;
+  final data, name;
   AppHeader({this.headerText, this.name, this.data});
   @override
   Widget build(BuildContext context) {
@@ -125,9 +125,9 @@ class DataListTile extends StatelessWidget {
 
 class CaseCard extends StatelessWidget {
   final int totalCases;
-  bool isFlag;
-  String flagURL;
-  var color;
+  final bool isFlag;
+  final String flagURL;
+  final color;
   CaseCard({this.totalCases, this.isFlag, this.flagURL, this.color});
   @override
   Widget build(BuildContext context) {
@@ -177,22 +177,21 @@ class CaseCard extends StatelessWidget {
 }
 
 class DataCard extends StatelessWidget {
-  DataCard(
-      {this.countryUrl,
-      this.countryName,
-      this.color,
-      this.newData,
-      this.totalData,
-      this.onTap});
+  DataCard({
+    this.countryUrl,
+    this.countryName,
+    this.color,
+    this.newData,
+    this.totalData,
+  });
 
   final String countryUrl, countryName;
   final int totalData, newData;
   final Color color;
-  var totalCaseNumber;
-  Function onTap;
+
   @override
   Widget build(BuildContext context) {
-    totalCaseNumber = formatter.format(totalData);
+    var totalCaseNumber = formatter.format(totalData);
 
     return Container(
       margin: EdgeInsets.fromLTRB(6, 0, 6, 10),
@@ -245,7 +244,7 @@ class DataCard extends StatelessWidget {
 }
 
 class BottomMenu extends StatelessWidget {
-  var allCountryArray;
+  final allCountryArray;
   BottomMenu([this.allCountryArray]);
   @override
   Widget build(BuildContext context) {
@@ -287,6 +286,7 @@ class BottomMenu extends StatelessWidget {
             ),
             InkWell(
               onTap: () {
+                Navigator.of(context).popUntil((route) => route.isFirst);
                 Navigator.push(
                     context, SlideRoute(widget: CountrySelectPage()));
               },
@@ -309,6 +309,7 @@ class BottomMenu extends StatelessWidget {
             ),
             InkWell(
               onTap: () {
+                Navigator.of(context).popUntil((route) => route.isFirst);
                 Navigator.push(context, SlideRoute(widget: StatsPage()));
               },
               child: Container(
@@ -427,6 +428,64 @@ class ErrorScreen extends StatelessWidget {
           ),
         ),
       ],
+    );
+  }
+}
+
+class StateDataCard extends StatelessWidget {
+  StateDataCard({
+    this.name,
+    this.color,
+    this.newData,
+    this.totalData,
+  });
+
+  final String name;
+  final int totalData, newData;
+  final Color color;
+
+  @override
+  Widget build(BuildContext context) {
+    var totalCaseNumber = formatter.format(totalData);
+
+    return Container(
+      margin: EdgeInsets.fromLTRB(6, 0, 6, 10),
+      height: 100,
+      width: MediaQuery.of(context).size.width / 1.1,
+      color: Colors.transparent,
+      child: Material(
+          color: Colors.white,
+          elevation: 2,
+          borderRadius: BorderRadius.circular(20),
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.center,
+            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+            children: <Widget>[
+              Padding(
+                padding: EdgeInsets.only(top: 8, bottom: 8),
+                child: Text(
+                  name,
+                  softWrap: true,
+                  style: TextStyle(fontSize: 22),
+                ),
+              ),
+              Row(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: <Widget>[
+                  Text(
+                    totalCaseNumber.toString(),
+                    style: kCaseNameTextStyle,
+                  ),
+                  Text(' ( + '),
+                  Text(
+                    newData.toString(),
+                    style: TextStyle(color: color),
+                  ),
+                  Text(' )')
+                ],
+              ),
+            ],
+          )),
     );
   }
 }

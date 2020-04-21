@@ -77,9 +77,10 @@ class _StartScreenState extends State<StartScreen> {
 
   getData() async {
     await globalData.getGlobalData();
-    setState(() {
-      if (globalData.totalConfirmed != null) load = true;
-    });
+    if (mounted)
+      setState(() {
+        if (globalData.totalConfirmed != null) load = true;
+      });
 
     return globalData;
   }

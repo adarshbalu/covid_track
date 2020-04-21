@@ -1,41 +1,33 @@
+import 'package:covidtrack/screens/india_stats_detail_page.dart';
 import 'package:covidtrack/screens/loading_screen.dart';
-import 'package:covidtrack/screens/stat_detail_page.dart';
 import 'package:covidtrack/utils/constants.dart';
 import 'package:covidtrack/utils/models/content_list.dart';
-import 'package:covidtrack/utils/models/country.dart';
-import 'package:covidtrack/utils/models/country_list.dart';
+import 'package:covidtrack/utils/models/state_data.dart';
+import 'package:covidtrack/utils/models/state_list.dart';
 import 'package:covidtrack/utils/navigation_transition.dart';
-import 'package:flutter/material.dart';
 import 'package:covidtrack/utils/widgets.dart';
+import 'package:flutter/material.dart';
 
-class StatsPage extends StatefulWidget {
+class IndiaStatsPage extends StatefulWidget {
   @override
-  _StatsPageState createState() => _StatsPageState();
+  _IndiaStatsPageState createState() => _IndiaStatsPageState();
 }
 
-class _StatsPageState extends State<StatsPage> {
-  DateTime dateTime = DateTime.now();
-  Map<String, CountryData> dataMap;
-  CountryList countryList;
-  String date = '';
-  List<CountryData> countryDataList = List();
-  CountryData mostCases, mostDeaths, mostRecovered;
-  bool load = false;
+class _IndiaStatsPageState extends State<IndiaStatsPage> {
   ContentsList contentsList;
-
+  StateList stateList;
+  List<StateData> stateDataList;
+  Map<String, StateData> dataMap;
+  StateData mostCases, mostDeaths, mostRecovered;
+  bool load = false;
   @override
   void initState() {
     contentsList = ContentsList();
     contentsList.contents = contentsList.getAllContents();
     contentsList.content =
         contentsList.contents[random.nextInt(contentsList.contents.length)];
-    dataMap = Map();
-    countryList = CountryList(countryList: [], indiaData: CountryData());
-    date = dateTime.day.toString() +
-        ' ' +
-        monthNames[dateTime.month - 1] +
-        ' ' +
-        dateTime.year.toString();
+    stateList = StateList();
+    stateDataList = List();
     super.initState();
   }
 
@@ -54,7 +46,7 @@ class _StatsPageState extends State<StatsPage> {
                       crossAxisAlignment: CrossAxisAlignment.center,
                       children: <Widget>[
                         AppHeader(
-                          headerText: 'Stats',
+                          headerText: 'States',
                         ),
                         SizedBox(
                           height: 12,
@@ -62,18 +54,19 @@ class _StatsPageState extends State<StatsPage> {
                         Padding(
                           padding: EdgeInsets.fromLTRB(0, 15, 0, 3),
                           child: Text(
-                            'Most Cases',
+                            'Cases',
                             style: kPrimaryTextStyle,
                           ),
                         ),
                         InkWell(
                           onTap: () {
-                            toScreen(context, 'cases', countryDataList);
+                            toScreen(context, 'cases', stateDataList);
                           },
                           child: DataCard(
                             color: Colors.amber,
-                            countryUrl: snapshot.data['cases'].countryUrl,
-                            countryName: snapshot.data['cases'].countryName,
+                            countryUrl:
+                                'http://www.geognos.com/api/en/countries/flag/IN.png',
+                            countryName: snapshot.data['cases'].name,
                             totalData: snapshot.data['cases'].totalConfirmed,
                             newData: snapshot.data['cases'].newConfirmed,
                           ),
@@ -87,12 +80,13 @@ class _StatsPageState extends State<StatsPage> {
                         ),
                         InkWell(
                           onTap: () {
-                            toScreen(context, 'recovered', countryDataList);
+                            toScreen(context, 'recovered', stateDataList);
                           },
                           child: DataCard(
                             color: Colors.greenAccent,
-                            countryUrl: snapshot.data['recovered'].countryUrl,
-                            countryName: snapshot.data['recovered'].countryName,
+                            countryUrl:
+                                'http://www.geognos.com/api/en/countries/flag/IN.png',
+                            countryName: snapshot.data['recovered'].name,
                             totalData:
                                 snapshot.data['recovered'].totalRecovered,
                             newData: snapshot.data['recovered'].newRecovered,
@@ -107,36 +101,23 @@ class _StatsPageState extends State<StatsPage> {
                         ),
                         InkWell(
                           onTap: () {
-                            toScreen(context, 'deaths', countryDataList);
+                            toScreen(context, 'deaths', stateDataList);
                           },
                           child: DataCard(
                             color: Colors.redAccent,
-                            countryUrl: snapshot.data['deaths'].countryUrl,
-                            countryName: snapshot.data['deaths'].countryName,
+                            countryUrl:
+                                'http://www.geognos.com/api/en/countries/flag/IN.png',
+                            countryName: snapshot.data['deaths'].name,
                             totalData: snapshot.data['deaths'].totalDeaths,
                             newData: snapshot.data['deaths'].newDeaths,
-                          ),
-                        ),
-                        Padding(
-                          padding: EdgeInsets.only(top: 8, bottom: 0),
-                          child: Text(
-                            'Last Updated $date',
-                            style: kLastUpdatedTextStyle,
-                          ),
-                        ),
-                        Padding(
-                          padding: EdgeInsets.only(top: 0.0, bottom: 10),
-                          child: Text(
-                            'Data might be subject to Inconsistency.',
-                            style: kLastUpdatedTextStyle,
                           ),
                         ),
                       ],
                     ),
                   ],
                 );
-              } else if (snapshot.hasError ||
-                  snapshot.connectionState == ConnectionState.none) {
+              } else if (snapshot.connectionState == ConnectionState.none ||
+                  snapshot.hasError) {
                 return ErrorScreen();
               } else {
                 return LoaderScreen(
@@ -149,28 +130,27 @@ class _StatsPageState extends State<StatsPage> {
     );
   }
 
-  Future<Map<String, CountryData>> getData() async {
+  Future getData() async {
     if (!load) {
-      var data = await countryList.getAllCountryData();
-
+      var data;
+      data = await stateList.getAllStateData();
       setState(() {
-        countryDataList = data;
+        stateDataList = data.stateList;
       });
 
-      mostCases = await countryList.getMost('cases');
-      mostDeaths = await countryList.getMost('deaths');
-      mostRecovered = await countryList.getMost('recovered');
+      mostCases = await stateList.getMost('cases');
+      mostDeaths = await stateList.getMost('deaths');
+      mostRecovered = await stateList.getMost('recovered');
 
       setState(() {
-        load = true;
         dataMap = {
           'cases': mostCases,
           'recovered': mostRecovered,
           'deaths': mostDeaths
         };
+        load = true;
       });
     }
-
     return dataMap;
   }
 
@@ -178,7 +158,7 @@ class _StatsPageState extends State<StatsPage> {
     await Navigator.push(
         context,
         SlideRoute(
-            widget: StatDetail(
+            widget: IndiaStatDetail(
           type: type,
           data: data,
         )));
