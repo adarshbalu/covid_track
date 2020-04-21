@@ -1,16 +1,14 @@
 import 'dart:math';
-
+import 'package:flutter/material.dart';
+import 'package:charts_flutter/flutter.dart' as charts;
 import 'package:covidtrack/screens/country_page.dart';
 import 'package:covidtrack/screens/country_select_page.dart';
 import 'package:covidtrack/screens/home_page.dart';
 import 'package:covidtrack/screens/stats_page.dart';
 import 'package:covidtrack/utils/constants.dart';
 import 'package:covidtrack/utils/navigation_transition.dart';
-import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:intl/intl.dart';
-
-var formatter = NumberFormat("##,##,##,###");
 
 class AppHeader extends StatelessWidget {
   final headerText;
@@ -488,4 +486,136 @@ class StateDataCard extends StatelessWidget {
           )),
     );
   }
+}
+
+class CountryDataCard extends StatelessWidget {
+  final Color color;
+  final String header;
+  final int totalCases, newCases;
+
+  CountryDataCard({this.color, this.totalCases, this.header, this.newCases});
+
+  @override
+  Widget build(BuildContext context) {
+    return Padding(
+      padding: EdgeInsets.fromLTRB(20.0, 10, 20, 10),
+      child: Material(
+        borderRadius: BorderRadius.circular(10),
+        elevation: 3,
+        child: Container(
+            padding: EdgeInsets.only(top: 15, bottom: 15),
+            decoration: BoxDecoration(
+              gradient: LinearGradient(colors: [Colors.white, Colors.white70]),
+              borderRadius: BorderRadius.circular(10),
+            ),
+            child: Column(
+              children: <Widget>[
+                Text(
+                  header,
+                  style: kSecondaryTextStyle,
+                ),
+                Divider(),
+                SizedBox(
+                  height: 10,
+                ),
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: <Widget>[
+                    Container(
+                      decoration: BoxDecoration(
+                          color: color, borderRadius: BorderRadius.circular(5)),
+                      padding: EdgeInsets.all(10),
+                      child: Text(
+                        formatter.format(totalCases).toString(),
+                        style: TextStyle(
+                            color: Colors.white,
+                            fontSize: 20,
+                            fontWeight: FontWeight.w600),
+                      ),
+                    ),
+                    SizedBox(
+                      width: 8,
+                    ),
+                    Icon(Icons.arrow_upward),
+                    SizedBox(
+                      width: 8,
+                    ),
+                    Container(
+                      decoration: BoxDecoration(
+                        borderRadius: BorderRadius.circular(8),
+                        color: Color(0xffe0f7fa),
+                      ),
+                      padding: EdgeInsets.all(10),
+                      child: Text(formatter.format(newCases).toString()),
+                    ),
+                  ],
+                ),
+              ],
+            )),
+      ),
+    );
+  }
+}
+
+class PieChart extends StatefulWidget {
+  final pieData;
+  PieChart(this.pieData);
+  _PieChartState createState() => _PieChartState();
+}
+
+class _PieChartState extends State<PieChart> {
+  List<charts.Series<Case, String>> _seriesPieData;
+  var pieData;
+  @override
+  void initState() {
+    pieData = widget.pieData;
+    super.initState();
+    _seriesPieData = List<charts.Series<Case, String>>();
+    _generateData();
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return charts.PieChart(_seriesPieData,
+        animate: true,
+        animationDuration: Duration(seconds: 2),
+        behaviors: [
+          charts.DatumLegend(
+            outsideJustification: charts.OutsideJustification.endDrawArea,
+            horizontalFirst: false,
+            desiredMaxRows: 1,
+            cellPadding: EdgeInsets.only(right: 4.0, bottom: 4.0),
+            entryTextStyle: charts.TextStyleSpec(
+                color: charts.MaterialPalette.black, fontSize: 11),
+          )
+        ],
+        defaultRenderer: charts.ArcRendererConfig(
+            arcWidth: 60,
+            arcRendererDecorators: [
+              charts.ArcLabelDecorator(
+                  labelPosition: charts.ArcLabelPosition.inside)
+            ]));
+  }
+
+  _generateData() {
+    _seriesPieData.add(
+      charts.Series(
+        domainFn: (Case task, _) => task.type,
+        measureFn: (Case task, _) => task.value,
+        colorFn: (Case task, _) =>
+            charts.ColorUtil.fromDartColor(task.colorValue),
+        id: 'Cases',
+        data: pieData,
+        labelAccessorFn: (Case row, _) => '',
+      ),
+    );
+  }
+}
+
+class Case {
+  String type;
+  int value;
+  Color colorValue;
+
+  Case(this.type, this.value, this.colorValue);
 }

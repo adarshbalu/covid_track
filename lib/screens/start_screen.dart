@@ -34,6 +34,7 @@ class _StartScreenState extends State<StartScreen> {
                 return Center(
                   child: Column(
                     mainAxisAlignment: MainAxisAlignment.center,
+                    crossAxisAlignment: CrossAxisAlignment.center,
                     children: <Widget>[
                       Image.asset(
                         kCOVIDImage,
@@ -41,23 +42,24 @@ class _StartScreenState extends State<StartScreen> {
                         height: MediaQuery.of(context).size.height / 2,
                       ),
                       Padding(
-                        padding: EdgeInsets.only(
-                          top: 8,
-                        ),
+                        padding: EdgeInsets.only(top: 8, bottom: 2),
                         child: Text(
-                          '#StayHome',
-                          style: TextStyle(fontSize: 25),
+                          'Stay Home',
+                          style: TextStyle(
+                              fontSize: 26,
+                              fontFamily: 'Merienda',
+                              fontWeight: FontWeight.w600),
                         ),
                       ),
-                      Padding(
-                        padding: EdgeInsets.only(bottom: 8),
-                        child: Text(
-                          '#StaySafe',
-                          style: TextStyle(fontSize: 26),
-                        ),
+                      Text(
+                        'Stay Safe',
+                        style: TextStyle(
+                            fontSize: 26,
+                            fontFamily: 'Merienda',
+                            fontWeight: FontWeight.w600),
                       ),
                       SizedBox(
-                        height: 10,
+                        height: 20,
                       ),
                       CircularProgressIndicator(
                           valueColor:

@@ -1,6 +1,7 @@
 import 'dart:math';
 
 import 'package:flutter/material.dart';
+import 'package:intl/intl.dart';
 
 final monthNames = [
   "January",
@@ -101,3 +102,5 @@ const kVirus_1_Image = 'assets/vaccine-1.png';
 const kVirus_2_Image = 'assets/vaccine-2.png';
 
 var random = Random();
+
+var formatter = NumberFormat("##,##,##,###");
