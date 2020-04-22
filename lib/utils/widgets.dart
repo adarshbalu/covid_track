@@ -590,7 +590,7 @@ class _PieChartState extends State<PieChart> {
           )
         ],
         defaultRenderer: charts.ArcRendererConfig(
-            arcWidth: 60,
+            arcWidth: 100,
             arcRendererDecorators: [
               charts.ArcLabelDecorator(
                   labelPosition: charts.ArcLabelPosition.inside)
@@ -616,6 +616,27 @@ class Case {
   String type;
   int value;
   Color colorValue;
+  charts.Color barColor;
+  Case({this.type, this.value, this.colorValue, this.barColor});
+}
 
-  Case(this.type, this.value, this.colorValue);
+class BarChart extends StatelessWidget {
+  final List<Case> data;
+  BarChart(this.data);
+  @override
+  Widget build(BuildContext context) {
+    List<charts.Series<Case, String>> series = [
+      charts.Series(
+        id: 'New Cases',
+        data: data,
+        domainFn: (Case cases, int) => cases.type,
+        measureFn: (Case cases, int) => cases.value,
+        colorFn: (Case cases, int) => cases.barColor,
+      )
+    ];
+    return charts.BarChart(
+      series,
+      animate: true,
+    );
+  }
 }

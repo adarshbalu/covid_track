@@ -7,6 +7,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
 import 'package:flutter/widgets.dart';
+import 'package:charts_flutter/flutter.dart' as charts;
 
 class HomePage extends StatefulWidget {
   final data;
@@ -21,6 +22,7 @@ class _HomePageState extends State<HomePage> {
   String date = '';
   bool load = false;
   var allCountryArray;
+
   @override
   void initState() {
     date = dateTime.day.toString() +
@@ -54,12 +56,23 @@ class _HomePageState extends State<HomePage> {
                             headerText: 'COVID-19',
                           ),
                           SizedBox(
-                            height: 12,
+                            height: 8,
                           ),
                           CaseCard(
                             totalCases: snapshot.data.totalConfirmed,
                             isFlag: false,
                             color: colorArray['purple'],
+                          ),
+                          Padding(
+                            padding: EdgeInsets.only(top: 8),
+                            child: Text(
+                              'All Cases',
+                              style: TextStyle(
+                                  fontSize: 35,
+                                  color: Colors.black87,
+                                  fontWeight: FontWeight.w600,
+                                  fontFamily: 'Merienda'),
+                            ),
                           ),
                           DataListTile(
                             color: Colors.deepPurple,
@@ -79,6 +92,83 @@ class _HomePageState extends State<HomePage> {
                           SizedBox(
                             height: 8,
                           ),
+                          Container(
+                            height: MediaQuery.of(context).size.height / 1.9,
+                            decoration: BoxDecoration(
+                                color: Colors.white,
+                                borderRadius: BorderRadius.circular(20)),
+                            width: MediaQuery.of(context).size.width / 1.3,
+                            margin: EdgeInsets.only(top: 8, bottom: 15),
+                            padding: EdgeInsets.all(8),
+                            child: PieChart([
+                              Case(
+                                  type: 'Active',
+                                  value: snapshot.data.totalActive,
+                                  colorValue: Color(0xff311b92),
+                                  barColor: null),
+                              Case(
+                                  type: 'Recovered',
+                                  value: snapshot.data.totalRecovered,
+                                  colorValue: Color(0xff4caf50),
+                                  barColor: null),
+                              Case(
+                                  type: 'Death',
+                                  value: snapshot.data.totalDeaths,
+                                  colorValue: Color(0xffff1744),
+                                  barColor: null),
+                            ]),
+                          ),
+                          Divider(),
+                          Padding(
+                            padding: EdgeInsets.only(top: 8.0, bottom: 8),
+                            child: Text(
+                              'New Cases',
+                              style: TextStyle(
+                                  fontSize: 35,
+                                  fontWeight: FontWeight.w600,
+                                  fontFamily: 'Merienda'),
+                            ),
+                          ),
+                          DataListTile(
+                            color: Colors.deepPurple,
+                            cases: snapshot.data.newActive,
+                            text: 'Active',
+                          ),
+                          DataListTile(
+                            color: Colors.green,
+                            cases: snapshot.data.newRecovered,
+                            text: 'Recovered',
+                          ),
+                          DataListTile(
+                            color: Colors.red,
+                            cases: snapshot.data.newDeaths,
+                            text: 'Deaths',
+                          ),
+                          Container(
+                              height: MediaQuery.of(context).size.height / 2,
+                              decoration: BoxDecoration(
+                                  color: Colors.white,
+                                  borderRadius: BorderRadius.circular(20)),
+                              width: MediaQuery.of(context).size.width / 1.2,
+                              margin: EdgeInsets.only(top: 8, bottom: 15),
+                              padding: EdgeInsets.all(18),
+                              child: BarChart([
+                                Case(
+                                    type: 'Active',
+                                    value: snapshot.data.newActive,
+                                    barColor: charts.ColorUtil.fromDartColor(
+                                        Colors.deepPurple)),
+                                Case(
+                                    type: 'Recovered',
+                                    value: snapshot.data.newRecovered,
+                                    barColor: charts.ColorUtil.fromDartColor(
+                                        Colors.green)),
+                                Case(
+                                    type: 'Death',
+                                    value: snapshot.data.newDeaths,
+                                    barColor: charts.ColorUtil.fromDartColor(
+                                        Colors.red)),
+                              ])),
                         ],
                       ),
                     ],
@@ -102,7 +192,6 @@ class _HomePageState extends State<HomePage> {
       } else {
         globalData = widget.data;
       }
-
       setState(() {
         load = true;
       });

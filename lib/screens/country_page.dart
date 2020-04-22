@@ -80,12 +80,18 @@ class _CountryPageState extends State<CountryPage> {
                           margin: EdgeInsets.only(top: 8, bottom: 15),
                           padding: EdgeInsets.all(8),
                           child: PieChart([
-                            Case('Active', snapshot.data.totalActive,
-                                Color(0xff2962ff)),
-                            Case('Recovered', snapshot.data.totalRecovered,
-                                Color(0xff4caf50)),
-                            Case('Death', snapshot.data.totalDeaths,
-                                Color(0xffff1744)),
+                            Case(
+                                type: 'Active',
+                                value: snapshot.data.totalActive,
+                                colorValue: Color(0xff2962ff)),
+                            Case(
+                                type: 'Recovered',
+                                value: snapshot.data.totalRecovered,
+                                colorValue: Color(0xff4caf50)),
+                            Case(
+                                type: 'Death',
+                                value: snapshot.data.totalDeaths,
+                                colorValue: Color(0xffff1744)),
                           ]),
                         ),
                         Divider(
