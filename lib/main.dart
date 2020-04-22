@@ -1,4 +1,3 @@
-import 'package:covidtrack/screens/loading_screen.dart';
 import 'package:covidtrack/screens/start_screen.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';

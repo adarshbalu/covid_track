@@ -48,81 +48,80 @@ class _CountrySelectPageState extends State<CountrySelectPage> {
                 name: name,
               ),
               SizedBox(
-                height: 30,
+                height: 20,
               ),
               Row(
                 children: <Widget>[
                   SizedBox(
-                    width: 30,
+                    width: MediaQuery.of(context).size.width / 4.5,
                   ),
                   Expanded(
-                    flex: 3,
-                    child: TextField(
-                      onChanged: (value) {
-                        setState(() {
-                          search = true;
-                          color = Colors.green;
-                        });
-                      },
-                      onSubmitted: (value) {
-                        for (var country in countryDataList) {
-                          if (country.countryName.toLowerCase() ==
-                              value.toLowerCase()) {
+                    child: Container(
+                      child: TextField(
+                        onChanged: (value) {
+                          setState(() {
+                            search = true;
+                            color = Colors.green;
+                          });
+                        },
+                        onSubmitted: (value) {
+                          for (var country in countryDataList) {
+                            if (country.countryName.toLowerCase() ==
+                                value.toLowerCase()) {
+                              setState(() {
+                                search = true;
+                                tempCountry = country.shortName;
+                              });
+                            }
+                          }
+                          if (!search) {
                             setState(() {
-                              search = true;
-                              tempCountry = country.shortName;
+                              color = Colors.red;
+                              tempCountry = '';
                             });
                           }
-                        }
-                        if (!search) {
-                          setState(() {
-                            color = Colors.red;
-                            tempCountry = '';
-                          });
-                        }
-                      },
-                      controller: _controller,
-                      style: TextStyle(
-                        color: Colors.black,
-                        fontSize: 24,
-                      ),
-                      decoration: InputDecoration(
-                        helperText: 'Enter Name of Country',
-                        helperStyle: TextStyle(
-                          color: Colors.grey,
-                          fontSize: 20,
+                        },
+                        controller: _controller,
+                        style: TextStyle(
+                          color: Colors.black,
+                          fontSize: 22,
                         ),
-                        border: OutlineInputBorder(
-                          borderRadius: BorderRadius.circular(30),
-                          borderSide: BorderSide(
-                            color: Colors.green,
-                            width: 2,
+                        decoration: InputDecoration(
+                          contentPadding: EdgeInsets.all(8),
+                          helperText: 'Enter Name of Country',
+                          helperStyle: TextStyle(
+                            color: Colors.grey,
+                            fontSize: 18,
                           ),
-                        ),
-                        enabledBorder: OutlineInputBorder(
-                          borderRadius: BorderRadius.circular(30),
-                          borderSide: BorderSide(
-                            color: Colors.blue,
-                            width: 2,
+                          border: OutlineInputBorder(
+                            borderRadius: BorderRadius.circular(30),
+                            borderSide: BorderSide(
+                              color: Colors.green,
+                              width: 2,
+                            ),
+                          ),
+                          enabledBorder: OutlineInputBorder(
+                            borderRadius: BorderRadius.circular(30),
+                            borderSide: BorderSide(
+                              color: Colors.blue,
+                              width: 2,
+                            ),
                           ),
                         ),
                       ),
                     ),
                   ),
-                  Expanded(
-                    child: CircleAvatar(
-                      radius: 30,
-                      backgroundColor: color,
-                      child: Icon(
-                        Icons.search,
-                        color: Colors.white,
-                      ),
-                    ),
+                  SizedBox(
+                    width: MediaQuery.of(context).size.width / 4.5,
                   ),
                 ],
               ),
               SizedBox(
-                height: 30,
+                height: 15,
+              ),
+              Divider(),
+              SizedBox(
+                height: 15,
               ),
               Text(
                 'Country List',
@@ -130,17 +129,21 @@ class _CountrySelectPageState extends State<CountrySelectPage> {
                 style: TextStyle(fontSize: 24, fontWeight: FontWeight.w300),
               ),
               SizedBox(
-                height: 2,
+                height: 5,
               ),
               Container(
                 margin: EdgeInsets.only(left: 10, right: 10),
+                padding: EdgeInsets.only(top: 8, bottom: 8),
                 decoration: BoxDecoration(
-                  //color: Colors.black12,
-
-                  borderRadius: BorderRadius.all(Radius.circular(20)),
+                  border: Border(
+                      left: BorderSide(color: Colors.grey, width: 10),
+                      right: BorderSide(color: Colors.grey, width: 10)),
+                  // borderRadius: BorderRadius.all(Radius.circular(20)),
                 ),
                 child: ConstrainedBox(
-                  constraints: BoxConstraints(maxHeight: 250),
+                  constraints: BoxConstraints(
+                      minHeight: MediaQuery.of(context).size.height / 2,
+                      maxHeight: MediaQuery.of(context).size.height / 1.8),
                   child: FutureBuilder(
                       future: getCountryData(),
                       builder: (context, snapshot) {
@@ -151,7 +154,7 @@ class _CountrySelectPageState extends State<CountrySelectPage> {
                               itemCount: snapshot.data.length,
                               itemBuilder: (context, index) {
                                 return Card(
-                                    margin: EdgeInsets.fromLTRB(30, 10, 30, 10),
+                                    margin: EdgeInsets.fromLTRB(20, 10, 20, 10),
                                     elevation: 2,
                                     child: ListTile(
                                       onTap: () {
@@ -161,10 +164,15 @@ class _CountrySelectPageState extends State<CountrySelectPage> {
                                       },
                                       title: Text(
                                           snapshot.data[index].countryName),
-                                      leading: Image.network(
-                                        snapshot.data[index].countryUrl,
+                                      leading: Container(
                                         height: 40,
                                         width: 40,
+                                        decoration: BoxDecoration(
+                                            shape: BoxShape.circle),
+                                        child: Image.network(
+                                          snapshot.data[index].countryUrl,
+                                          fit: BoxFit.contain,
+                                        ),
                                       ),
                                     ));
                               });
