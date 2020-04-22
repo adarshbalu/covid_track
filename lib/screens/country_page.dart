@@ -1,5 +1,3 @@
-import 'package:covidtrack/screens/india_page.dart';
-import 'package:covidtrack/screens/india_stats_page.dart';
 import 'package:covidtrack/utils/constants.dart';
 import 'package:covidtrack/utils/models/country.dart';
 import 'package:covidtrack/utils/models/state_data.dart';
@@ -47,7 +45,8 @@ class _CountryPageState extends State<CountryPage> {
                     Column(
                       crossAxisAlignment: CrossAxisAlignment.center,
                       children: <Widget>[
-                        CountryNameHeader(snapshot.data.countryName),
+                        CountryNameHeader(snapshot.data.countryName,
+                            snapshot.data.countryUrl),
 
 //                        InkWell(
 //                          onTap:
@@ -92,17 +91,7 @@ class _CountryPageState extends State<CountryPage> {
                                 type: 'Death',
                                 value: snapshot.data.totalDeaths,
                                 colorValue: Color(0xffff1744)),
-                          ]),
-                        ),
-                        Divider(
-                          color: Colors.black,
-                        ),
-                        Padding(
-                          padding: EdgeInsets.only(top: 15, bottom: 8),
-                          child: Text(
-                            'All Data',
-                            style: kPrimaryTextStyle,
-                          ),
+                          ], true),
                         ),
                         CountryDataCard(
                           header: 'Total Active',
@@ -122,6 +111,46 @@ class _CountryPageState extends State<CountryPage> {
                           newCases: snapshot.data.newDeaths,
                           color: Color(0xffff1744),
                         ),
+                        Container(
+                            height: MediaQuery.of(context).size.height / 2,
+                            decoration: BoxDecoration(
+                                color: Colors.white,
+                                borderRadius: BorderRadius.circular(20)),
+                            width: MediaQuery.of(context).size.width / 1.2,
+                            margin: EdgeInsets.only(top: 8, bottom: 15),
+                            padding: EdgeInsets.all(18),
+                            child: Column(
+                              children: <Widget>[
+                                Text(
+                                  'New Cases',
+                                  style: kPrimaryTextStyle,
+                                ),
+                                Expanded(
+                                  child: BarChart(
+                                    [
+                                      Case(
+                                          type: 'Active',
+                                          value: snapshot.data.newActive,
+                                          barColor:
+                                              charts.ColorUtil.fromDartColor(
+                                                  Colors.deepPurple)),
+                                      Case(
+                                          type: 'Recovered',
+                                          value: snapshot.data.newRecovered,
+                                          barColor:
+                                              charts.ColorUtil.fromDartColor(
+                                                  Colors.green)),
+                                      Case(
+                                          type: 'Death',
+                                          value: snapshot.data.newDeaths,
+                                          barColor:
+                                              charts.ColorUtil.fromDartColor(
+                                                  Colors.red)),
+                                    ],
+                                  ),
+                                ),
+                              ],
+                            )),
                       ],
                     ),
                   ],

@@ -33,8 +33,13 @@ class GlobalData {
     this.newRecovered = data['NewRecovered'];
     this.newDeaths = data['NewDeaths'];
     this.totalActive =
-        this.totalConfirmed - (this.totalRecovered + this.totalDeaths);
-    this.newActive = this.newConfirmed - (this.newRecovered + this.newDeaths);
+        this.totalConfirmed - (this.totalRecovered + this.totalDeaths) >= 0
+            ? this.totalConfirmed - (this.totalRecovered + this.totalDeaths)
+            : 0;
+    this.newActive =
+        this.newConfirmed - (this.newRecovered + this.newDeaths) >= 0
+            ? this.newConfirmed - (this.newRecovered + this.newDeaths)
+            : 0;
 
     return this;
   }

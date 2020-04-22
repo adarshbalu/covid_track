@@ -35,10 +35,6 @@ class ContentsList {
     this.contents.add(_content.getContent(_mask, kMask_3_Image));
     this.contents.add(_content.getContent(_mask, kMask_4_Image));
     this.contents.add(_content.getContent(_respiratoryHygiene, kTissueImage));
-    this.contents.add(_content.getContent(_vaccine, kVaccine_1_Image));
-    this.contents.add(_content.getContent(_vaccine, kVaccine_2_Image));
-    this.contents.add(_content.getContent(_vaccine, kMedicineImage));
-    this.contents.add(_content.getContent(_vaccine, kPillsImage));
     this.contents.add(_content.getContent(_quarantine, kQuarantineImage));
     this
         .contents
@@ -63,8 +59,6 @@ class ContentsList {
       'Wear masks when going out and dispose them properly after use.';
   String _respiratoryHygiene =
       'Cover your mouth and nose with your bent elbow or tissue when you cough or sneeze. Then dispose of the used tissue immediately.';
-  String _vaccine =
-      'Currently No Effective vaccine available for COVID-19. Prevention is Cure';
   String _quarantine =
       'If adviced to be in quarantine , complete the quarantine period to avoid potential spread .';
   String _clean = 'Clean house and surroundings with soap and water.';

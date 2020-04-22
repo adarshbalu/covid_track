@@ -103,20 +103,20 @@ class _HomePageState extends State<HomePage> {
                             child: PieChart([
                               Case(
                                   type: 'Active',
-                                  value: snapshot.data.totalActive,
+                                  value: globalData.totalActive,
                                   colorValue: Color(0xff311b92),
                                   barColor: null),
                               Case(
                                   type: 'Recovered',
-                                  value: snapshot.data.totalRecovered,
+                                  value: globalData.totalRecovered,
                                   colorValue: Color(0xff4caf50),
                                   barColor: null),
                               Case(
                                   type: 'Death',
-                                  value: snapshot.data.totalDeaths,
+                                  value: globalData.totalDeaths,
                                   colorValue: Color(0xffff1744),
                                   barColor: null),
-                            ]),
+                            ], false),
                           ),
                           Divider(),
                           Padding(
@@ -152,23 +152,33 @@ class _HomePageState extends State<HomePage> {
                               width: MediaQuery.of(context).size.width / 1.2,
                               margin: EdgeInsets.only(top: 8, bottom: 15),
                               padding: EdgeInsets.all(18),
-                              child: BarChart([
-                                Case(
-                                    type: 'Active',
-                                    value: snapshot.data.newActive,
-                                    barColor: charts.ColorUtil.fromDartColor(
-                                        Colors.deepPurple)),
-                                Case(
-                                    type: 'Recovered',
-                                    value: snapshot.data.newRecovered,
-                                    barColor: charts.ColorUtil.fromDartColor(
-                                        Colors.green)),
-                                Case(
-                                    type: 'Death',
-                                    value: snapshot.data.newDeaths,
-                                    barColor: charts.ColorUtil.fromDartColor(
-                                        Colors.red)),
-                              ])),
+                              child: Column(
+                                children: <Widget>[
+                                  Text('New Cases'),
+                                  Expanded(
+                                    child: BarChart([
+                                      Case(
+                                          type: 'Active',
+                                          value: snapshot.data.newActive,
+                                          barColor:
+                                              charts.ColorUtil.fromDartColor(
+                                                  Colors.deepPurple)),
+                                      Case(
+                                          type: 'Recovered',
+                                          value: snapshot.data.newRecovered,
+                                          barColor:
+                                              charts.ColorUtil.fromDartColor(
+                                                  Colors.green)),
+                                      Case(
+                                          type: 'Death',
+                                          value: snapshot.data.newDeaths,
+                                          barColor:
+                                              charts.ColorUtil.fromDartColor(
+                                                  Colors.red)),
+                                    ]),
+                                  ),
+                                ],
+                              )),
                         ],
                       ),
                     ],
@@ -187,11 +197,8 @@ class _HomePageState extends State<HomePage> {
 
   Future<GlobalData> getData() async {
     if (!load) {
-      if (widget.data == null) {
-        await globalData.getGlobalData();
-      } else {
-        globalData = widget.data;
-      }
+      await globalData.getGlobalData();
+
       setState(() {
         load = true;
       });

@@ -356,8 +356,9 @@ class BottomMenu extends StatelessWidget {
 }
 
 class CountryNameHeader extends StatelessWidget {
-  final String name;
-  CountryNameHeader(this.name);
+  final String name, url;
+
+  CountryNameHeader(this.name, this.url);
   @override
   Widget build(BuildContext context) {
     return Container(
@@ -369,12 +370,20 @@ class CountryNameHeader extends StatelessWidget {
               bottomRight: Radius.circular(5), bottomLeft: Radius.circular(5)),
           color: Colors.white,
           backgroundBlendMode: BlendMode.colorDodge),
-      child: Text(
-        name.toUpperCase(),
-        style: TextStyle(
-            fontWeight: FontWeight.w700, fontSize: 25, fontFamily: 'Merienda'),
-        textAlign: TextAlign.center,
-        softWrap: true,
+      child: ListTile(
+        leading: Image.network(
+          url,
+          height: 40,
+          width: 40,
+        ),
+        title: Text(
+          name.toUpperCase(),
+          style: TextStyle(
+              fontWeight: FontWeight.w700,
+              fontSize: 25,
+              fontFamily: 'Merienda'),
+          softWrap: true,
+        ),
       ),
     );
   }
@@ -557,28 +566,27 @@ class CountryDataCard extends StatelessWidget {
   }
 }
 
-class PieChart extends StatefulWidget {
-  final pieData;
-  PieChart(this.pieData);
-  _PieChartState createState() => _PieChartState();
-}
-
-class _PieChartState extends State<PieChart> {
-  List<charts.Series<Case, String>> _seriesPieData;
-  var pieData;
-  @override
-  void initState() {
-    pieData = widget.pieData;
-    super.initState();
-    _seriesPieData = List<charts.Series<Case, String>>();
-    _generateData();
-  }
+class PieChart extends StatelessWidget {
+  final List<Case> pieData;
+  PieChart(this.pieData, this.animate);
+  final bool animate;
 
   @override
   Widget build(BuildContext context) {
+    List<charts.Series<Case, String>> _seriesPieData = [
+      charts.Series(
+        domainFn: (Case task, _) => task.type,
+        measureFn: (Case task, _) => task.value,
+        colorFn: (Case task, _) =>
+            charts.ColorUtil.fromDartColor(task.colorValue),
+        id: 'Cases',
+        data: pieData,
+        labelAccessorFn: (Case row, _) => '',
+      ),
+    ];
     return charts.PieChart(_seriesPieData,
-        animate: true,
-        animationDuration: Duration(seconds: 2),
+        animate: animate,
+        animationDuration: Duration(seconds: 3),
         behaviors: [
           charts.DatumLegend(
             outsideJustification: charts.OutsideJustification.endDrawArea,
@@ -596,28 +604,6 @@ class _PieChartState extends State<PieChart> {
                   labelPosition: charts.ArcLabelPosition.inside)
             ]));
   }
-
-  _generateData() {
-    _seriesPieData.add(
-      charts.Series(
-        domainFn: (Case task, _) => task.type,
-        measureFn: (Case task, _) => task.value,
-        colorFn: (Case task, _) =>
-            charts.ColorUtil.fromDartColor(task.colorValue),
-        id: 'Cases',
-        data: pieData,
-        labelAccessorFn: (Case row, _) => '',
-      ),
-    );
-  }
-}
-
-class Case {
-  String type;
-  int value;
-  Color colorValue;
-  charts.Color barColor;
-  Case({this.type, this.value, this.colorValue, this.barColor});
 }
 
 class BarChart extends StatelessWidget {
@@ -637,6 +623,15 @@ class BarChart extends StatelessWidget {
     return charts.BarChart(
       series,
       animate: true,
+      animationDuration: Duration(seconds: 1),
     );
   }
+}
+
+class Case {
+  String type;
+  int value;
+  Color colorValue;
+  charts.Color barColor;
+  Case({this.type, this.value, this.colorValue, this.barColor});
 }

@@ -25,7 +25,11 @@ class StateList {
     this.totalData.newDeaths = int.parse(total['deltadeaths']);
     this.totalData.newRecovered = int.parse(total['deltarecovered']);
     this.totalData.newActive = this.totalData.newConfirmed -
-        (this.totalData.newRecovered + this.totalData.newDeaths);
+                (this.totalData.newRecovered + this.totalData.newDeaths) >=
+            0
+        ? this.totalData.newConfirmed -
+            (this.totalData.newRecovered + this.totalData.newDeaths)
+        : 0;
 
     for (int i = 1; i < statesArray.length; i++) {
       StateData stateData =

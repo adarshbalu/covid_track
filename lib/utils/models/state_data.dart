@@ -29,7 +29,10 @@ class StateData {
     this.newConfirmed = data.newConfirmed;
     this.newRecovered = data.newRecovered;
     this.newDeaths = data.newDeaths;
-    this.newActive = data.newConfirmed - (data.newRecovered + data.newDeaths);
+    this.newActive =
+        data.newConfirmed - (data.newRecovered + data.newDeaths) >= 0
+            ? data.newConfirmed - (data.newRecovered + data.newDeaths)
+            : 0;
     this.totalActive = data.totalActive;
     this.name = data.name;
     this.code = data.code;
