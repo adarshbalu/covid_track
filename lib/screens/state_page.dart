@@ -1,33 +1,26 @@
 import 'package:covidtrack/utils/constants.dart';
-import 'package:covidtrack/utils/models/country.dart';
 import 'package:covidtrack/utils/models/state_data.dart';
-import 'package:covidtrack/utils/models/state_list.dart';
 import 'package:charts_flutter/flutter.dart' as charts;
 import 'package:covidtrack/utils/widgets.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
-class CountryPage extends StatefulWidget {
-  final String countryName;
+class StatePage extends StatefulWidget {
+  final String stateName;
   final data;
-  CountryPage({this.countryName, this.data});
+  StatePage({this.stateName, this.data});
   @override
-  _CountryPageState createState() => _CountryPageState();
+  _StatePageState createState() => _StatePageState();
 }
 
-class _CountryPageState extends State<CountryPage> {
-  CountryData countryData;
-  String countryName;
-
-  StateList stateList;
-  List<StateData> stateDataList = List();
+class _StatePageState extends State<StatePage> {
+  StateData stateData;
+  String stateName;
 
   @override
   void initState() {
-    stateList = StateList(totalData: StateData());
-
-    countryData = widget.data;
-    countryName = widget.countryName;
+    stateData = widget.data;
+    stateName = widget.stateName;
     super.initState();
   }
 
@@ -37,7 +30,7 @@ class _CountryPageState extends State<CountryPage> {
       bottomNavigationBar: BottomMenu(null),
       body: SafeArea(
         child: FutureBuilder(
-            future: getCountry(),
+            future: getStateData(),
             builder: (context, snapshot) {
               if (snapshot.hasData) {
                 return ListView(
@@ -45,8 +38,37 @@ class _CountryPageState extends State<CountryPage> {
                     Column(
                       crossAxisAlignment: CrossAxisAlignment.center,
                       children: <Widget>[
-                        CountryNameHeader(snapshot.data.countryName,
-                            snapshot.data.countryUrl),
+                        Container(
+                          decoration: BoxDecoration(
+                            color: Colors.white,
+                            borderRadius: BorderRadius.only(
+                                bottomRight: Radius.circular(5),
+                                bottomLeft: Radius.circular(5)),
+                          ),
+                          padding: EdgeInsets.only(top: 10, bottom: 10),
+                          margin: EdgeInsets.only(bottom: 10),
+                          child: Row(
+                            children: <Widget>[
+                              Padding(
+                                padding: EdgeInsets.fromLTRB(18.0, 0, 8, 0),
+                                child: Image.asset(
+                                  kIndiaImage,
+                                  width: 50,
+                                ),
+                              ),
+                              Expanded(
+                                child: Text(
+                                  stateName,
+                                  style: TextStyle(
+                                      fontWeight: FontWeight.w700,
+                                      fontSize: 25,
+                                      fontFamily: 'Merienda'),
+                                  softWrap: true,
+                                ),
+                              ),
+                            ],
+                          ),
+                        ),
                         CountryDataCard(
                           header: 'Total Confirmed',
                           totalCases: snapshot.data.totalConfirmed,
@@ -146,8 +168,8 @@ class _CountryPageState extends State<CountryPage> {
     );
   }
 
-  Future<CountryData> getCountry() async {
-    countryData.getCountryData(widget.data);
-    return countryData;
+  Future<StateData> getStateData() async {
+    stateData.setStateData(widget.data);
+    return stateData;
   }
 }

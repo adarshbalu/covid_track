@@ -1,4 +1,4 @@
-import 'package:covidtrack/screens/country_page.dart';
+import 'package:covidtrack/screens/state_page.dart';
 import 'package:covidtrack/utils/constants.dart';
 import 'package:covidtrack/utils/models/content_list.dart';
 import 'package:covidtrack/utils/models/state_data.dart';
@@ -140,39 +140,57 @@ class _IndiaStatDetailState extends State<IndiaStatDetail> {
                       itemCount: totalReports,
                       itemBuilder: (context, index) {
                         if (type == 'recovered') {
-                          return Container(
-                            margin: EdgeInsets.fromLTRB(20, 10, 20, 5),
-                            child: DataCard(
-                              color: color,
-                              countryUrl:
-                                  'http://www.geognos.com/api/en/countries/flag/IN.png',
-                              countryName: snapshot.data[index].name,
-                              totalData: snapshot.data[index].totalRecovered,
-                              newData: snapshot.data[index].newRecovered,
+                          return InkWell(
+                            onTap: () {
+                              toStatePage(snapshot.data[index].name,
+                                  snapshot.data[index]);
+                            },
+                            child: Container(
+                              margin: EdgeInsets.fromLTRB(20, 10, 20, 5),
+                              child: DataCard(
+                                color: color,
+                                countryUrl:
+                                    'http://www.geognos.com/api/en/countries/flag/IN.png',
+                                countryName: snapshot.data[index].name,
+                                totalData: snapshot.data[index].totalRecovered,
+                                newData: snapshot.data[index].newRecovered,
+                              ),
                             ),
                           );
                         } else if (type == 'cases') {
-                          return Container(
-                            margin: EdgeInsets.fromLTRB(20, 10, 20, 5),
-                            child: DataCard(
-                              color: color,
-                              countryUrl:
-                                  'http://www.geognos.com/api/en/countries/flag/IN.png',
-                              countryName: snapshot.data[index].name,
-                              totalData: snapshot.data[index].totalConfirmed,
-                              newData: snapshot.data[index].newConfirmed,
+                          return InkWell(
+                            onTap: () {
+                              toStatePage(snapshot.data[index].name,
+                                  snapshot.data[index]);
+                            },
+                            child: Container(
+                              margin: EdgeInsets.fromLTRB(20, 10, 20, 5),
+                              child: DataCard(
+                                color: color,
+                                countryUrl:
+                                    'http://www.geognos.com/api/en/countries/flag/IN.png',
+                                countryName: snapshot.data[index].name,
+                                totalData: snapshot.data[index].totalConfirmed,
+                                newData: snapshot.data[index].newConfirmed,
+                              ),
                             ),
                           );
                         } else {
-                          return Container(
-                            margin: EdgeInsets.fromLTRB(20, 10, 20, 5),
-                            child: DataCard(
-                              color: color,
-                              countryUrl:
-                                  'http://www.geognos.com/api/en/countries/flag/IN.png',
-                              countryName: snapshot.data[index].name,
-                              totalData: snapshot.data[index].totalDeaths,
-                              newData: snapshot.data[index].newDeaths,
+                          return InkWell(
+                            onTap: () {
+                              toStatePage(snapshot.data[index].name,
+                                  snapshot.data[index]);
+                            },
+                            child: Container(
+                              margin: EdgeInsets.fromLTRB(20, 10, 20, 5),
+                              child: DataCard(
+                                color: color,
+                                countryUrl:
+                                    'http://www.geognos.com/api/en/countries/flag/IN.png',
+                                countryName: snapshot.data[index].name,
+                                totalData: snapshot.data[index].totalDeaths,
+                                newData: snapshot.data[index].newDeaths,
+                              ),
                             ),
                           );
                         }
@@ -199,12 +217,12 @@ class _IndiaStatDetailState extends State<IndiaStatDetail> {
     return statesArray;
   }
 
-  void toCountryPage(String countryName, var data) {
+  void toStatePage(String stateName, var data) {
     Navigator.push(
         context,
         SlideRoute(
-            widget: CountryPage(
-          countryName: countryName,
+            widget: StatePage(
+          stateName: stateName,
           data: data,
         )));
   }

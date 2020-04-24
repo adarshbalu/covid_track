@@ -1,4 +1,5 @@
 import 'dart:math';
+import 'package:covidtrack/screens/india_home_page.dart';
 import 'package:flutter/material.dart';
 import 'package:charts_flutter/flutter.dart' as charts;
 import 'package:covidtrack/screens/country_page.dart';
@@ -44,12 +45,7 @@ class AppHeader extends StatelessWidget {
                 ? GestureDetector(
                     onTap: () {
                       Navigator.push(
-                          context,
-                          SlideRoute(
-                              widget: CountryPage(
-                            countryName: name,
-                            data: data,
-                          )));
+                          context, SlideRoute(widget: IndiaHomePage()));
                     },
                     child: CircleAvatar(
                         radius: 25,
@@ -153,7 +149,7 @@ class CaseCard extends StatelessWidget {
                 )
               : Image.network(
                   flagURL,
-                  width: 100,
+                  width: 80,
                 ),
           Padding(
             padding: EdgeInsets.only(top: 5.0, bottom: 5),
@@ -623,7 +619,7 @@ class BarChart extends StatelessWidget {
     return charts.BarChart(
       series,
       animate: true,
-      animationDuration: Duration(seconds: 1),
+      animationDuration: Duration(seconds: 2),
     );
   }
 }

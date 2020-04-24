@@ -76,17 +76,17 @@ class _HomePageState extends State<HomePage> {
                           ),
                           DataListTile(
                             color: Colors.deepPurple,
-                            cases: snapshot.data.totalActive,
+                            cases: globalData.totalActive,
                             text: 'Active',
                           ),
                           DataListTile(
                             color: Colors.green,
-                            cases: snapshot.data.totalRecovered,
+                            cases: globalData.totalRecovered,
                             text: 'Recovered',
                           ),
                           DataListTile(
                             color: Colors.red,
-                            cases: snapshot.data.totalDeaths,
+                            cases: globalData.totalDeaths,
                             text: 'Deaths',
                           ),
                           SizedBox(
@@ -131,8 +131,8 @@ class _HomePageState extends State<HomePage> {
                           ),
                           DataListTile(
                             color: Colors.deepPurple,
-                            cases: snapshot.data.newActive,
-                            text: 'Active',
+                            cases: snapshot.data.newConfirmed,
+                            text: 'Confirmed',
                           ),
                           DataListTile(
                             color: Colors.green,
@@ -158,8 +158,8 @@ class _HomePageState extends State<HomePage> {
                                   Expanded(
                                     child: BarChart([
                                       Case(
-                                          type: 'Active',
-                                          value: snapshot.data.newActive,
+                                          type: 'Confirmed',
+                                          value: snapshot.data.newConfirmed,
                                           barColor:
                                               charts.ColorUtil.fromDartColor(
                                                   Colors.deepPurple)),
