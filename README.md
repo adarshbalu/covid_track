@@ -31,7 +31,7 @@ This Mobile application allows you to select different countries to obtain the r
 ## Screenshots
 
 ### Home Screen
-<img src="1.jpg" align="left"
+<img src="1.jpg" align="center"
 width="200"
     hspace="10" vspace="10">
 <img src="2.jpg" align="center"
