@@ -12,7 +12,7 @@ Download the Latest version from this [Link](build/app/outputs/apk/release/app-r
 
 Covid-19 Track tracks the active, recovered and deaths due to corona virus all over the world and updates daily.  
 
-This android application allows you to select different countries to obtain the results seperately with graphical visualisations .
+This Mobile application allows you to select different countries to obtain the results seperately with graphical visualisations.
 
 
 ## Features
@@ -26,6 +26,7 @@ This android application allows you to select different countries to obtain the 
 - View the total statistic details on countries with Most Cases, Most Recovered and Most Deaths.
 - Gets updated regularly.
 - Does not ask for any unwanted permissions.
+- Has a minimal user interface.
 
 ## Screenshots
 
