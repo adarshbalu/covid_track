@@ -1,55 +1,80 @@
-# Project Title
+# wallabag - Android App [![Build Status](https://travis-ci.org/wallabag/android-app.svg?branch=master)](https://travis-ci.org/wallabag/android-app)
 
-One Paragraph of project description goes here
+<img src="/readme/wallabag logo.png" align="left"
+width="200" hspace="10" vspace="10">
 
-## Getting Started
+wallabag is a self-hosted read-it-later app.  
+Unlike other services, wallabag is free and open source.  
+wallabag for Android is a companion app for [wallabag](https://www.wallabag.org). You need a wallabag account first, which you are going to use in this app.
 
-These instructions will get you a copy of the project up and running on your local machine for development and testing purposes. See deployment for notes on how to deploy the project on a live system.
+wallabag is available on the Google Play Store and F-Droid.
 
+<p align="left">
+<a href="https://play.google.com/store/apps/details?id=fr.gaulupeau.apps.InThePoche">
+    <img alt="Get it on Google Play"
+        height="80"
+        src="https://play.google.com/intl/en_us/badges/images/generic/en_badge_web_generic.png" />
+</a>  
+<a href="https://f-droid.org/app/fr.gaulupeau.apps.InThePoche">
+    <img alt="Get it on F-Droid"
+        height="80"
+        src="https://f-droid.org/badge/get-it-on.png" />
+        </a>
+        </p>
 
-### Installing
+## About
 
-A step by step series of examples that tell you how to get a development env running
+wallabag has been made for you to comfortably read and archive your articles.
+You can download wallabag from wallabag.org and follow the instructions to install it on your own server.
+Alternatively, you can directly sign up for [wallabag.it](https://wallabag.it) or [Framabag](https://framabag.org).
 
-Say what the step will be
+This android application allows you to put a link in your wallabag instance, letting you read your wallabag links offline.
 
-```
-Give the example
-```
+This application was originally created by Jonathan GAULUPEAU and released under the GNU GPLv3.
+wallabag is a creation from Nicolas Lœuillet released under the MIT License (Expat License).
 
-And repeat
+## Features
 
-```
-until finished
-```
+The android app lets you:
+- Connect to your self-hosted wallabag instance or connect to your [wallabag.it](https://wallabag.it) or [Framabag](https://framabag.org) account.
+- Supports wallabag 2.0 and higher.
+- Completely ad-free.
+- Increase and decrease the size of the font and also switch between a serif or sans-serif font for a more comfortable reading experience.
+- Switch between numerous themes.
+- Possibility to cache images locally for offline reading.
+- Get articles read via Text-to-Speech feature.
+- Needs no special permissions on Android 6.0+.
 
-End with an example of getting some data out of the system or using it for a little demo
+## Screenshots
 
+[<img src="/readme/Wallabag%20Reading%20List.png" align="left"
+width="200"
+    hspace="10" vspace="10">](/readme/Wallabag%20Reading%20List.png)
+[<img src="/readme/Wallabag%20Article%20View.png" align="center"
+width="200"
+    hspace="10" vspace="10">](/readme/Wallabag%20Article%20View.png)
 
+## Permissions
 
-## Built With
+On Android versions prior to Android 6.0, wallabag requires the following permissions:
+- Full Network Access.
+- View Network Connections.
+- Run at startup.
+- Read and write access to external storage.
 
-* [Dropwizard](http://www.dropwizard.io/1.0.2/docs/) - The web framework used
-* [Maven](https://maven.apache.org/) - Dependency Management
-* [ROME](https://rometools.github.io/rome/) - Used to generate RSS Feeds
+The "Run at startup" permission is only used if Auto-Sync feature is enabled and is not utilised otherwise. The network access permissions are made use of for downloading content. The external storage permission is used to cache article images for viewing offline.
 
 ## Contributing
 
-Please read [CONTRIBUTING.md](https://gist.github.com/PurpleBooth/b24679402957c63ec426) for details on our code of conduct, and the process for submitting pull requests to us.
+wallabag app is a free and open source project developed by volunteers. Any contributions are welcome. Here are a few ways you can help:
+ * [Report bugs and make suggestions.](https://github.com/wallabag/android-app/issues)
+ * [Translate the app](https://hosted.weblate.org/projects/wallabag/android-app/) (you don't have to create an account).
+ * Write some code. Please follow the code style used in the project to make a review process faster.
 
-
-## Authors
-
-* **Billie Thompson** - *Initial work* - [PurpleBooth](https://github.com/PurpleBooth)
-
-See also the list of [contributors](https://github.com/your/project/contributors) who participated in this project.
+## Credits  
+Thanks to Michael Cook ([Twitter](https://twitter.com/mcookie)/[website](https://cookicons.co/)) for the app icon.
 
 ## License
 
-This project is licensed under the MIT License - see the [LICENSE.md](LICENSE.md) file for details
-
-## Acknowledgments
-
-* Hat tip to anyone whose code was used
-* Inspiration
-* etc
+This application is released under GNU GPLv3 (see [LICENSE](LICENSE)).
+Some of the used libraries are released under different licenses.
