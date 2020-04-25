@@ -1,26 +1,13 @@
-# wallabag - Android App [![Build Status](https://travis-ci.org/wallabag/android-app.svg?branch=master)](https://travis-ci.org/wallabag/android-app)
+# Covid-19 Track [![Build Status](https://travis-ci.org/wallabag/android-app.svg?branch=master)](https://travis-ci.org/wallabag/android-app)
 
-<img src="/readme/wallabag logo.png" align="left"
+<img src="microorganism.png" align="left"
 width="200" hspace="10" vspace="10">
 
 wallabag is a self-hosted read-it-later app.  
 Unlike other services, wallabag is free and open source.  
 wallabag for Android is a companion app for [wallabag](https://www.wallabag.org). You need a wallabag account first, which you are going to use in this app.
 
-wallabag is available on the Google Play Store and F-Droid.
 
-<p align="left">
-<a href="https://play.google.com/store/apps/details?id=fr.gaulupeau.apps.InThePoche">
-    <img alt="Get it on Google Play"
-        height="80"
-        src="https://play.google.com/intl/en_us/badges/images/generic/en_badge_web_generic.png" />
-</a>  
-<a href="https://f-droid.org/app/fr.gaulupeau.apps.InThePoche">
-    <img alt="Get it on F-Droid"
-        height="80"
-        src="https://f-droid.org/badge/get-it-on.png" />
-        </a>
-        </p>
 
 ## About
 
@@ -47,10 +34,10 @@ The android app lets you:
 
 ## Screenshots
 
-[<img src="/readme/Wallabag%20Reading%20List.png" align="left"
+[<img src="location" align="left"
 width="200"
     hspace="10" vspace="10">](/readme/Wallabag%20Reading%20List.png)
-[<img src="/readme/Wallabag%20Article%20View.png" align="center"
+[<img src="location" align="center"
 width="200"
     hspace="10" vspace="10">](/readme/Wallabag%20Article%20View.png)
 
