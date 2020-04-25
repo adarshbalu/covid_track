@@ -36,7 +36,7 @@ width="200"
 <img src="2.jpg" align="center"
 width="200"
     hspace="10" vspace="10">
-<img src="3.jpg" align="right"
+<img src="3.jpg" align="center"
 width="200"
     hspace="10" vspace="10">
     
