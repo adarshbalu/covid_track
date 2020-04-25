@@ -5,6 +5,7 @@ width="200" hspace="10" vspace="10">
 
   
 Covid-19 Track is free and Open Source, Cross Platform Application developed using [Flutter](https://github.com/flutter/flutter).
+Download the Latest version from this [Link](build/app/outputs/apk/release/app-release.apk).
 
 
 ## About
@@ -21,7 +22,7 @@ This android application allows you to select different countries to obtain the 
 - View the total cases, and all the active ,recovered, deaths and all the details about the new cases with chart representations in the   home screen.
 - Select countries specifically for their specific details with chart representaions.
 - Completely ad-free.
-- View individual informations on all the states in India.
+- View individual information on all the states and Districts in India.
 - View the total statistic details on countries with Most Cases, Most Recovered and Most Deaths.
 - Gets updated regularly.
 - Does not ask for any unwanted permissions.
@@ -35,7 +36,7 @@ width="200"
 <img src="2.jpg" align="center"
 width="200"
     hspace="10" vspace="10">
-<img src="3.jpg" align="center"
+<img src="3.jpg" align="right"
 width="200"
     hspace="10" vspace="10">
     
@@ -65,7 +66,8 @@ It uses the network data to update the app contents regularly and provide the la
 ## Contributing
 
 Covid-19 Track app is a free and open source project. Any contributions are welcome. Here are a few ways you can help:
- * [Report bugs and make suggestions.](https://github.com/wallabag/android-app/issues)
+ * [Report bugs and make suggestions.](https://github.com/adarshbalu/covid_track/issues)
+ * [Open a pull Request](https://github.com/adarshbalu/covid_track/pulls)
  
 
 ## Credits  
