@@ -34,7 +34,7 @@ class _CountryPageState extends State<CountryPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      bottomNavigationBar: BottomMenu(null),
+      bottomNavigationBar: BottomMenu(),
       body: SafeArea(
         child: FutureBuilder(
             future: getCountry(),

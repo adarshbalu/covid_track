@@ -1,64 +1,55 @@
 import 'package:covidtrack/utils/widgets.dart';
 import 'package:flutter/material.dart';
+import 'package:shimmer/shimmer.dart';
 
 class LoaderScreen extends StatelessWidget {
-  final String text, image;
-
-  LoaderScreen({
-    this.text,
-    this.image,
-  });
-
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      backgroundColor: Colors.white,
-      body: Column(
-        mainAxisAlignment: MainAxisAlignment.start,
-        children: <Widget>[
-          AppHeader(
-            headerText: 'Advices',
+    int offset = 0;
+    int time = 800;
+
+    return Column(
+      children: <Widget>[
+        AppHeader(
+          headerText: 'COVID-19',
+        ),
+        SizedBox(
+          height: 20,
+        ),
+        Flexible(
+          child: ListView.builder(
+            itemCount: 5,
+            itemBuilder: (BuildContext context, int index) {
+              offset += 5;
+              time = 800 + offset;
+              return Padding(
+                  padding: EdgeInsets.symmetric(horizontal: 15),
+                  child: Shimmer.fromColors(
+                    highlightColor: Colors.white,
+                    baseColor: Colors.grey[100],
+                    child: ShimmerLayout(),
+                    period: Duration(milliseconds: time),
+                  ));
+            },
           ),
-          Expanded(
-            child: Padding(
-              padding: EdgeInsets.only(top: 20.0),
-              child: Container(
-                margin: EdgeInsets.all(10),
-                width: MediaQuery.of(context).size.width / 1.5,
-                height: MediaQuery.of(context).size.height / 4,
-                child: Image.asset(
-                  image,
-                  width: 80,
-                  height: 80,
-                ),
-              ),
-            ),
-          ),
-          Expanded(
-            child: Center(
-              child: Padding(
-                padding:
-                    EdgeInsets.only(top: 30, left: 10.0, right: 10, bottom: 8),
-                child: Text(
-                  text,
-                  textAlign: TextAlign.center,
-                  style: TextStyle(
-                      fontSize: 23,
-                      fontFamily: 'Merienda',
-                      fontWeight: FontWeight.w500),
-                ),
-              ),
-            ),
-          ),
-          Center(
-            child: CircularProgressIndicator(
-              backgroundColor: Colors.transparent,
-            ),
-          ),
-          SizedBox(
-            height: 20,
-          )
-        ],
+        ),
+      ],
+    );
+  }
+}
+
+class ShimmerLayout extends StatelessWidget {
+  @override
+  Widget build(BuildContext context) {
+    double containerWidth = MediaQuery.of(context).size.width / 1.5;
+    double containerHeight = MediaQuery.of(context).size.height / 6;
+
+    return Container(
+      color: Colors.white,
+      margin: EdgeInsets.symmetric(vertical: 7.5),
+      child: SizedBox(
+        height: containerHeight,
+        width: containerWidth,
       ),
     );
   }

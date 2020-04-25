@@ -1,6 +1,5 @@
 import 'package:covidtrack/screens/state_page.dart';
 import 'package:covidtrack/utils/constants.dart';
-import 'package:covidtrack/utils/models/content_list.dart';
 import 'package:covidtrack/utils/models/state_data.dart';
 import 'package:covidtrack/utils/models/state_list.dart';
 import 'package:covidtrack/utils/navigation_transition.dart';
@@ -24,15 +23,9 @@ class _IndiaStatDetailState extends State<IndiaStatDetail> {
   bool loaded = false;
   TextEditingController controller;
   int totalReports = 5;
-  ContentsList contentsList;
 
   @override
   void initState() {
-    contentsList = ContentsList();
-    contentsList.contents = contentsList.getAllContents();
-    contentsList.content =
-        contentsList.contents[random.nextInt(contentsList.contents.length)];
-
     type = widget.type;
     stateList = StateList(stateList: widget.data, totalData: StateData());
 
@@ -60,7 +53,7 @@ class _IndiaStatDetailState extends State<IndiaStatDetail> {
   Widget build(BuildContext context) {
     double width = MediaQuery.of(context).size.width;
     return Scaffold(
-      bottomNavigationBar: BottomMenu(null),
+      bottomNavigationBar: BottomMenu(),
       body: SafeArea(
         child: FutureBuilder(
           future: getData(),

@@ -37,7 +37,7 @@ class _HomePageState extends State<HomePage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      bottomNavigationBar: BottomMenu(allCountryArray),
+      bottomNavigationBar: BottomMenu(),
       body: WillPopScope(
         onWillPop: () async {
           return false;

@@ -27,7 +27,7 @@ class _StatePageState extends State<StatePage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      bottomNavigationBar: BottomMenu(null),
+      bottomNavigationBar: BottomMenu(),
       body: SafeArea(
         child: FutureBuilder(
             future: getStateData(),

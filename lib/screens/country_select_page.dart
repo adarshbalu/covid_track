@@ -37,7 +37,7 @@ class _CountrySelectPageState extends State<CountrySelectPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-        bottomNavigationBar: BottomMenu(countryList),
+        bottomNavigationBar: BottomMenu(),
         body: SafeArea(
           child: ListView(
             //crossAxisAlignment: CrossAxisAlignment.center,

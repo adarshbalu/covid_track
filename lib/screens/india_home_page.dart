@@ -2,7 +2,6 @@ import 'package:covidtrack/screens/india_stats_detail_page.dart';
 import 'package:covidtrack/screens/loading_screen.dart';
 import 'package:covidtrack/screens/state_select_page.dart';
 import 'package:covidtrack/utils/constants.dart';
-import 'package:covidtrack/utils/models/content_list.dart';
 import 'package:covidtrack/utils/models/state_data.dart';
 import 'package:covidtrack/utils/models/state_list.dart';
 import 'package:covidtrack/utils/navigation_transition.dart';
@@ -16,7 +15,6 @@ class IndiaHomePage extends StatefulWidget {
 }
 
 class _IndiaHomePageState extends State<IndiaHomePage> {
-  ContentsList contentsList;
   StateList stateList;
   List<StateData> stateDataList;
   Map<String, StateData> dataMap;
@@ -25,10 +23,6 @@ class _IndiaHomePageState extends State<IndiaHomePage> {
   String indiaFlagUrl = 'http://www.geognos.com/api/en/countries/flag/IN.png';
   @override
   void initState() {
-    contentsList = ContentsList();
-    contentsList.contents = contentsList.getAllContents();
-    contentsList.content =
-        contentsList.contents[random.nextInt(contentsList.contents.length)];
     stateList = StateList();
     stateDataList = List();
     super.initState();
@@ -37,7 +31,7 @@ class _IndiaHomePageState extends State<IndiaHomePage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      bottomNavigationBar: BottomMenu(null),
+      bottomNavigationBar: BottomMenu(),
       body: SafeArea(
         child: FutureBuilder(
             future: getData(),
@@ -218,7 +212,7 @@ class _IndiaHomePageState extends State<IndiaHomePage> {
                         Padding(
                           padding: EdgeInsets.fromLTRB(0, 15, 0, 3),
                           child: Text(
-                            'Cases',
+                            'Most Cases',
                             style: kPrimaryTextStyle,
                           ),
                         ),
@@ -287,10 +281,7 @@ class _IndiaHomePageState extends State<IndiaHomePage> {
                   snapshot.hasError) {
                 return ErrorScreen();
               } else {
-                return LoaderScreen(
-                  text: contentsList.content.text,
-                  image: contentsList.content.image,
-                );
+                return LoaderScreen();
               }
             }),
       ),

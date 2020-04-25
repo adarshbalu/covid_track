@@ -1,6 +1,5 @@
 import 'package:covidtrack/screens/country_page.dart';
 import 'package:covidtrack/utils/constants.dart';
-import 'package:covidtrack/utils/models/content_list.dart';
 import 'package:covidtrack/utils/models/country.dart';
 import 'package:covidtrack/utils/models/country_list.dart';
 import 'package:covidtrack/utils/navigation_transition.dart';
@@ -24,15 +23,9 @@ class _StatDetailState extends State<StatDetail> {
   bool loaded = false;
   TextEditingController controller;
   int totalReports = 5;
-  ContentsList contentsList;
 
   @override
   void initState() {
-    contentsList = ContentsList();
-    contentsList.contents = contentsList.getAllContents();
-    contentsList.content =
-        contentsList.contents[random.nextInt(contentsList.contents.length)];
-
     type = widget.type;
     countryList =
         CountryList(countryList: widget.data, indiaData: CountryData());

@@ -1,7 +1,6 @@
 import 'package:covidtrack/screens/loading_screen.dart';
 import 'package:covidtrack/screens/stat_detail_page.dart';
 import 'package:covidtrack/utils/constants.dart';
-import 'package:covidtrack/utils/models/content_list.dart';
 import 'package:covidtrack/utils/models/country.dart';
 import 'package:covidtrack/utils/models/country_list.dart';
 import 'package:covidtrack/utils/navigation_transition.dart';
@@ -21,14 +20,9 @@ class _StatsPageState extends State<StatsPage> {
   List<CountryData> countryDataList = List();
   CountryData mostCases, mostDeaths, mostRecovered;
   bool load = false;
-  ContentsList contentsList;
 
   @override
   void initState() {
-    contentsList = ContentsList();
-    contentsList.contents = contentsList.getAllContents();
-    contentsList.content =
-        contentsList.contents[random.nextInt(contentsList.contents.length)];
     dataMap = Map();
     countryList = CountryList(countryList: [], indiaData: CountryData());
     date = dateTime.day.toString() +
@@ -42,7 +36,7 @@ class _StatsPageState extends State<StatsPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      bottomNavigationBar: BottomMenu(null),
+      bottomNavigationBar: BottomMenu(),
       body: SafeArea(
         child: FutureBuilder(
             future: getData(),
@@ -139,10 +133,7 @@ class _StatsPageState extends State<StatsPage> {
                   snapshot.connectionState == ConnectionState.none) {
                 return ErrorScreen();
               } else {
-                return LoaderScreen(
-                  text: contentsList.content.text,
-                  image: contentsList.content.image,
-                );
+                return LoaderScreen();
               }
             }),
       ),

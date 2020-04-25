@@ -2,7 +2,6 @@ import 'dart:math';
 import 'package:covidtrack/screens/india_home_page.dart';
 import 'package:flutter/material.dart';
 import 'package:charts_flutter/flutter.dart' as charts;
-import 'package:covidtrack/screens/country_page.dart';
 import 'package:covidtrack/screens/country_select_page.dart';
 import 'package:covidtrack/screens/home_page.dart';
 import 'package:covidtrack/screens/stats_page.dart';
@@ -238,8 +237,6 @@ class DataCard extends StatelessWidget {
 }
 
 class BottomMenu extends StatelessWidget {
-  final allCountryArray;
-  BottomMenu([this.allCountryArray]);
   @override
   Widget build(BuildContext context) {
     return BottomAppBar(
