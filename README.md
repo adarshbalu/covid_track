@@ -3,47 +3,59 @@
 <img src="microorganism.png" align="left"
 width="200" hspace="10" vspace="10">
 
-wallabag is a self-hosted read-it-later app.  
-Unlike other services, wallabag is free and open source.  
-wallabag for Android is a companion app for [wallabag](https://www.wallabag.org). You need a wallabag account first, which you are going to use in this app.
-
+  
+Covid-19 Track is free and open source.  
 
 
 ## About
 
-wallabag has been made for you to comfortably read and archive your articles.
-You can download wallabag from wallabag.org and follow the instructions to install it on your own server.
-Alternatively, you can directly sign up for [wallabag.it](https://wallabag.it) or [Framabag](https://framabag.org).
+Covid-19 Track tracks the active, recovered and deaths due to corona virus all over the world and updates daily.  
 
-This android application allows you to put a link in your wallabag instance, letting you read your wallabag links offline.
+This android application allows you to select different countries to obtain the results seperately with graphical visualisations .
 
-This application was originally created by Jonathan GAULUPEAU and released under the GNU GPLv3.
-wallabag is a creation from Nicolas Lœuillet released under the MIT License (Expat License).
+This application was originally created by Adarsh Balachandran.
 
 ## Features
 
-The android app lets you:
-- Connect to your self-hosted wallabag instance or connect to your [wallabag.it](https://wallabag.it) or [Framabag](https://framabag.org) account.
-- Supports wallabag 2.0 and higher.
+### The android app lets you:
+
+- View the total cases, and all the active ,recovered, deaths and all the details about the new cases with chart representations in the home screen.
+- Select countries specifically for their specific details with chart representaions.
 - Completely ad-free.
-- Increase and decrease the size of the font and also switch between a serif or sans-serif font for a more comfortable reading experience.
-- Switch between numerous themes.
-- Possibility to cache images locally for offline reading.
-- Get articles read via Text-to-Speech feature.
-- Needs no special permissions on Android 6.0+.
+- View the total statistic details on countries with Most Cases, Most Recovered and Most Deaths.
+- Gets updated daily.
 
 ## Screenshots
 
-[<img src="location" align="left"
+### Home Screen
+[<img src="1.jpg" align="left"
 width="200"
-    hspace="10" vspace="10">](/readme/Wallabag%20Reading%20List.png)
-[<img src="location" align="center"
+    hspace="10" vspace="10">]
+[<img src="2.jpg" align="center"
 width="200"
-    hspace="10" vspace="10">](/readme/Wallabag%20Article%20View.png)
+    hspace="10" vspace="10">]
+[<img src="3.jpg" align="center"
+width="200"
+    hspace="10" vspace="10">]
+    
+### Select Country
+
+[<img src="4.jpg" align="left"
+width="200"
+    hspace="10" vspace="10">]
+[<img src="5.jpg" align="center"
+width="200"
+    hspace="10" vspace="10">]
+    
+ ### Statistics
+ 
+[<img src="6.jpg" align="center"
+width="200"
+    hspace="10" vspace="10">]
 
 ## Permissions
 
-On Android versions prior to Android 6.0, wallabag requires the following permissions:
+On Android versions prior to Android 6.0, Covid-19 Track requires the following permissions:
 - Full Network Access.
 - View Network Connections.
 - Run at startup.
@@ -53,13 +65,12 @@ The "Run at startup" permission is only used if Auto-Sync feature is enabled and
 
 ## Contributing
 
-wallabag app is a free and open source project developed by volunteers. Any contributions are welcome. Here are a few ways you can help:
+Covid-19 Track app is a free and open source project developed by volunteers. Any contributions are welcome. Here are a few ways you can help:
  * [Report bugs and make suggestions.](https://github.com/wallabag/android-app/issues)
- * [Translate the app](https://hosted.weblate.org/projects/wallabag/android-app/) (you don't have to create an account).
- * Write some code. Please follow the code style used in the project to make a review process faster.
+ 
 
 ## Credits  
-Thanks to Michael Cook ([Twitter](https://twitter.com/mcookie)/[website](https://cookicons.co/)) for the app icon.
+Thanks to  Wanicon (https://flaticon.com/authors/wanicon) for the app icon.
 
 ## License
 
