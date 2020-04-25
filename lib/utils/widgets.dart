@@ -128,10 +128,10 @@ class CaseCard extends StatelessWidget {
     var caseNumber;
     caseNumber = formatter.format(totalCases);
     return Container(
-      padding: EdgeInsets.all(20),
+      padding: EdgeInsets.all(5),
       margin: EdgeInsets.fromLTRB(20, 5, 20, 10),
       width: MediaQuery.of(context).size.width / 2,
-      height: MediaQuery.of(context).size.height / 3.2,
+      height: MediaQuery.of(context).size.height / 3,
       decoration: BoxDecoration(
           gradient: LinearGradient(
             colors: color,
@@ -157,10 +157,13 @@ class CaseCard extends StatelessWidget {
               style: kSecondaryTextStyleWhite,
             ),
           ),
-          Text(
-            'TOTAL CASES',
-            style: TextStyle(
-              color: Colors.white,
+          Padding(
+            padding: EdgeInsets.only(top: 5.0),
+            child: Text(
+              'TOTAL CASES',
+              style: TextStyle(
+                color: Colors.white,
+              ),
             ),
           )
         ],

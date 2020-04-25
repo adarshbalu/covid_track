@@ -51,7 +51,7 @@ const kSecondaryTextStyle =
 
 const kCaseNameTextStyle = TextStyle(fontSize: 20, fontWeight: FontWeight.bold);
 
-const kSecondaryTextStyleWhite = TextStyle(color: Colors.white, fontSize: 30);
+const kSecondaryTextStyleWhite = TextStyle(color: Colors.white, fontSize: 29);
 
 const kLastUpdatedTextStyle = TextStyle(color: Colors.grey, fontSize: 15);
 
