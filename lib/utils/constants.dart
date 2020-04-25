@@ -56,7 +56,7 @@ const kSecondaryTextStyleWhite = TextStyle(color: Colors.white, fontSize: 29);
 const kLastUpdatedTextStyle = TextStyle(color: Colors.grey, fontSize: 15);
 
 const kPrimaryTextStyle = TextStyle(fontSize: 24, fontWeight: FontWeight.w300);
-
+const kTertiaryTextStyle = TextStyle(fontSize: 20, fontWeight: FontWeight.w300);
 // Images
 
 const kAvoidEyeImage = 'assets/avoid-eye.png';

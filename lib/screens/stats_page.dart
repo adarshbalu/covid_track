@@ -64,7 +64,7 @@ class _StatsPageState extends State<StatsPage> {
                     toScreen(context, 'cases', countryDataList);
                   },
                   child: DataCard(
-                    color: Colors.amber,
+                    color: Colors.deepPurple,
                     countryUrl: snapshot.data['cases'].countryUrl,
                     countryName: snapshot.data['cases'].countryName,
                     totalData: snapshot.data['cases'].totalConfirmed,
@@ -107,6 +107,39 @@ class _StatsPageState extends State<StatsPage> {
                     countryName: snapshot.data['deaths'].countryName,
                     totalData: snapshot.data['deaths'].totalDeaths,
                     newData: snapshot.data['deaths'].newDeaths,
+                  ),
+                ),
+                Container(
+                  height: MediaQuery.of(context).size.height / 2,
+                  decoration: BoxDecoration(
+                      color: Colors.white,
+                      borderRadius: BorderRadius.circular(20)),
+                  width: MediaQuery.of(context).size.width / 1.2,
+                  margin: EdgeInsets.only(top: 8, bottom: 15),
+                  padding: EdgeInsets.all(18),
+                  child: Column(
+                    children: <Widget>[
+                      Text('Stat Comparision'),
+                      Expanded(
+                        child: GroupedBarChart(
+                          mostCases: [
+                            snapshot.data['cases'],
+                            snapshot.data['recovered'],
+                            snapshot.data['deaths']
+                          ],
+                          mostDeaths: [
+                            snapshot.data['cases'],
+                            snapshot.data['recovered'],
+                            snapshot.data['deaths']
+                          ],
+                          mostRecovered: [
+                            snapshot.data['cases'],
+                            snapshot.data['recovered'],
+                            snapshot.data['deaths']
+                          ],
+                        ),
+                      ),
+                    ],
                   ),
                 ),
                 SizedBox(

@@ -1,10 +1,10 @@
 import 'dart:math';
 import 'package:covidtrack/screens/india_home_page.dart';
+import 'package:covidtrack/utils/models/country.dart';
 import 'package:flutter/material.dart';
 import 'package:charts_flutter/flutter.dart' as charts;
 import 'package:covidtrack/screens/country_select_page.dart';
 import 'package:covidtrack/screens/home_page.dart';
-import 'package:covidtrack/screens/stats_page.dart';
 import 'package:covidtrack/utils/constants.dart';
 import 'package:covidtrack/utils/navigation_transition.dart';
 import 'package:flutter/services.dart';
@@ -303,20 +303,20 @@ class BottomMenu extends StatelessWidget {
             ),
             InkWell(
               onTap: () {
-                Navigator.of(context).popUntil((route) => route.isFirst);
-                Navigator.push(context, SlideRoute(widget: StatsPage()));
+//                Navigator.of(context).popUntil((route) => route.isFirst);
+//                Navigator.push(context, SlideRoute(widget: StatsPage()));
               },
               child: Container(
                 child: Column(
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: <Widget>[
                     Icon(
-                      Icons.assessment,
+                      Icons.info_outline,
                       size: 40,
                       color: Colors.white,
                     ),
                     Text(
-                      'Stats',
+                      'Info',
                       style: TextStyle(color: Colors.white),
                     ),
                   ],
@@ -614,6 +614,44 @@ class BarChart extends StatelessWidget {
         measureFn: (Case cases, int) => cases.value,
         colorFn: (Case cases, int) => cases.barColor,
       )
+    ];
+    return charts.BarChart(
+      series,
+      animate: true,
+      animationDuration: Duration(seconds: 2),
+    );
+  }
+}
+
+class GroupedBarChart extends StatelessWidget {
+  final List<CountryData> mostCases, mostRecovered, mostDeaths;
+  GroupedBarChart({this.mostRecovered, this.mostCases, this.mostDeaths});
+  @override
+  Widget build(BuildContext context) {
+    List<charts.Series<CountryData, String>> series = [
+      charts.Series(
+        id: 'Confirmed Cases',
+        domainFn: (CountryData country, _) => country.shortName,
+        measureFn: (CountryData country, _) => country.totalConfirmed,
+        data: mostCases,
+        colorFn: (_, __) => charts.MaterialPalette.purple.shadeDefault,
+        fillColorFn: (_, __) =>
+            charts.MaterialPalette.purple.shadeDefault.darker,
+      ),
+      charts.Series<CountryData, String>(
+        id: 'Recovered',
+        measureFn: (CountryData country, _) => country.totalRecovered,
+        data: mostRecovered,
+        colorFn: (_, __) => charts.MaterialPalette.green.shadeDefault,
+        domainFn: (CountryData country, _) => country.shortName,
+      ),
+      charts.Series<CountryData, String>(
+        id: 'Deaths',
+        domainFn: (CountryData country, _) => country.shortName,
+        measureFn: (CountryData country, _) => country.totalDeaths,
+        data: mostDeaths,
+        colorFn: (_, __) => charts.MaterialPalette.red.shadeDefault,
+      ),
     ];
     return charts.BarChart(
       series,

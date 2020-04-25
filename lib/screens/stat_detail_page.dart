@@ -54,6 +54,7 @@ class _StatDetailState extends State<StatDetail> {
   Widget build(BuildContext context) {
     double width = MediaQuery.of(context).size.width;
     return Scaffold(
+      bottomNavigationBar: BottomMenu(),
       body: SafeArea(
         child: FutureBuilder(
           future: getData(),

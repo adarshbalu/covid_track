@@ -1,3 +1,4 @@
+import 'package:covidtrack/screens/district_detail.dart';
 import 'package:covidtrack/utils/constants.dart';
 import 'package:covidtrack/utils/models/state_data.dart';
 import 'package:charts_flutter/flutter.dart' as charts;
@@ -39,34 +40,42 @@ class _StatePageState extends State<StatePage> {
                       crossAxisAlignment: CrossAxisAlignment.center,
                       children: <Widget>[
                         Container(
+                          width: double.infinity,
                           decoration: BoxDecoration(
                             color: Colors.white,
                             borderRadius: BorderRadius.only(
                                 bottomRight: Radius.circular(5),
                                 bottomLeft: Radius.circular(5)),
                           ),
-                          padding: EdgeInsets.only(top: 10, bottom: 10),
-                          margin: EdgeInsets.only(bottom: 10),
-                          child: Row(
+                          padding: EdgeInsets.only(
+                              left: 10, right: 8, top: 0, bottom: 8),
+                          margin: EdgeInsets.only(bottom: 8),
+                          child: Column(
+                            mainAxisAlignment: MainAxisAlignment.center,
                             children: <Widget>[
-                              Padding(
-                                padding: EdgeInsets.fromLTRB(18.0, 0, 8, 0),
-                                child: Image.asset(
-                                  kIndiaImage,
-                                  width: 50,
-                                ),
+                              Image.asset(
+                                kIndiaImage,
+                                width: 35,
                               ),
-                              Expanded(
-                                child: Text(
-                                  stateName,
-                                  style: TextStyle(
-                                      fontWeight: FontWeight.w700,
-                                      fontSize: 25,
-                                      fontFamily: 'Merienda'),
-                                  softWrap: true,
-                                ),
+                              Text(
+                                stateName,
+                                textAlign: TextAlign.center,
+                                style: TextStyle(
+                                    fontWeight: FontWeight.w700,
+                                    fontSize: 25,
+                                    fontFamily: 'Merienda'),
                               ),
                             ],
+                          ),
+                        ),
+                        Padding(
+                          padding: EdgeInsets.only(top: 8.0, bottom: 0),
+                          child: Text(
+                            'Total Data',
+                            style: TextStyle(
+                                fontSize: 35,
+                                fontWeight: FontWeight.w600,
+                                fontFamily: 'Merienda'),
                           ),
                         ),
                         CountryDataCard(
@@ -156,7 +165,25 @@ class _StatePageState extends State<StatePage> {
                                 ),
                               ],
                             )),
+                        SizedBox(
+                          height: 8,
+                        ),
+                        Divider(),
+                        Padding(
+                          padding: EdgeInsets.only(top: 8.0, bottom: 8),
+                          child: Text(
+                            'District Data',
+                            style: TextStyle(
+                                fontSize: 35,
+                                fontWeight: FontWeight.w600,
+                                fontFamily: 'Merienda'),
+                          ),
+                        ),
                       ],
+                    ),
+                    DistrictDetails(snapshot.data.name),
+                    SizedBox(
+                      height: 30,
                     ),
                   ],
                 );

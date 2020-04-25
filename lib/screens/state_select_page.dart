@@ -130,7 +130,7 @@ class _StateSelectPageState extends State<StateSelectPage> {
                 height: 5,
               ),
               Container(
-                margin: EdgeInsets.only(left: 10, right: 10),
+                margin: EdgeInsets.only(left: 10, right: 10, bottom: 20),
                 padding: EdgeInsets.only(top: 8, bottom: 8),
                 decoration: BoxDecoration(
                   border: Border(
