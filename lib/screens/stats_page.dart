@@ -1,4 +1,3 @@
-import 'package:covidtrack/screens/loading_screen.dart';
 import 'package:covidtrack/screens/stat_detail_page.dart';
 import 'package:covidtrack/utils/constants.dart';
 import 'package:covidtrack/utils/models/country.dart';
@@ -35,112 +34,100 @@ class _StatsPageState extends State<StatsPage> {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      bottomNavigationBar: BottomMenu(),
-      body: SafeArea(
-        child: FutureBuilder(
-            future: getData(),
-            builder: (context, snapshot) {
-              if (snapshot.hasData) {
-                return ListView(
-                  children: <Widget>[
-                    Column(
-                      crossAxisAlignment: CrossAxisAlignment.center,
-                      children: <Widget>[
-                        AppHeader(
-                          headerText: 'Stats',
-                        ),
-                        SizedBox(
-                          height: 12,
-                        ),
-                        Padding(
-                          padding: EdgeInsets.fromLTRB(0, 15, 0, 3),
-                          child: Text(
-                            'Most Cases',
-                            style: kPrimaryTextStyle,
-                          ),
-                        ),
-                        InkWell(
-                          onTap: () {
-                            toScreen(context, 'cases', countryDataList);
-                          },
-                          child: DataCard(
-                            color: Colors.amber,
-                            countryUrl: snapshot.data['cases'].countryUrl,
-                            countryName: snapshot.data['cases'].countryName,
-                            totalData: snapshot.data['cases'].totalConfirmed,
-                            newData: snapshot.data['cases'].newConfirmed,
-                          ),
-                        ),
-                        Padding(
-                          padding: EdgeInsets.fromLTRB(0, 15, 0, 3),
-                          child: Text(
-                            'Most Recovered',
-                            style: kPrimaryTextStyle,
-                          ),
-                        ),
-                        InkWell(
-                          onTap: () {
-                            toScreen(context, 'recovered', countryDataList);
-                          },
-                          child: DataCard(
-                            color: Colors.greenAccent,
-                            countryUrl: snapshot.data['recovered'].countryUrl,
-                            countryName: snapshot.data['recovered'].countryName,
-                            totalData:
-                                snapshot.data['recovered'].totalRecovered,
-                            newData: snapshot.data['recovered'].newRecovered,
-                          ),
-                        ),
-                        Padding(
-                          padding: EdgeInsets.fromLTRB(0, 15, 0, 3),
-                          child: Text(
-                            'Most Deaths',
-                            style: kPrimaryTextStyle,
-                          ),
-                        ),
-                        InkWell(
-                          onTap: () {
-                            toScreen(context, 'deaths', countryDataList);
-                          },
-                          child: DataCard(
-                            color: Colors.redAccent,
-                            countryUrl: snapshot.data['deaths'].countryUrl,
-                            countryName: snapshot.data['deaths'].countryName,
-                            totalData: snapshot.data['deaths'].totalDeaths,
-                            newData: snapshot.data['deaths'].newDeaths,
-                          ),
-                        ),
-                        Padding(
-                          padding: EdgeInsets.only(top: 8, bottom: 0),
-                          child: Text(
-                            'Last Updated $date',
-                            style: kLastUpdatedTextStyle,
-                          ),
-                        ),
-                        Padding(
-                          padding: EdgeInsets.only(top: 0.0, bottom: 10),
-                          child: Text(
-                            'Data might be subject to Inconsistency.',
-                            style: kLastUpdatedTextStyle,
-                          ),
-                        ),
-                      ],
-                    ),
-                  ],
-                );
-              } else if (snapshot.hasError ||
-                  snapshot.connectionState == ConnectionState.none) {
-                return ErrorScreen();
-              } else {
-                return LoaderScreen();
-              }
-            }),
-      ),
-    );
+    return FutureBuilder(
+        future: getStatsData(),
+        builder: (context, snapshot) {
+          if (snapshot.hasData) {
+            return Column(
+              crossAxisAlignment: CrossAxisAlignment.center,
+              children: <Widget>[
+                Padding(
+                  padding: EdgeInsets.only(top: 0, bottom: 8),
+                  child: Text(
+                    'Stats',
+                    style: TextStyle(
+                        fontSize: 35,
+                        color: Colors.black87,
+                        fontWeight: FontWeight.w600,
+                        fontFamily: 'Merienda'),
+                  ),
+                ),
+                Padding(
+                  padding: EdgeInsets.fromLTRB(0, 8, 0, 3),
+                  child: Text(
+                    'Most Cases',
+                    style: kPrimaryTextStyle,
+                  ),
+                ),
+                InkWell(
+                  onTap: () {
+                    toScreen(context, 'cases', countryDataList);
+                  },
+                  child: DataCard(
+                    color: Colors.amber,
+                    countryUrl: snapshot.data['cases'].countryUrl,
+                    countryName: snapshot.data['cases'].countryName,
+                    totalData: snapshot.data['cases'].totalConfirmed,
+                    newData: snapshot.data['cases'].newConfirmed,
+                  ),
+                ),
+                Padding(
+                  padding: EdgeInsets.fromLTRB(0, 15, 0, 3),
+                  child: Text(
+                    'Most Recovered',
+                    style: kPrimaryTextStyle,
+                  ),
+                ),
+                InkWell(
+                  onTap: () {
+                    toScreen(context, 'recovered', countryDataList);
+                  },
+                  child: DataCard(
+                    color: Colors.greenAccent,
+                    countryUrl: snapshot.data['recovered'].countryUrl,
+                    countryName: snapshot.data['recovered'].countryName,
+                    totalData: snapshot.data['recovered'].totalRecovered,
+                    newData: snapshot.data['recovered'].newRecovered,
+                  ),
+                ),
+                Padding(
+                  padding: EdgeInsets.fromLTRB(0, 15, 0, 3),
+                  child: Text(
+                    'Most Deaths',
+                    style: kPrimaryTextStyle,
+                  ),
+                ),
+                InkWell(
+                  onTap: () {
+                    toScreen(context, 'deaths', countryDataList);
+                  },
+                  child: DataCard(
+                    color: Colors.redAccent,
+                    countryUrl: snapshot.data['deaths'].countryUrl,
+                    countryName: snapshot.data['deaths'].countryName,
+                    totalData: snapshot.data['deaths'].totalDeaths,
+                    newData: snapshot.data['deaths'].newDeaths,
+                  ),
+                ),
+                SizedBox(
+                  height: 20,
+                ),
+              ],
+            );
+          } else {
+            return Center(
+              child: Container(
+                  width: 40,
+                  margin: EdgeInsets.only(top: 20, bottom: 20),
+                  child: CircularProgressIndicator(
+                      valueColor:
+                          AlwaysStoppedAnimation<Color>(Colors.greenAccent))),
+            );
+          }
+        });
   }
 
-  Future<Map<String, CountryData>> getData() async {
+  Future<Map<String, CountryData>> getStatsData() async {
     if (!load) {
       var data = await countryList.getAllCountryData();
 

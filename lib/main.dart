@@ -1,4 +1,5 @@
-import 'package:covidtrack/screens/start_screen.dart';
+import 'package:covidtrack/screens/home_page.dart';
+
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
@@ -19,7 +20,7 @@ class MyApp extends StatelessWidget {
             bodyColor: Colors.black,
           ),
           scaffoldBackgroundColor: Color(0xffE3F2FD)),
-      home: StartScreen(),
+      home: HomePage(),
     );
   }
 }

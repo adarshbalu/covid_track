@@ -1,6 +1,8 @@
 import 'package:covidtrack/screens/start_screen.dart';
 import 'package:covidtrack/screens/stat_detail_page.dart';
+import 'package:covidtrack/screens/stats_page.dart';
 import 'package:covidtrack/utils/constants.dart';
+import 'package:covidtrack/utils/models/country.dart';
 import 'package:covidtrack/utils/models/global.dart';
 import 'package:covidtrack/utils/widgets.dart';
 import 'package:flutter/cupertino.dart';
@@ -10,8 +12,6 @@ import 'package:flutter/widgets.dart';
 import 'package:charts_flutter/flutter.dart' as charts;
 
 class HomePage extends StatefulWidget {
-  final data;
-  HomePage(this.data);
   @override
   _HomePageState createState() => _HomePageState();
 }
@@ -22,6 +22,8 @@ class _HomePageState extends State<HomePage> {
   String date = '';
   bool load = false;
   var allCountryArray;
+
+  CountryData mostCases, mostDeaths, mostRecovered;
 
   @override
   void initState() {
@@ -181,10 +183,17 @@ class _HomePageState extends State<HomePage> {
                               )),
                         ],
                       ),
+                      SizedBox(
+                        height: 8,
+                      ),
+                      Divider(),
+                      SizedBox(
+                        height: 8,
+                      ),
+                      StatsPage(),
                     ],
                   );
-                } else if (snapshot.connectionState == ConnectionState.none ||
-                    snapshot.hasError) {
+                } else if (snapshot.hasError) {
                   return ErrorScreen();
                 } else {
                   return StartScreen();
@@ -198,11 +207,10 @@ class _HomePageState extends State<HomePage> {
   Future<GlobalData> getData() async {
     if (!load) {
       await globalData.getGlobalData();
-
-      setState(() {
-        load = true;
-      });
     }
+    setState(() {
+      load = true;
+    });
     return globalData;
   }
 

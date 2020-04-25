@@ -256,7 +256,7 @@ class BottomMenu extends StatelessWidget {
             InkWell(
               onTap: () {
                 Navigator.pushReplacement(
-                    context, SlideRoute(widget: HomePage(null)));
+                    context, SlideRoute(widget: HomePage()));
               },
               child: Container(
                 child: Column(
@@ -424,8 +424,7 @@ class ErrorScreen extends StatelessWidget {
         ),
         Center(
           child: CircularProgressIndicator(
-            backgroundColor: Colors.transparent,
-          ),
+              valueColor: AlwaysStoppedAnimation<Color>(Colors.orange)),
         ),
       ],
     );
