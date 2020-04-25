@@ -4,7 +4,7 @@
 width="200" hspace="10" vspace="10">
 
   
-Covid-19 Track is free and open source.  
+Covid-19 Track is free and Open Source, Cross Platform Application developed using [Flutter](https://github.com/flutter/flutter).
 
 
 ## About
