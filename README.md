@@ -21,11 +21,12 @@ This Mobile application allows you to select different countries to obtain the r
 - View the total cases, and all the active ,recovered, deaths and all the details about the new cases with chart representations in the   home screen.
 - Select countries specifically for their specific details with chart representaions.
 - Completely ad-free.
-- View individual information on all the states and Districts in India.
+- View Detailed information on all the states and Districts in India.
 - View the total statistic details on countries with Most Cases, Most Recovered and Most Deaths.
 - Gets updated regularly.
-- Does not ask for any unwanted permissions.
 - Has a minimal user interface.
+- View Detailed information on all the states and Districts in India.
+- Information on symptoms and prevention of Covid-19
 
 ## Screenshots
 
@@ -62,6 +63,7 @@ On Android versions prior to Android 6.0, Covid-19 Track requires the following 
 - View Network Connections.
 
 It uses the network data to update the app contents regularly and provide the latest information on all countries with updated visual representation.
+No use of data in background.
 
 ## Contributing
 
@@ -71,7 +73,10 @@ Covid-19 Track app is a free and open source project. Any contributions are welc
  
 
 ## Credits  
-Thanks to  Wanicon (https://flaticon.com/authors/wanicon) for the app icon.
+- Thanks Wanicon (https://flaticon.com/authors/wanicon) for the app icon.
+- Thanks Freepik (https://flaticon.com/authors/freepik) for icons.
+- Thanks [Rendi Ramadana](https://www.uplabs.com/posts/coronavirus-information-concept) for UI design.
+- Thanks [Preethi](https://github.com/preethirkrish) for help in documentation and UI design .
 
 ## License
 
