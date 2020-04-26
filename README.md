@@ -21,7 +21,6 @@ This Mobile application allows you to select different countries to obtain the r
 - View the total cases, and all the active ,recovered, deaths and all the details about the new cases with chart representations in the   home screen.
 - Select countries specifically for their specific details with chart representaions.
 - Completely ad-free.
-- View Detailed information on all the states and Districts in India.
 - View the total statistic details on countries with Most Cases, Most Recovered and Most Deaths.
 - Gets updated regularly.
 - Has a minimal user interface.
