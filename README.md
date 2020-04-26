@@ -1,6 +1,6 @@
 # Covid-19 Track [![Build Status](https://travis-ci.org/wallabag/android-app.svg?branch=master)](https://travis-ci.org/wallabag/android-app)
 
-<img src="microorganism.png" align="left"
+<img src="images/app-icon.png" align="left"
 width="200" hspace="10" vspace="10">
 
   
@@ -31,28 +31,28 @@ This Mobile application allows you to select different countries to obtain the r
 ## Screenshots
 
 ### Home Screen
-<img src="1.jpg" align="center"
+<img src="images/1.jpg" align="center"
 width="200"
     hspace="10" vspace="10">
-<img src="2.jpg" align="center"
+<img src="images/2.jpg" align="center"
 width="200"
     hspace="10" vspace="10">
-<img src="3.jpg" align="center"
+<img src="images/3.jpg" align="center"
 width="200"
     hspace="10" vspace="10">
     
 ### Select Country
 
-<img src="4.jpg" align="left"
+<img src="images/4.jpg" align="left"
 width="200"
     hspace="10" vspace="10">
-<img src="5.jpg" align="center"
+<img src="images/5.jpg" align="center"
 width="200"
     hspace="10" vspace="10">
     
  ### Statistics
  
-<img src="6.jpg" align="center"
+<img src="images/6.jpg" align="center"
 width="200"
     hspace="10" vspace="10">
 
