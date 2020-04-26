@@ -7,6 +7,9 @@ width="200" hspace="10" vspace="10">
 Covid-19 Track is free and Open Source, Cross Platform Application developed using [Flutter](https://github.com/flutter/flutter).
 Download the Latest version from this [Link](https://github.com/adarshbalu/covid_track/raw/master/build/app/outputs/apk/release/app-release.apk).
 
+## Download the App
+[<img src="https://image.flaticon.com/icons/svg/443/443049.svg" align="center"
+width="60" hspace="10" vspace="10">](https://github.com/adarshbalu/covid_track/raw/master/build/app/outputs/apk/release/app-release.apk)
 
 ## About
 
