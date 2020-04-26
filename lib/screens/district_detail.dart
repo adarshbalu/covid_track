@@ -5,7 +5,8 @@ import 'package:flutter/material.dart';
 
 class DistrictDetails extends StatefulWidget {
   final String stateName;
-  DistrictDetails(this.stateName);
+  final int total;
+  DistrictDetails(this.stateName, this.total);
   @override
   _DistrictDetailsState createState() => _DistrictDetailsState();
 }
@@ -13,9 +14,11 @@ class DistrictDetails extends StatefulWidget {
 class _DistrictDetailsState extends State<DistrictDetails> {
   DistrictList districtList;
   String stateName;
+  int total;
   List<DistrictDataCard> dataCardWidgets;
   @override
   void initState() {
+    total = widget.total;
     stateName = widget.stateName;
     districtList = DistrictList(districtList: []);
     super.initState();
@@ -68,22 +71,25 @@ class _DistrictDetailsState extends State<DistrictDetails> {
         newRecovered: districtList.districtList[i].newRecovered,
         totalDeaths: districtList.districtList[i].totalDeaths,
         newDeaths: districtList.districtList[i].newDeaths,
+        stateTotal: total,
       ));
     return dataCardWidgets;
   }
 }
 
 class DistrictDataCard extends StatelessWidget {
-final int totalConfirmed,
+  final int totalConfirmed,
       totalDeaths,
       totalRecovered,
       newDeaths,
       newConfirmed,
       newRecovered,
-      totalActive;
- final String name;
+      totalActive,
+      stateTotal;
+  final String name;
   DistrictDataCard(
       {this.name,
+      this.stateTotal,
       this.totalDeaths,
       this.totalRecovered,
       this.totalConfirmed,
@@ -103,7 +109,7 @@ final int totalConfirmed,
           children: <Widget>[
             Center(
               child: Padding(
-                padding: EdgeInsets.only(top: 15.0, bottom: 8),
+                padding: EdgeInsets.only(top: 10.0, bottom: 8),
                 child: Text(
                   name,
                   textAlign: TextAlign.center,
@@ -130,6 +136,27 @@ final int totalConfirmed,
                     ),
                     Text(
                         ' (+' + formatter.format(newConfirmed).toString() + ')')
+                  ],
+                ),
+              ],
+            ),
+            SizedBox(
+              height: 8,
+            ),
+            Row(
+              mainAxisAlignment: MainAxisAlignment.spaceAround,
+              children: <Widget>[
+                Text(
+                  'Infection Rate : ',
+                  style: kTertiaryTextStyle,
+                ),
+                Row(
+                  children: <Widget>[
+                    Text(
+                      ((totalConfirmed / stateTotal) * 100).toStringAsFixed(2),
+                      style: kCaseNameTextStyle,
+                    ),
+                    Text(' %')
                   ],
                 ),
               ],
@@ -179,6 +206,28 @@ final int totalConfirmed,
               mainAxisAlignment: MainAxisAlignment.spaceAround,
               children: <Widget>[
                 Text(
+                  'Recovery Rate : ',
+                  style: kTertiaryTextStyle,
+                ),
+                Row(
+                  children: <Widget>[
+                    Text(
+                      ((totalRecovered / totalConfirmed) * 100)
+                          .toStringAsFixed(2),
+                      style: kCaseNameTextStyle,
+                    ),
+                    Text(' %')
+                  ],
+                ),
+              ],
+            ),
+            SizedBox(
+              height: 8,
+            ),
+            Row(
+              mainAxisAlignment: MainAxisAlignment.spaceAround,
+              children: <Widget>[
+                Text(
                   'Total Deaths : ',
                   style: kTertiaryTextStyle,
                 ),
@@ -189,6 +238,27 @@ final int totalConfirmed,
                       style: kCaseNameTextStyle,
                     ),
                     Text(' (+' + formatter.format(newDeaths).toString() + ')')
+                  ],
+                ),
+              ],
+            ),
+            SizedBox(
+              height: 8,
+            ),
+            Row(
+              mainAxisAlignment: MainAxisAlignment.spaceAround,
+              children: <Widget>[
+                Text(
+                  'Mortality Rate : ',
+                  style: kTertiaryTextStyle,
+                ),
+                Row(
+                  children: <Widget>[
+                    Text(
+                      ((totalDeaths / totalConfirmed) * 100).toStringAsFixed(2),
+                      style: kCaseNameTextStyle,
+                    ),
+                    Text(' %')
                   ],
                 ),
               ],

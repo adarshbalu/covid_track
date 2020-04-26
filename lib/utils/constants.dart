@@ -75,6 +75,7 @@ const kRunnyNoseImage = 'assets/runny-nose.png';
 const kSickImage = 'assets/sick.png';
 const kSoreThroatImage = 'assets/sore-throat.png';
 const kStayHomeImage = 'assets/stay-home.png';
+const kTissueImage = 'assets/tissue.png';
 
 var random = Random();
 

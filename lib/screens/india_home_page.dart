@@ -121,6 +121,50 @@ class _IndiaHomePageState extends State<IndiaHomePage> {
                           cases: totalData.totalDeaths,
                           text: 'Deaths',
                         ),
+                        Padding(
+                            padding: EdgeInsets.fromLTRB(8, 10, 8, 10),
+                            child: Material(
+                              borderRadius: BorderRadius.circular(10),
+                              elevation: 2,
+                              child: Container(
+                                decoration: BoxDecoration(
+                                    color: Colors.white,
+                                    borderRadius: BorderRadius.circular(10)),
+                                padding: EdgeInsets.fromLTRB(8, 13, 8, 13),
+                                child: Row(
+                                  mainAxisAlignment:
+                                      MainAxisAlignment.spaceEvenly,
+                                  children: <Widget>[
+                                    PercentDataCard(
+                                      title: 'Active',
+                                      number: ((totalData.totalActive /
+                                                  totalData.totalConfirmed) *
+                                              100)
+                                          .toStringAsFixed(2),
+                                      color: Colors.deepPurple,
+                                    ),
+                                    Divider(),
+                                    PercentDataCard(
+                                      title: 'Recovered',
+                                      number: ((totalData.totalRecovered /
+                                                  totalData.totalConfirmed) *
+                                              100)
+                                          .toStringAsFixed(2),
+                                      color: Colors.green,
+                                    ),
+                                    Divider(),
+                                    PercentDataCard(
+                                      title: 'Death',
+                                      number: ((totalData.totalDeaths /
+                                                  totalData.totalConfirmed) *
+                                              100)
+                                          .toStringAsFixed(2),
+                                      color: Colors.red,
+                                    ),
+                                  ],
+                                ),
+                              ),
+                            )),
                         Container(
                           height: MediaQuery.of(context).size.height / 2.2,
                           decoration: BoxDecoration(
@@ -169,6 +213,51 @@ class _IndiaHomePageState extends State<IndiaHomePage> {
                           color: Colors.red,
                           cases: totalData.newDeaths,
                           text: 'Deaths',
+                        ),
+                        Padding(
+                          padding: EdgeInsets.fromLTRB(8, 10, 8, 10),
+                          child: Material(
+                            borderRadius: BorderRadius.circular(10),
+                            elevation: 2,
+                            child: Container(
+                              decoration: BoxDecoration(
+                                  color: Colors.white,
+                                  borderRadius: BorderRadius.circular(10)),
+                              padding: EdgeInsets.fromLTRB(8, 13, 8, 13),
+                              child: Row(
+                                mainAxisAlignment:
+                                    MainAxisAlignment.spaceEvenly,
+                                children: <Widget>[
+                                  PercentDataCard(
+                                    title: 'New Active',
+                                    number: ((totalData.newConfirmed /
+                                                totalData.totalConfirmed) *
+                                            100)
+                                        .toStringAsFixed(2),
+                                    color: Colors.deepPurple,
+                                  ),
+                                  Divider(),
+                                  PercentDataCard(
+                                    title: 'New Recovered',
+                                    number: ((totalData.newRecovered /
+                                                totalData.totalConfirmed) *
+                                            100)
+                                        .toStringAsFixed(2),
+                                    color: Colors.green,
+                                  ),
+                                  Divider(),
+                                  PercentDataCard(
+                                    title: 'New Death',
+                                    number: ((totalData.newDeaths /
+                                                totalData.totalDeaths) *
+                                            100)
+                                        .toStringAsFixed(2),
+                                    color: Colors.red,
+                                  ),
+                                ],
+                              ),
+                            ),
+                          ),
                         ),
                         Container(
                             height: MediaQuery.of(context).size.height / 2,

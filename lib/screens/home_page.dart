@@ -94,6 +94,50 @@ class _HomePageState extends State<HomePage> {
                           SizedBox(
                             height: 8,
                           ),
+                          Padding(
+                              padding: EdgeInsets.fromLTRB(8, 10, 8, 10),
+                              child: Material(
+                                borderRadius: BorderRadius.circular(10),
+                                elevation: 2,
+                                child: Container(
+                                  decoration: BoxDecoration(
+                                      color: Colors.white,
+                                      borderRadius: BorderRadius.circular(10)),
+                                  padding: EdgeInsets.fromLTRB(8, 13, 8, 13),
+                                  child: Row(
+                                    mainAxisAlignment:
+                                        MainAxisAlignment.spaceEvenly,
+                                    children: <Widget>[
+                                      PercentDataCard(
+                                        title: 'Active',
+                                        number: ((globalData.totalActive /
+                                                    globalData.totalConfirmed) *
+                                                100)
+                                            .toStringAsFixed(2),
+                                        color: Colors.deepPurple,
+                                      ),
+                                      Divider(),
+                                      PercentDataCard(
+                                        title: 'Recovered',
+                                        number: ((globalData.totalRecovered /
+                                                    globalData.totalConfirmed) *
+                                                100)
+                                            .toStringAsFixed(2),
+                                        color: Colors.green,
+                                      ),
+                                      Divider(),
+                                      PercentDataCard(
+                                        title: 'Death',
+                                        number: ((globalData.totalDeaths /
+                                                    globalData.totalConfirmed) *
+                                                100)
+                                            .toStringAsFixed(2),
+                                        color: Colors.red,
+                                      ),
+                                    ],
+                                  ),
+                                ),
+                              )),
                           Container(
                             height: MediaQuery.of(context).size.height / 1.9,
                             decoration: BoxDecoration(
@@ -145,6 +189,51 @@ class _HomePageState extends State<HomePage> {
                             color: Colors.red,
                             cases: snapshot.data.newDeaths,
                             text: 'Deaths',
+                          ),
+                          Padding(
+                            padding: EdgeInsets.fromLTRB(8, 10, 8, 10),
+                            child: Material(
+                              borderRadius: BorderRadius.circular(10),
+                              elevation: 2,
+                              child: Container(
+                                decoration: BoxDecoration(
+                                    color: Colors.white,
+                                    borderRadius: BorderRadius.circular(10)),
+                                padding: EdgeInsets.fromLTRB(8, 13, 8, 13),
+                                child: Row(
+                                  mainAxisAlignment:
+                                      MainAxisAlignment.spaceEvenly,
+                                  children: <Widget>[
+                                    PercentDataCard(
+                                      title: 'New Active',
+                                      number: ((globalData.newConfirmed /
+                                                  globalData.totalConfirmed) *
+                                              100)
+                                          .toStringAsFixed(2),
+                                      color: Colors.deepPurple,
+                                    ),
+                                    Divider(),
+                                    PercentDataCard(
+                                      title: 'New Recovered',
+                                      number: ((globalData.newRecovered /
+                                                  globalData.totalConfirmed) *
+                                              100)
+                                          .toStringAsFixed(2),
+                                      color: Colors.green,
+                                    ),
+                                    Divider(),
+                                    PercentDataCard(
+                                      title: 'New Death',
+                                      number: ((globalData.newDeaths /
+                                                  globalData.totalDeaths) *
+                                              100)
+                                          .toStringAsFixed(2),
+                                      color: Colors.red,
+                                    ),
+                                  ],
+                                ),
+                              ),
+                            ),
                           ),
                           Container(
                               height: MediaQuery.of(context).size.height / 2,

@@ -47,11 +47,87 @@ class _CountryPageState extends State<CountryPage> {
                       children: <Widget>[
                         CountryNameHeader(snapshot.data.countryName,
                             snapshot.data.countryUrl),
-                        CountryDataCard(
-                          header: 'Total Confirmed',
-                          totalCases: snapshot.data.totalConfirmed,
-                          newCases: snapshot.data.newConfirmed,
-                          color: Color(0xff4a148c),
+                        Padding(
+                          padding: EdgeInsets.fromLTRB(8, 10, 8, 10),
+                          child: Material(
+                            borderRadius: BorderRadius.circular(10),
+                            elevation: 2,
+                            child: Container(
+                              width: double.infinity,
+                              decoration: BoxDecoration(
+                                  color: Colors.white,
+                                  borderRadius: BorderRadius.circular(10)),
+                              padding: EdgeInsets.fromLTRB(13, 13, 13, 13),
+                              child: RichText(
+                                textAlign: TextAlign.left,
+                                text: TextSpan(
+                                  style: TextStyle(
+                                    fontSize: 19,
+                                    color: Colors.black,
+                                  ),
+                                  children: [
+                                    TextSpan(
+                                        text: snapshot.data.countryName,
+                                        style: TextStyle(
+                                            fontWeight: FontWeight.bold)),
+                                    TextSpan(text: ' has a total of '),
+                                    TextSpan(
+                                        text: snapshot.data.totalConfirmed
+                                            .toString(),
+                                        style: TextStyle(
+                                          fontWeight: FontWeight.bold,
+                                          color: Colors.deepPurple,
+                                        )),
+                                    TextSpan(
+                                        text:
+                                            ' cases , total recovered cases '),
+                                    TextSpan(
+                                        text: snapshot.data.totalRecovered
+                                            .toString(),
+                                        style: TextStyle(
+                                          fontWeight: FontWeight.bold,
+                                          color: Colors.green,
+                                        )),
+                                    TextSpan(text: ' at a recovery rate of '),
+                                    TextSpan(
+                                        text: ((countryData.totalRecovered /
+                                                        countryData
+                                                            .totalConfirmed) *
+                                                    100)
+                                                .toStringAsFixed(2) +
+                                            '%',
+                                        style: TextStyle(
+                                          fontWeight: FontWeight.bold,
+                                          color: Colors.green.shade800,
+                                        )),
+                                    TextSpan(text: ', total deaths '),
+                                    TextSpan(
+                                        text: snapshot.data.totalDeaths
+                                            .toString(),
+                                        style: TextStyle(
+                                          fontWeight: FontWeight.bold,
+                                          color: Colors.red,
+                                        )),
+                                    TextSpan(text: ' at a mortality rate of '),
+                                    TextSpan(
+                                        text: ((countryData.totalDeaths /
+                                                        countryData
+                                                            .totalConfirmed) *
+                                                    100)
+                                                .toStringAsFixed(2) +
+                                            '%',
+                                        style: TextStyle(
+                                          fontWeight: FontWeight.bold,
+                                          color: Colors.redAccent,
+                                        )),
+                                    TextSpan(
+                                        text:
+                                            ' as per the latest data.\nCheck detailed Data Below'),
+                                  ],
+                                ),
+                              ),
+                            ),
+                          ),
                         ),
                         Container(
                           height: MediaQuery.of(context).size.height / 2.2,
@@ -75,6 +151,12 @@ class _CountryPageState extends State<CountryPage> {
                                 value: snapshot.data.totalDeaths,
                                 colorValue: Color(0xffff1744)),
                           ], true),
+                        ),
+                        CountryDataCard(
+                          header: 'Total Confirmed',
+                          totalCases: snapshot.data.totalConfirmed,
+                          newCases: snapshot.data.newConfirmed,
+                          color: Color(0xff4a148c),
                         ),
                         CountryDataCard(
                           header: 'Total Active',

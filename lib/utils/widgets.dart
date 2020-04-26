@@ -662,6 +662,63 @@ class GroupedBarChart extends StatelessWidget {
   }
 }
 
+class PercentDataCard extends StatelessWidget {
+  final String number;
+  final Color color;
+  final String title;
+  const PercentDataCard({
+    Key key,
+    this.number,
+    this.color,
+    this.title,
+  }) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    return Column(
+      children: <Widget>[
+        Container(
+          padding: EdgeInsets.all(6),
+          height: 25,
+          width: 25,
+          decoration: BoxDecoration(
+            shape: BoxShape.circle,
+            color: color.withOpacity(.50),
+          ),
+          child: Container(
+            decoration: BoxDecoration(
+              shape: BoxShape.circle,
+              color: Colors.transparent,
+              border: Border.all(
+                color: color,
+                width: 2,
+              ),
+            ),
+          ),
+        ),
+        SizedBox(height: 8),
+        RichText(
+            text: TextSpan(children: [
+          TextSpan(
+            text: number,
+            style: TextStyle(
+              fontSize: 34,
+              color: color,
+            ),
+          ),
+          TextSpan(
+              text: '%',
+              style: TextStyle(
+                fontSize: 18,
+                color: color,
+              )),
+        ])),
+        Text(title, style: kSubTextStyle),
+      ],
+    );
+  }
+}
+
 class Case {
   String type;
   int value;

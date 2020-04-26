@@ -114,28 +114,32 @@ class _InfoScreenState extends State<InfoScreen> {
                     title: "Wear face mask",
                   ),
                   PreventCard(
-                    text:
-                        "Since the start of the coronavirus outbreak some places have fully embraced wearing facemasks",
+                    text: "Bury the germ by washing your hands frequently.",
                     image: kHandWashImage,
                     title: "Wash your hands",
                   ),
                   PreventCard(
                     text:
-                        "Since the start of the coronavirus outbreak some places have fully embraced wearing facemasks",
+                        "To help prevent infections , keep your hands away from your face.",
+                    image: kAvoidTouchImage,
+                    title: "Avoid touching your face",
+                  ),
+                  PreventCard(
+                    text:
+                        "Maintain a safe distance from everyone and stay safe.",
                     image: kKeepDistanceImage,
                     title: "Social Distancing",
                   ),
                   PreventCard(
                     text:
-                        "Since the start of the coronavirus outbreak some places have fully embraced wearing facemasks",
-                    image: kStayHomeImage,
-                    title: "Stay Home",
+                        "Cover your nose and mouth with your bent elbow or a tissue when you cough or sneeze.",
+                    image: kTissueImage,
+                    title: "Avoid sneezing on hands",
                   ),
                   PreventCard(
-                    text:
-                        "Since the start of the coronavirus outbreak some places have fully embraced wearing facemasks",
-                    image: kAvoidTouchImage,
-                    title: "Avoid touching eyes,nose and mouth",
+                    text: "You're not stuck at home, you're safe at home.",
+                    image: kStayHomeImage,
+                    title: "Stay Home",
                   ),
                   SizedBox(height: 50),
                 ],
@@ -209,7 +213,7 @@ class PreventCard extends StatelessWidget {
                     ),
                     Expanded(
                       child: Padding(
-                        padding: EdgeInsets.only(top: 8.0),
+                        padding: EdgeInsets.only(top: 4.0),
                         child: Text(
                           text,
                           maxLines: 4,
