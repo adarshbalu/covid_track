@@ -73,6 +73,8 @@ Covid-19 Track app is a free and open source project. Any contributions are welc
  
 
 ## Credits  
+- Thanks [COVID-19 API](https://covid19api.com/) for country data.
+- Thanks [COVID19-India API](https://api.covid19india.org/) for India data.
 - Thanks Wanicon (https://flaticon.com/authors/wanicon) for the app icon.
 - Thanks Freepik (https://flaticon.com/authors/freepik) for icons.
 - Thanks [Rendi Ramadana](https://www.uplabs.com/posts/coronavirus-information-concept) for UI design.
