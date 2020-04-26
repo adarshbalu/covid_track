@@ -59,37 +59,48 @@ const kPrimaryTextStyle = TextStyle(fontSize: 24, fontWeight: FontWeight.w300);
 const kTertiaryTextStyle = TextStyle(fontSize: 20, fontWeight: FontWeight.w300);
 // Images
 
-const kAvoidEyeImage = 'assets/avoid-eye.png';
-const kAvoidGathering_1_Image = 'assets/avoid-gathering-1.png';
-const kAvoidGathering_2_Image = 'assets/avoid-gathering-2.png';
-const kAvoidMouthImage = 'assets/avoid-mouth.png';
-const kAvoidNoseImage = 'assets/avoid-nose.png';
-const kAvoidTravelImage = 'assets/avoid-travel.png';
-const kCleanImage = 'assets/clean.png';
+const kAvoidTouchImage = 'assets/avoid-touch.png';
 const kCoughImage = 'assets/cough.png';
 const kCOVIDImage = 'assets/covid-19.png';
 const kDifficultyBreathingImage = 'assets/difficulty-breathing.png';
 const kFeverImage = 'assets/fever.png';
 const kGermImage = 'assets/germ.png';
-const kHandWash_1_Image = 'assets/hand-wash-1.png';
-const kHandWash_2_Image = 'assets/hand-wash-2.png';
-const kSanitizerImage = 'assets/handsanitizer.png';
-const kHandWashImage = 'assets/handwash.png';
+const kHandWashImage = 'assets/hand-wash.png';
 const kIndiaImage = 'assets/india.png';
 const kKeepDistanceImage = 'assets/keep-distance.png';
-const kMask_1_Image = 'assets/mask-1.png';
-const kMask_2_Image = 'assets/mask-2.png';
-const kMask_3_Image = 'assets/mask-3.png';
-const kMask_4_Image = 'assets/mask-4.png';
+const kMaskImage = 'assets/mask.png';
 const kPandemic_1_Image = 'assets/pandemic-1.png';
 const kPandemic_2_Image = 'assets/pandemic-2.png';
-const kQuarantineImage = 'assets/quarantine.png';
 const kRunnyNoseImage = 'assets/runny-nose.png';
 const kSickImage = 'assets/sick.png';
 const kSoreThroatImage = 'assets/sore-throat.png';
 const kStayHomeImage = 'assets/stay-home.png';
-const kTissueImage = 'assets/tissue.png';
 
 var random = Random();
 
 var formatter = NumberFormat("##,##,##,###");
+
+const kBackgroundColor = Color(0xFFFEFEFE);
+const kTitleTextColor = Color(0xFF303030);
+const kBodyTextColor = Color(0xFF4B4B4B);
+const kTextLightColor = Color(0xFF959595);
+const kInfectedColor = Color(0xFFFF8748);
+const kDeathColor = Color(0xFFFF4848);
+const kRecovercolor = Color(0xFF36C12C);
+const kPrimaryColor = Color(0xFF3382CC);
+final kShadowColor = Color(0xFFB7B7B7).withOpacity(.16);
+final kActiveShadowColor = Color(0xFF4056C6).withOpacity(.15);
+
+// Text Style
+const kHeadingTextStyle =
+    TextStyle(fontSize: 22, fontWeight: FontWeight.w600, fontFamily: 'Poppins');
+
+const kSubTextStyle =
+    TextStyle(fontSize: 16, color: kTextLightColor, fontFamily: 'Poppins');
+
+const kTitleTextstyle = TextStyle(
+  fontFamily: 'Poppins',
+  fontSize: 18,
+  color: kTitleTextColor,
+  fontWeight: FontWeight.bold,
+);

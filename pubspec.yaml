@@ -48,34 +48,22 @@ flutter:
   assets:
   - sick.png
   - germ.png
-  - handwash.png
-  - handsanitizer.png
   - india.png
-#  - avoid-eye.png
-#  - avoid-gathering-1.png
-#  - avoid-gathering-2.png
-#  - avoid-mouth.png
-#  - avoid-nose.png
-#  - avoid-travel.png
-#  - clean.png
-#  - cough.png
+  - avoid-touch.png
+  - cough.png
   - covid-19.png
-#  - difficulty-breathing.png
-#  - fever.png
-#  - hand-wash-1.png
-#  - hand-wash-2.png
-#  - keep-distance.png
-#  - mask-1.png
-#  - mask-2.png
-#  - mask-3.png
-#  - mask-4.png
+  - difficulty-breathing.png
+  - fever.png
+  - hand-wash.png
+  - keep-distance.png
+  - mask.png
   - pandemic-1.png
   - pandemic-2.png
-#  - quarantine.png
-#  - runny-nose.png
-#  - sore-throat.png
-#  - stay-home.png
-#  - tissue.png
+  - runny-nose.png
+  - sore-throat.png
+  - stay-home.png
+  - virus.png
+  - medical-mask.png
 
   #  - images/a_dot_ham.jpeg
 
@@ -95,6 +83,11 @@ flutter:
       fonts :
         - asset: assets/fonts/Merienda-Regular.ttf
         - asset: assets/fonts/Merienda-Bold.ttf
+
+    - family : Poppins
+      fonts :
+        - asset: assets/fonts/Poppins-Regular.ttf
+        - asset: assets/fonts/Poppins-Medium.ttf
   #         style: italic
   #   - family: Trajan Pro
   #     fonts:

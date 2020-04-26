@@ -1,5 +1,6 @@
 import 'dart:math';
 import 'package:covidtrack/screens/india_home_page.dart';
+import 'package:covidtrack/screens/info_screen.dart';
 import 'package:covidtrack/utils/models/country.dart';
 import 'package:flutter/material.dart';
 import 'package:charts_flutter/flutter.dart' as charts;
@@ -303,8 +304,8 @@ class BottomMenu extends StatelessWidget {
             ),
             InkWell(
               onTap: () {
-//                Navigator.of(context).popUntil((route) => route.isFirst);
-//                Navigator.push(context, SlideRoute(widget: StatsPage()));
+                Navigator.of(context).popUntil((route) => route.isFirst);
+                Navigator.push(context, SlideRoute(widget: InfoScreen()));
               },
               child: Container(
                 child: Column(

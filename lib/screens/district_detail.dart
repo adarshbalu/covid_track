@@ -74,14 +74,14 @@ class _DistrictDetailsState extends State<DistrictDetails> {
 }
 
 class DistrictDataCard extends StatelessWidget {
-  int totalConfirmed,
+final int totalConfirmed,
       totalDeaths,
       totalRecovered,
       newDeaths,
       newConfirmed,
       newRecovered,
       totalActive;
-  String name;
+ final String name;
   DistrictDataCard(
       {this.name,
       this.totalDeaths,
