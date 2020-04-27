@@ -31,6 +31,7 @@ class _InfoScreenState extends State<InfoScreen> {
   @override
   void dispose() {
     controller.dispose();
+    _controller.dispose();
     super.dispose();
   }
 

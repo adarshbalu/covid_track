@@ -46,7 +46,7 @@ class _StateSelectPageState extends State<StateSelectPage> {
                 headerText: 'States',
               ),
               SizedBox(
-                height: 20,
+                height: 13,
               ),
               Row(
                 children: <Widget>[
@@ -115,33 +115,33 @@ class _StateSelectPageState extends State<StateSelectPage> {
                 ],
               ),
               SizedBox(
-                height: 15,
+                height: 8,
               ),
               Divider(),
               SizedBox(
-                height: 15,
+                height: 3,
               ),
-              Text(
-                'States List',
-                textAlign: TextAlign.center,
-                style: TextStyle(fontSize: 24, fontWeight: FontWeight.w300),
+              Row(
+                mainAxisAlignment: MainAxisAlignment.spaceAround,
+                children: <Widget>[
+                  Text(
+                    'States List',
+                    textAlign: TextAlign.center,
+                    style: TextStyle(fontSize: 24, fontWeight: FontWeight.w300),
+                  ),
+                  Icon(Icons.expand_more)
+                ],
               ),
               SizedBox(
                 height: 5,
               ),
               Container(
-                margin: EdgeInsets.only(left: 10, right: 10, bottom: 20),
-                padding: EdgeInsets.only(top: 8, bottom: 8),
-                decoration: BoxDecoration(
-                  border: Border(
-                      left: BorderSide(color: Colors.grey, width: 10),
-                      right: BorderSide(color: Colors.grey, width: 10)),
-                  // borderRadius: BorderRadius.all(Radius.circular(20)),
-                ),
+                margin: EdgeInsets.only(left: 10, right: 10),
+                padding: EdgeInsets.only(top: 8, bottom: 0),
                 child: ConstrainedBox(
                   constraints: BoxConstraints(
-                      minHeight: MediaQuery.of(context).size.height / 2,
-                      maxHeight: MediaQuery.of(context).size.height / 1.8),
+                      minHeight: MediaQuery.of(context).size.height / 2.3,
+                      maxHeight: MediaQuery.of(context).size.height / 2.2),
                   child: FutureBuilder(
                       future: getStateData(),
                       builder: (context, snapshot) {
@@ -173,7 +173,14 @@ class _StateSelectPageState extends State<StateSelectPage> {
                 ),
               ),
               SizedBox(
-                height: 40,
+                child: Padding(
+                  padding: EdgeInsets.all(8.0),
+                  child: Text(
+                    'Displays states with minimum one confirmed case.',
+                    textAlign: TextAlign.center,
+                  ),
+                ),
+                height: 30,
               ),
             ],
           ),

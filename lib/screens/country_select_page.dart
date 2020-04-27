@@ -21,9 +21,11 @@ class _CountrySelectPageState extends State<CountrySelectPage> {
   var countryList;
   List<CountryData> countryDataList;
   bool load = false;
+  ScrollController _scrollController = ScrollController();
   @override
   void dispose() {
     _controller.dispose();
+    _scrollController.dispose();
     super.dispose();
   }
 
@@ -48,7 +50,7 @@ class _CountrySelectPageState extends State<CountrySelectPage> {
                 name: name,
               ),
               SizedBox(
-                height: 20,
+                height: 15,
               ),
               Row(
                 children: <Widget>[
@@ -117,65 +119,69 @@ class _CountrySelectPageState extends State<CountrySelectPage> {
                 ],
               ),
               SizedBox(
-                height: 15,
+                height: 5,
               ),
               Divider(),
               SizedBox(
-                height: 15,
+                height: 5,
               ),
-              Text(
-                'Country List',
-                textAlign: TextAlign.center,
-                style: TextStyle(fontSize: 24, fontWeight: FontWeight.w300),
+              Row(
+                mainAxisAlignment: MainAxisAlignment.spaceAround,
+                children: <Widget>[
+                  Text(
+                    'Country List',
+                    textAlign: TextAlign.center,
+                    style: TextStyle(fontSize: 24, fontWeight: FontWeight.w300),
+                  ),
+                  Icon(Icons.expand_more)
+                ],
               ),
               SizedBox(
                 height: 5,
               ),
               Container(
                 margin: EdgeInsets.only(left: 10, right: 10),
-                padding: EdgeInsets.only(top: 8, bottom: 8),
-                decoration: BoxDecoration(
-                  border: Border(
-                      left: BorderSide(color: Colors.grey, width: 10),
-                      right: BorderSide(color: Colors.grey, width: 10)),
-                  // borderRadius: BorderRadius.all(Radius.circular(20)),
-                ),
+                padding: EdgeInsets.only(top: 8, bottom: 0),
                 child: ConstrainedBox(
                   constraints: BoxConstraints(
-                      minHeight: MediaQuery.of(context).size.height / 2,
-                      maxHeight: MediaQuery.of(context).size.height / 1.8),
+                      minHeight: MediaQuery.of(context).size.height / 2.3,
+                      maxHeight: MediaQuery.of(context).size.height / 2.2),
                   child: FutureBuilder(
                       future: getCountryData(),
                       builder: (context, snapshot) {
                         if (snapshot.hasData) {
-                          return ListView.builder(
-                              physics: ScrollPhysics(),
-                              shrinkWrap: true,
-                              itemCount: snapshot.data.length,
-                              itemBuilder: (context, index) {
-                                return Card(
-                                    margin: EdgeInsets.fromLTRB(20, 10, 20, 10),
-                                    elevation: 2,
-                                    child: ListTile(
-                                      onTap: () {
-                                        toCountryPage(
-                                            snapshot.data[index].shortName,
-                                            snapshot.data[index]);
-                                      },
-                                      title: Text(
-                                          snapshot.data[index].countryName),
-                                      leading: Container(
-                                        height: 40,
-                                        width: 40,
-                                        decoration: BoxDecoration(
-                                            shape: BoxShape.circle),
-                                        child: Image.network(
-                                          snapshot.data[index].countryUrl,
-                                          fit: BoxFit.contain,
+                          return Scrollbar(
+                            controller: _scrollController,
+                            child: ListView.builder(
+                                physics: ScrollPhysics(),
+                                shrinkWrap: true,
+                                itemCount: snapshot.data.length,
+                                itemBuilder: (context, index) {
+                                  return Card(
+                                      margin:
+                                          EdgeInsets.fromLTRB(20, 10, 20, 10),
+                                      elevation: 2,
+                                      child: ListTile(
+                                        onTap: () {
+                                          toCountryPage(
+                                              snapshot.data[index].shortName,
+                                              snapshot.data[index]);
+                                        },
+                                        title: Text(
+                                            snapshot.data[index].countryName),
+                                        leading: Container(
+                                          height: 40,
+                                          width: 40,
+                                          decoration: BoxDecoration(
+                                              shape: BoxShape.circle),
+                                          child: Image.network(
+                                            snapshot.data[index].countryUrl,
+                                            fit: BoxFit.contain,
+                                          ),
                                         ),
-                                      ),
-                                    ));
-                              });
+                                      ));
+                                }),
+                          );
                         } else {
                           return Center(
                             child: Container(
@@ -187,7 +193,14 @@ class _CountrySelectPageState extends State<CountrySelectPage> {
                 ),
               ),
               SizedBox(
-                height: 40,
+                child: Padding(
+                  padding: EdgeInsets.all(8.0),
+                  child: Text(
+                    'Displays countries with minimum one confirmed case.',
+                    textAlign: TextAlign.center,
+                  ),
+                ),
+                height: 30,
               ),
             ],
           ),
