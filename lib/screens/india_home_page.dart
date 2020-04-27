@@ -20,7 +20,7 @@ class _IndiaHomePageState extends State<IndiaHomePage> {
   List<StateData> stateDataList;
   Map<String, StateData> dataMap;
   StateData mostCases, mostDeaths, mostRecovered, totalData;
-  bool load = false, showAll = true, showNew = true, showStats = true;
+  bool load = false, showAll = true, showNew = true, showStats = false;
   String indiaFlagUrl = 'http://www.geognos.com/api/en/countries/flag/IN.png';
   IconData showAllIcon, showNewIcon, showStatsIcon;
   @override
@@ -69,23 +69,26 @@ class _IndiaHomePageState extends State<IndiaHomePage> {
                                   'INDIA',
                                   style: kHeaderTextStyle,
                                 ),
-                                GestureDetector(
-                                  onTap: () {
-                                    toStateSearchPage();
-                                  },
-                                  child: Container(
-                                    width: 50,
-                                    height: 50,
-                                    margin: EdgeInsets.only(right: 8),
-                                    child: Material(
-                                        color: Colors.white70,
-                                        type: MaterialType.circle,
-                                        elevation: 4,
-                                        child: Icon(
-                                          Icons.search,
-                                          color: Colors.black,
-                                          size: 35,
-                                        )),
+                                Tooltip(
+                                  message: 'Search States',
+                                  child: GestureDetector(
+                                    onTap: () {
+                                      toStateSearchPage();
+                                    },
+                                    child: Container(
+                                      width: 50,
+                                      height: 50,
+                                      margin: EdgeInsets.only(right: 8),
+                                      child: Material(
+                                          color: Colors.white70,
+                                          type: MaterialType.circle,
+                                          elevation: 4,
+                                          child: Icon(
+                                            Icons.search,
+                                            color: Colors.black,
+                                            size: 35,
+                                          )),
+                                    ),
                                   ),
                                 )
                               ],

@@ -6,7 +6,7 @@ class LoaderScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     int offset = 0;
-    int time = 800;
+    int time = 1000;
 
     return Column(
       children: <Widget>[
@@ -14,7 +14,7 @@ class LoaderScreen extends StatelessWidget {
           headerText: 'COVID-19',
         ),
         SizedBox(
-          height: 20,
+          height: 30,
         ),
         Flexible(
           child: ListView.builder(
@@ -26,7 +26,7 @@ class LoaderScreen extends StatelessWidget {
                   padding: EdgeInsets.symmetric(horizontal: 15),
                   child: Shimmer.fromColors(
                     highlightColor: Colors.white,
-                    baseColor: Colors.grey[100],
+                    baseColor: Colors.grey[300],
                     child: ShimmerLayout(),
                     period: Duration(milliseconds: time),
                   ));
