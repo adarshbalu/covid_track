@@ -129,7 +129,7 @@ class _StateSelectPageState extends State<StateSelectPage> {
                     textAlign: TextAlign.center,
                     style: TextStyle(fontSize: 24, fontWeight: FontWeight.w300),
                   ),
-                  Icon(Icons.expand_more)
+                  Icon(Icons.arrow_downward)
                 ],
               ),
               SizedBox(
@@ -159,6 +159,13 @@ class _StateSelectPageState extends State<StateSelectPage> {
                                         toStatePage(snapshot.data[index].name,
                                             snapshot.data[index]);
                                       },
+                                      trailing: Padding(
+                                        padding: EdgeInsets.only(right: 8.0),
+                                        child: Icon(Icons.arrow_right),
+                                      ),
+                                      subtitle: Text('Cases : ' +
+                                          snapshot.data[index].totalConfirmed
+                                              .toString()),
                                       title: Text(snapshot.data[index].name),
                                     ));
                               });

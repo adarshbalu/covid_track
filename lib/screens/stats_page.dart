@@ -42,17 +42,6 @@ class _StatsPageState extends State<StatsPage> {
               crossAxisAlignment: CrossAxisAlignment.center,
               children: <Widget>[
                 Padding(
-                  padding: EdgeInsets.only(top: 0, bottom: 8),
-                  child: Text(
-                    'Stats',
-                    style: TextStyle(
-                        fontSize: 35,
-                        color: Colors.black87,
-                        fontWeight: FontWeight.w600,
-                        fontFamily: 'Merienda'),
-                  ),
-                ),
-                Padding(
                   padding: EdgeInsets.fromLTRB(0, 8, 0, 3),
                   child: Text(
                     'Most Cases',
@@ -148,14 +137,17 @@ class _StatsPageState extends State<StatsPage> {
               ],
             );
           } else {
-            return Center(
-              child: Container(
-                  width: 40,
-                  margin: EdgeInsets.only(top: 20, bottom: 20),
-                  child: CircularProgressIndicator(
-                      valueColor:
-                          AlwaysStoppedAnimation<Color>(Colors.greenAccent))),
-            );
+            if (snapshot.connectionState == ConnectionState.waiting) {
+              return Center(
+                child: Container(
+                    width: 40,
+                    margin: EdgeInsets.only(top: 0, bottom: 40),
+                    child: CircularProgressIndicator(
+                        valueColor:
+                            AlwaysStoppedAnimation<Color>(Colors.greenAccent))),
+              );
+            } else
+              return SizedBox();
           }
         });
   }

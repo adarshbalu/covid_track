@@ -109,7 +109,7 @@ class DistrictDataCard extends StatelessWidget {
           children: <Widget>[
             Center(
               child: Padding(
-                padding: EdgeInsets.only(top: 10.0, bottom: 8),
+                padding: EdgeInsets.only(top: 10.0, bottom: 10),
                 child: Text(
                   name,
                   textAlign: TextAlign.center,
@@ -132,10 +132,15 @@ class DistrictDataCard extends StatelessWidget {
                   children: <Widget>[
                     Text(
                       formatter.format(totalConfirmed).toString(),
-                      style: kCaseNameTextStyle,
+                      style: kCaseNameTextStyle.copyWith(
+                          color: Colors.deepPurple,
+                          fontWeight: FontWeight.bold),
                     ),
                     Text(
-                        ' (+' + formatter.format(newConfirmed).toString() + ')')
+                        ' (+' + formatter.format(newConfirmed).toString() + ')',
+                        style: TextStyle(
+                          color: Colors.deepPurple,
+                        ))
                   ],
                 ),
               ],
@@ -154,9 +159,13 @@ class DistrictDataCard extends StatelessWidget {
                   children: <Widget>[
                     Text(
                       ((totalConfirmed / stateTotal) * 100).toStringAsFixed(2),
-                      style: kCaseNameTextStyle,
+                      style: kCaseNameTextStyle.copyWith(
+                          color: Colors.orange, fontWeight: FontWeight.bold),
                     ),
-                    Text(' %')
+                    Text(' %',
+                        style: TextStyle(
+                          color: Colors.orange,
+                        ))
                   ],
                 ),
               ],
@@ -173,7 +182,9 @@ class DistrictDataCard extends StatelessWidget {
                 ),
                 Text(
                   formatter.format(totalActive).toString(),
-                  style: kCaseNameTextStyle,
+                  style: kCaseNameTextStyle.copyWith(
+                      color: Colors.deepPurpleAccent,
+                      fontWeight: FontWeight.bold),
                 ),
               ],
             ),
@@ -191,10 +202,14 @@ class DistrictDataCard extends StatelessWidget {
                   children: <Widget>[
                     Text(
                       formatter.format(totalRecovered).toString(),
-                      style: kCaseNameTextStyle,
+                      style: kCaseNameTextStyle.copyWith(
+                          color: Colors.green, fontWeight: FontWeight.bold),
                     ),
                     Text(
-                        ' (+' + formatter.format(newRecovered).toString() + ')')
+                        ' (+' + formatter.format(newRecovered).toString() + ')',
+                        style: TextStyle(
+                          color: Colors.green,
+                        ))
                   ],
                 ),
               ],
@@ -214,9 +229,14 @@ class DistrictDataCard extends StatelessWidget {
                     Text(
                       ((totalRecovered / totalConfirmed) * 100)
                           .toStringAsFixed(2),
-                      style: kCaseNameTextStyle,
+                      style: kCaseNameTextStyle.copyWith(
+                          color: Colors.green.shade700,
+                          fontWeight: FontWeight.bold),
                     ),
-                    Text(' %')
+                    Text(' %',
+                        style: TextStyle(
+                          color: Colors.green.shade700,
+                        ))
                   ],
                 ),
               ],
@@ -235,9 +255,13 @@ class DistrictDataCard extends StatelessWidget {
                   children: <Widget>[
                     Text(
                       formatter.format(totalDeaths).toString(),
-                      style: kCaseNameTextStyle,
+                      style: kCaseNameTextStyle.copyWith(
+                          color: Colors.red, fontWeight: FontWeight.bold),
                     ),
-                    Text(' (+' + formatter.format(newDeaths).toString() + ')')
+                    Text(' (+' + formatter.format(newDeaths).toString() + ')',
+                        style:TextStyle(
+                          color: Colors.red,
+                        )),
                   ],
                 ),
               ],
@@ -256,15 +280,20 @@ class DistrictDataCard extends StatelessWidget {
                   children: <Widget>[
                     Text(
                       ((totalDeaths / totalConfirmed) * 100).toStringAsFixed(2),
-                      style: kCaseNameTextStyle,
+                      style: kCaseNameTextStyle.copyWith(
+                          color: Colors.deepOrange,
+                          fontWeight: FontWeight.bold),
                     ),
-                    Text(' %')
+                    Text(' %',
+                        style: TextStyle(
+                          color: Colors.deepOrange,
+                        ))
                   ],
                 ),
               ],
             ),
             SizedBox(
-              height: 10,
+              height: 15,
             )
           ],
         ),

@@ -50,7 +50,7 @@ class _CountrySelectPageState extends State<CountrySelectPage> {
                 name: name,
               ),
               SizedBox(
-                height: 15,
+                height: MediaQuery.of(context).size.height / 40,
               ),
               Row(
                 children: <Widget>[
@@ -123,7 +123,7 @@ class _CountrySelectPageState extends State<CountrySelectPage> {
               ),
               Divider(),
               SizedBox(
-                height: 5,
+                height: MediaQuery.of(context).size.height / 80,
               ),
               Row(
                 mainAxisAlignment: MainAxisAlignment.spaceAround,
@@ -133,11 +133,11 @@ class _CountrySelectPageState extends State<CountrySelectPage> {
                     textAlign: TextAlign.center,
                     style: TextStyle(fontSize: 24, fontWeight: FontWeight.w300),
                   ),
-                  Icon(Icons.expand_more)
+                  Icon(Icons.arrow_downward)
                 ],
               ),
               SizedBox(
-                height: 5,
+                height: MediaQuery.of(context).size.height / 100,
               ),
               Container(
                 margin: EdgeInsets.only(left: 10, right: 10),
@@ -160,13 +160,20 @@ class _CountrySelectPageState extends State<CountrySelectPage> {
                                   return Card(
                                       margin:
                                           EdgeInsets.fromLTRB(20, 10, 20, 10),
-                                      elevation: 2,
+                                      elevation: 4,
                                       child: ListTile(
                                         onTap: () {
                                           toCountryPage(
                                               snapshot.data[index].shortName,
                                               snapshot.data[index]);
                                         },
+                                        trailing: Padding(
+                                          padding: EdgeInsets.only(right: 8.0),
+                                          child: Icon(Icons.arrow_right),
+                                        ),
+                                        subtitle: Text('Cases : ' +
+                                            snapshot.data[index].totalConfirmed
+                                                .toString()),
                                         title: Text(
                                             snapshot.data[index].countryName),
                                         leading: Container(

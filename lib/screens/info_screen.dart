@@ -16,7 +16,8 @@ class _InfoScreenState extends State<InfoScreen> {
     super.initState();
     controller.addListener(onScroll);
     _controller = ScrollController();
-    WidgetsBinding.instance.addPostFrameCallback((_) {
+    WidgetsBinding.instance.addPostFrameCallback((_) async{
+     await Future.delayed(Duration(seconds: 4));
       _controller
           .animateTo(_controller.position.maxScrollExtent,
               duration: Duration(seconds: 20), curve: Curves.linear)

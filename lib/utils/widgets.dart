@@ -47,14 +47,20 @@ class AppHeader extends StatelessWidget {
                       Navigator.push(
                           context, SlideRoute(widget: IndiaHomePage()));
                     },
-                    child: CircleAvatar(
-                        radius: 25,
-                        backgroundColor: Colors.white,
-                        child: Image.asset(
-                          kIndiaImage,
-                          width: 50,
-                          height: 50,
-                        )),
+                    child: Container(
+                      width: 50,
+                      height: 50,
+                      child: Material(
+                          color: Colors.white70,
+                          type: MaterialType.circle,
+                          elevation: 4,
+                          child: Image.asset(
+                            kIndiaImage,
+                            fit: BoxFit.fill,
+                            width: 50,
+                            height: 50,
+                          )),
+                    ),
                   )
                 : SizedBox(),
           ],
@@ -192,16 +198,19 @@ class DataCard extends StatelessWidget {
 
     return Container(
       margin: EdgeInsets.fromLTRB(6, 0, 6, 10),
-      height: 100,
+      height: 120,
       width: MediaQuery.of(context).size.width / 1.1,
       color: Colors.transparent,
       child: Material(
           color: Colors.white,
-          elevation: 2,
+          elevation: 4,
           borderRadius: BorderRadius.circular(20),
           child: Column(
             mainAxisAlignment: MainAxisAlignment.spaceEvenly,
             children: <Widget>[
+              SizedBox(
+                height: 8,
+              ),
               Row(
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: <Widget>[
@@ -219,6 +228,9 @@ class DataCard extends StatelessWidget {
                   )
                 ],
               ),
+              SizedBox(
+                height: 4,
+              ),
               Row(
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: <Widget>[
@@ -233,6 +245,13 @@ class DataCard extends StatelessWidget {
                   ),
                   Text(' )')
                 ],
+              ),
+              Padding(
+                padding: EdgeInsets.only(right: 8.0),
+                child: Align(
+                  alignment: Alignment.bottomRight,
+                  child: Icon(Icons.arrow_right),
+                ),
               ),
             ],
           )),
@@ -431,64 +450,6 @@ class ErrorScreen extends StatelessWidget {
               valueColor: AlwaysStoppedAnimation<Color>(Colors.orange)),
         ),
       ],
-    );
-  }
-}
-
-class StateDataCard extends StatelessWidget {
-  StateDataCard({
-    this.name,
-    this.color,
-    this.newData,
-    this.totalData,
-  });
-
-  final String name;
-  final int totalData, newData;
-  final Color color;
-
-  @override
-  Widget build(BuildContext context) {
-    var totalCaseNumber = formatter.format(totalData);
-
-    return Container(
-      margin: EdgeInsets.fromLTRB(6, 0, 6, 10),
-      height: 100,
-      width: MediaQuery.of(context).size.width / 1.1,
-      color: Colors.transparent,
-      child: Material(
-          color: Colors.white,
-          elevation: 2,
-          borderRadius: BorderRadius.circular(20),
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.center,
-            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-            children: <Widget>[
-              Padding(
-                padding: EdgeInsets.only(top: 8, bottom: 8),
-                child: Text(
-                  name,
-                  softWrap: true,
-                  style: TextStyle(fontSize: 22),
-                ),
-              ),
-              Row(
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: <Widget>[
-                  Text(
-                    totalCaseNumber.toString(),
-                    style: kCaseNameTextStyle,
-                  ),
-                  Text(' ( + '),
-                  Text(
-                    newData.toString(),
-                    style: TextStyle(color: color),
-                  ),
-                  Text(' )')
-                ],
-              ),
-            ],
-          )),
     );
   }
 }
