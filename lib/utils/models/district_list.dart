@@ -33,8 +33,12 @@ class DistrictList {
           districtData.newRecovered = district['delta']['recovered'];
           districtData.newActive = districtData.newConfirmed -
               (districtData.newRecovered + districtData.newDeaths);
-          if (stateName == state['state'] && district['district'] != 'Unknown')
-            this.districtList.add(districtData);
+          if (stateName == state['state'] &&
+              district['district'] != 'Unknown') {
+            if (!(districtData.totalConfirmed == 0))
+              this.districtList.add(districtData);
+          }
+
           districtData = DistrictData(
             stateName: state['state'],
             stateCode: state['statecode'],

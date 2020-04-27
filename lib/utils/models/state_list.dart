@@ -51,8 +51,7 @@ class StateList {
       stateData.newActive = int.parse(statesArray[i]['deltaconfirmed']) -
           (int.parse(statesArray[i]['deltarecovered']) +
               int.parse(statesArray[i]['deltadeaths']));
-      if (stateData.totalConfirmed != 0 && stateData.totalRecovered != 0)
-        this.stateList.add(stateData);
+      if (!(stateData.totalConfirmed == 0)) this.stateList.add(stateData);
     }
 
     return this;

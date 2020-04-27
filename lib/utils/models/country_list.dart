@@ -48,7 +48,7 @@ class CountryList {
       if (countryData.shortName == 'india') {
         this.indiaData = countryData;
       }
-      this.countryList.add(countryData);
+      if (!(countryData.totalConfirmed == 0)) this.countryList.add(countryData);
     }
     return this.countryList;
   }
