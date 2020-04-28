@@ -417,7 +417,27 @@ class _HomePageState extends State<HomePage> {
                       SizedBox(
                         height: 15,
                       ),
-                      showStats ? StatsPage() : SizedBox(),
+                      showStats
+                          ? StatsPage()
+                          : SizedBox(
+                              height: 40,
+                            ),
+                      Row(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        children: <Widget>[
+                          Icon(
+                            Icons.favorite,
+                            color: Colors.red,
+                          ),
+                          Text(
+                            ' Stay Home , Stay Safe',
+                            style: TextStyle(fontFamily: 'Poppins'),
+                          )
+                        ],
+                      ),
+                      SizedBox(
+                        height: 10,
+                      ),
                     ],
                   );
                 } else if (snapshot.hasError) {

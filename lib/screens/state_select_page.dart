@@ -86,7 +86,7 @@ class _StateSelectPageState extends State<StateSelectPage> {
                         ),
                         decoration: InputDecoration(
                           contentPadding: EdgeInsets.all(8),
-                          helperText: 'Enter Name of State',
+                          helperText: 'Enter State Name',
                           helperStyle: TextStyle(
                             color: Colors.grey,
                             fontSize: 18,
@@ -180,13 +180,6 @@ class _StateSelectPageState extends State<StateSelectPage> {
                 ),
               ),
               SizedBox(
-                child: Padding(
-                  padding: EdgeInsets.all(8.0),
-                  child: Text(
-                    'Displays states with minimum one confirmed case.',
-                    textAlign: TextAlign.center,
-                  ),
-                ),
                 height: 30,
               ),
             ],

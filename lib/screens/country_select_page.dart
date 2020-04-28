@@ -90,7 +90,7 @@ class _CountrySelectPageState extends State<CountrySelectPage> {
                         ),
                         decoration: InputDecoration(
                           contentPadding: EdgeInsets.all(8),
-                          helperText: 'Enter Name of Country',
+                          helperText: 'Enter Country name',
                           helperStyle: TextStyle(
                             color: Colors.grey,
                             fontSize: 18,
@@ -200,13 +200,6 @@ class _CountrySelectPageState extends State<CountrySelectPage> {
                 ),
               ),
               SizedBox(
-                child: Padding(
-                  padding: EdgeInsets.all(8.0),
-                  child: Text(
-                    'Displays countries with minimum one confirmed case.',
-                    textAlign: TextAlign.center,
-                  ),
-                ),
                 height: 30,
               ),
             ],
