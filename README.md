@@ -9,12 +9,25 @@ Download the Latest version from the below links.
 
 ## Download the App
 
-### Direct Download
-[<img src="https://image.flaticon.com/icons/svg/443/443049.svg" align="center"
-width="60" hspace="10" vspace="10">](https://github.com/adarshbalu/covid_track/raw/master/build/app/outputs/apk/release/app-release.apk)
 
 
-### MediaFire
+<table style="border:0px" align="right">
+  <tr>
+    <td> Direct Download</td>
+  </tr>
+  <tr>
+    <td>
+<p>Click on the button to download.</p>
+    </td>
+    <td>
+
+[<img src="https://image.flaticon.com/icons/svg/443/443049.svg" 
+width="60" hspace="10" >](https://github.com/adarshbalu/covid_track/raw/master/build/app/outputs/apk/release/app-release.apk) 
+</td>
+</tr>
+</table>
+
+#### MediaFire
 [<img align="center" src="https://www.pngkey.com/png/detail/189-1892159_five-nights-at-freddys-4-halloween-dlc-update.png" width="200" height="100">](http://www.mediafire.com/file/b5vrphkkwe5138x/Covid-Tracker.apk/file)
 
 ## About
