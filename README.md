@@ -5,11 +5,17 @@ width="200" hspace="10" vspace="10">
 
   
 Covid-19 Track is free and Open Source, Cross Platform Application developed using [Flutter](https://github.com/flutter/flutter).
-Download the Latest version from this [Link](https://github.com/adarshbalu/covid_track/raw/master/build/app/outputs/apk/release/app-release.apk).
+Download the Latest version from the below links.
 
 ## Download the App
+
+### Direct Download
 [<img src="https://image.flaticon.com/icons/svg/443/443049.svg" align="center"
 width="60" hspace="10" vspace="10">](https://github.com/adarshbalu/covid_track/raw/master/build/app/outputs/apk/release/app-release.apk)
+
+
+### MediaFire
+[<img align="center" src="https://www.pngkey.com/png/detail/189-1892159_five-nights-at-freddys-4-halloween-dlc-update.png" width="200" height="100">](http://www.mediafire.com/file/b5vrphkkwe5138x/Covid-Tracker.apk/file)
 
 ## About
 
